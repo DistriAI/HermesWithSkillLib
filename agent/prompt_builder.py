@@ -1269,12 +1269,23 @@ def build_skills_system_prompt(
         # are session-stable, so byte-stable), skills.create_dir, skills.external_dirs.
         extra_roots = [(t, d) for t, d in get_skill_search_roots(skills_dir) if t != TIER_LOCAL]
         if not skills_dir.exists() and not extra_roots:
-            return ""
-        return _build_skills_system_prompt_inner(
-            skills_dir, extra_roots, available_tools, available_toolsets, compact_categories)
+            index = ""
+        else:
+            index = _build_skills_system_prompt_inner(
+                skills_dir, extra_roots, available_tools, available_toolsets, compact_categories)
     finally:
         if _home_token is not None:
             reset_hermes_home_override(_home_token)
+    # Appended outside the skills-index cache: the fragment is the library's
+    # domain list, constant for the conversation, and only when this session's
+    # tool list offers the skill_library tools.
+    from agent.skill_library import library_prompt
+    extra = library_prompt(available_tools)
+    if not extra:
+        return index
+    if not index:
+        return extra
+    return index.rstrip() + "\n\n" + extra
 
 
 def _entry_name(entry: dict) -> str:

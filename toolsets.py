@@ -14,6 +14,7 @@ _HERMES_CORE_TOOLS = [
     "read_file", "write_file", "patch", "search_files",
     "vision_analyze", "image_generate",
     "skills_list", "skill_view", "skill_manage",
+    "skill_library_find", "skill_library_load", "skill_library_visit",
     "browser_navigate", "browser_snapshot", "browser_click",
     "browser_type", "browser_scroll", "browser_back",
     "browser_press", "browser_get_images",
@@ -104,6 +105,11 @@ TOOLSETS = {
         "Access, create, edit, and manage skill documents with specialized "
         "instructions and knowledge",
         ["skills_list", "skill_view", "skill_manage"],
+    ),
+    "skill_library": _ts(
+        "Search and load the hierarchical skill-lib catalog (domain, scenario, skill). "
+        "Present only when the skill-lib submodule catalog is checked out.",
+        ["skill_library_find", "skill_library_load", "skill_library_visit"],
     ),
     # web_search belongs to `web`/`search` only. Listing it here too let
     # `disabled_toolsets: [browser]` (headless/Docker deployments) strip

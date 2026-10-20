@@ -403,6 +403,22 @@ skills:
 The dashboard's Browse-hub scan button returns the same advisory data in
 its response (`tier1` field) alongside the built-in scanner's verdict.
 
+## Hierarchical skill library
+
+This checkout can carry a second catalog, the [`skill-lib`](https://github.com/DistriAI/SkillLib) submodule. It indexes skills as domain, then scenario, then skill. Hermes searches that index on demand. The profile catalog in `~/.hermes/skills/` and the `<available_skills>` list stay as they are.
+
+```bash
+git submodule update --init skill-lib
+```
+
+When `skill-lib/catalog/routing_cards.jsonl` is present, a normal session gets three tools:
+
+- `skill_library_find` — a few matching cards for the task
+- `skill_library_load` — the cached skill text for one card id
+- `skill_library_visit` — check out the repository a load gap names, so bundled scripts are on disk
+
+The system prompt lists one sentence per domain and tells the agent to call `skill_library_find` before deciding that no skill applies. Disable the catalog with `disabled_toolsets: [skill_library]`. Leave `skill-lib` out of `skills.external_dirs`; that setting scans `SKILL.md` files into the prompt index, which this catalog is too large for.
+
 ## External Skill Directories
 
 If you maintain skills outside of Hermes — for example, a shared `~/.agents/skills/` directory used by multiple AI tools — you can tell Hermes to scan those directories too.
