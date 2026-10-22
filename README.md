@@ -216,6 +216,32 @@ See `hermes claw migrate --help` for all options, or use the `openclaw-migration
 
 ---
 
+## This checkout
+
+Use the virtualenv in this directory, and keep this Hermes profile inside the checkout. The default `~/.hermes` profile belongs to another agent that is still under development. `HERMES_HOME` is the existing profile switch: sessions, `config.yaml`, and `.env` for this tree live in `.hermes/` here, which git ignores.
+
+Install and activate from the repository root. `uv` 0.9 warns on `exclude-newer = "3 days"` in `pyproject.toml` and would otherwise ignore `uv.lock`, so sync frozen:
+
+```bash
+uv venv --python 3.14 .venv
+uv sync --frozen --python .venv/bin/python
+source .venv/bin/activate
+export HERMES_HOME="$PWD/.hermes"
+mkdir -p "$HERMES_HOME"
+```
+
+Put API keys in `$HERMES_HOME/.env` and settings in `$HERMES_HOME/config.yaml`. `hermes setup` and `hermes chat` then read this profile. Each benchmark experiment copies that profile into its own directory and keeps its sessions there.
+
+SkillLib and the four benchmark trees are submodules. After the first clone, check them out at the commits this project records, and run the same command again when a later pull moves one:
+
+```bash
+git submodule update --init --recursive
+```
+
+Preparing the four benchmarks and running them is in [`benchmark/README.md`](benchmark/README.md). Re-running the same experiment name continues from tasks that were interrupted.
+
+---
+
 ## Contributing
 
 We welcome contributions! See the [Contributing Guide](https://hermes-agent.nousresearch.com/docs/developer-guide/contributing) for development setup, code style, and PR process.

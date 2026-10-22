@@ -244,13 +244,19 @@ def run_oneshot(
     usage_file: Optional[str] = None,
     resume: Optional[str] = None,
     reasoning: object = None,
+    *,
+    cwd: Optional[str] = None,
+    disabled_toolsets: Optional[list[str]] = None,
+    skip_memory: bool = False,
 ) -> int:
     """Execute a single prompt and print only the final content block.
 
     Model/provider fall back to ``HERMES_INFERENCE_MODEL`` and config.yaml. ``usage_file`` gets a
     JSON usage report even when the run fails. ``resume`` is a session id (already normalized by
     the CLI layer: latest/title/--continue resolution) whose transcript is loaded and continued
-    by this turn. Returns the exit code; the caller owns process termination.
+    by this turn. ``cwd`` is the agent's working directory. ``disabled_toolsets`` is subtracted
+    after the enabled set. ``skip_memory`` keeps the turn out of the memory provider. Returns
+    the exit code; the caller owns process termination.
     """
     # Silence every stdlib logger: AIAgent, tools and provider adapters log to stderr through the
     # root logger. File handlers from setup_logging() keep working (level-independent).
@@ -304,6 +310,9 @@ def run_oneshot(
                 resume=resume,
                 reasoning=reasoning,
                 ledger=bool(usage_file),
+                cwd=cwd,
+                disabled_toolsets=disabled_toolsets,
+                skip_memory=skip_memory,
             )
         except BaseException as exc:
             # Capture anything escaping the agent (OSError from prompt_toolkit on a non-TTY pipe,
@@ -510,6 +519,9 @@ def _run_agent(
     resume: Optional[str] = None,
     reasoning: object = None,
     ledger: bool = False,
+    cwd: Optional[str] = None,
+    disabled_toolsets: Optional[list[str]] = None,
+    skip_memory: bool = False,
 ) -> tuple[str, dict]:
     """Build an AIAgent exactly like a normal CLI chat turn, run one conversation, and return
     ``(final_response, run_result)``. Imports are local to keep CLI startup cheap. *ledger* (set when
@@ -582,8 +594,11 @@ def _run_agent(
             api_mode=runtime.get("api_mode"),
             model=choice.model,
             enabled_toolsets=toolsets_list,
+            disabled_toolsets=disabled_toolsets,
             quiet_mode=True,
             platform="cli",
+            cwd=cwd,
+            skip_memory=skip_memory,
             session_db=session_db,
             session_id=resume_sid,
             credential_pool=runtime.get("credential_pool"),
