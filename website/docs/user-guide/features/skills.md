@@ -411,13 +411,7 @@ This checkout can carry a second catalog, the [`skill-lib`](https://github.com/D
 git submodule update --init skill-lib
 ```
 
-When `skill-lib/catalog/routing_cards.jsonl` is present, a normal session gets three tools:
-
-- `skill_library_find` — a few matching cards for the task
-- `skill_library_load` — the cached skill text for one card id
-- `skill_library_visit` — check out the repository a load gap names, so bundled scripts are on disk
-
-The system prompt lists one sentence per domain and tells the agent to call `skill_library_find` before deciding that no skill applies. Disable the catalog with `disabled_toolsets: [skill_library]`. Leave `skill-lib` out of `skills.external_dirs`; that setting scans `SKILL.md` files into the prompt index, which this catalog is too large for.
+When `skill-lib/catalog/routing_cards.jsonl` is present, a normal session registers the three tools from SkillLib's integration module, `skilllib.integrate`: `skill_library_find`, `skill_library_load`, and `skill_library_visit`. The system prompt is that module's `resident_prompt()`, not a prompt written in Hermes. Disable the catalog with `disabled_toolsets: [skill_library]`. Leave `skill-lib` out of `skills.external_dirs`; that setting scans `SKILL.md` files into the prompt index, which this catalog is too large for. Another agent integrates the same way: register `tool_specs()` and append `resident_prompt()`. The contract is in the SkillLib repository at `docs/interface.md`.
 
 ## External Skill Directories
 

@@ -99,6 +99,16 @@ def prepare(replica: Path, workspace: Path, skill_mode: str) -> tuple[str, str]:
     return prompt.rstrip() + common.skill_note(skill_mode, workspace, has_task_skills=False), ""
 
 
+def finished(_replica: Path, workspace: Path, _cases: list[dict]) -> bool:
+    """The agent loop ends when the submission the judge will read is in place.
+
+    Rubric leaves stay unjudged until ``judge.json`` is written. They are not a
+    reason to send another user turn.
+    """
+    readme = workspace / "submission" / "README.md"
+    return readme.is_file() and readme.stat().st_size > 0
+
+
 def grade(replica: Path, workspace: Path, task_dir: Path) -> list[dict]:
     rubric_path = replica / "rubric.json"
     if not rubric_path.is_file():
@@ -140,6 +150,7 @@ SPEC = common.Spec(
     replicate=replicate,
     prepare=prepare,
     grade=grade,
+    finished=finished,
     uses_split=True,
     after_clone=pull_lfs,
 )

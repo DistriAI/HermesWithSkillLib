@@ -143,6 +143,23 @@ def test_pytest_grades_rewritten_workspace(tmp_path: Path):
     assert any(case["passed"] and "test_ok" in case["id"] for case in cases)
 
 
+def test_conversation_stops_on_the_benchmark_verifier(tmp_path: Path):
+    passed = [{"id": "test_ok", "passed": True, "graded": True}]
+    failed = [{"id": "test_ok", "passed": False, "detail": "missing mass_report.json", "graded": True}]
+    unjudged = [{"id": "leaf-1", "passed": False, "graded": False}]
+    assert common.verifier_finished(tmp_path, tmp_path, passed)
+    assert not common.verifier_finished(tmp_path, tmp_path, failed)
+    assert not common.verifier_finished(tmp_path, tmp_path, unjudged)
+    assert "test_ok" in common.followup_prompt(failed)
+    assert "mass_report.json" in common.followup_prompt(failed)
+    workspace = tmp_path / "workspace"
+    assert not paperbench.finished(tmp_path, workspace, unjudged)
+    readme = workspace / "submission" / "README.md"
+    readme.parent.mkdir(parents=True)
+    readme.write_text("reproduced the main experiment\n", encoding="utf-8")
+    assert paperbench.finished(tmp_path, workspace, unjudged)
+
+
 def test_paper_leaves_follow_judge_file():
     rubric = {
         "id": "root",
@@ -265,6 +282,144 @@ def test_success_curves_and_cost_stats():
     assert summary["execution_time_sec"]["all_tasks"]["mean"] == 20
     assert summary["input_tokens"]["successful_tasks"]["mean"] == 100
     assert summary["total_tokens"]["all_tasks"]["n"] == 2
+
+
+def test_skill_library_usage_splits_success_by_calls():
+    find_call = {
+        "role": "assistant",
+        "turn": 1,
+        "tool_calls": [{
+            "id": "c1",
+            "function": {"name": "skill_library_find", "arguments": json.dumps({"task": "parse stl"})},
+        }],
+    }
+    find_result = {
+        "role": "tool",
+        "turn": 1,
+        "tool_call_id": "c1",
+        "content": json.dumps({"success": True, "cards": [{"id": "mesh-volume"}, {"id": "unrelated"}]}),
+    }
+    load_call = {
+        "role": "assistant",
+        "turn": 1,
+        "tool_calls": [{
+            "id": "c2",
+            "function": {"name": "skill_library_load", "arguments": json.dumps({"skill_id": "mesh-volume"})},
+        }],
+    }
+    load_result = {
+        "role": "tool",
+        "turn": 1,
+        "tool_call_id": "c2",
+        "content": json.dumps({"success": True, "gap": "need checkout"}),
+    }
+    other = {"role": "assistant", "turn": 1, "tool_calls": [{"id": "t", "function": {"name": "terminal", "arguments": "{}"}}]}
+    used = common.observe_skill_library(common.empty_skill_library_usage(), [find_call, find_result, load_call, load_result, other])
+    assert used["calls"] == {"skill_library_find": 1, "skill_library_load": 1, "skill_library_visit": 0}
+    assert used["cards_offered"] == ["mesh-volume", "unrelated"]
+    assert used["skills_loaded"] == ["mesh-volume"]
+    assert used["loads_with_gap"] == 1
+    assert used["involved"] is True
+    find_only = common.observe_skill_library(common.empty_skill_library_usage(), [find_call, find_result])
+    records = [
+        {"status": "complete", "id": "loaded", "grades": [{"turn": 1, "cases": [{"id": "a", "passed": True}]}], "skill_library": used},
+        {"status": "complete", "id": "find-only", "grades": [{"turn": 1, "cases": [{"id": "a", "passed": False}]}], "skill_library": find_only},
+        {"status": "complete", "id": "plain", "grades": [{"turn": 1, "cases": [{"id": "a", "passed": True}]}]},
+    ]
+    summary = common.summarize_records(records, [1], benchmark="skillsbench", run="r")
+    library = summary["skill_library"]
+    assert library["tasks_involved"] == 2
+    assert library["tasks_not_involved"] == 1
+    assert library["tasks_loaded"] == 1
+    assert library["tasks_find_only"] == 1
+    assert library["calls_total"]["skill_library_find"] == 2
+    assert library["calls_total"]["skill_library_load"] == 1
+    assert library["final_macro_success"]["loaded"] == 1.0
+    assert library["final_macro_success"]["find_only"] == 0.0
+    assert library["final_macro_success"]["not_involved"] == 1.0
+    assert "mesh-volume" in library["skills_loaded"]
+    report = common.format_report(summary, [])
+    assert "skill_library involved=2/3" in report
+
+
+def test_success_at_k_follows_tool_call_turns_inside_the_conversation():
+    user = {"role": "user", "content": "task"}
+    call = {"role": "assistant", "tool_calls": [{"id": "c", "function": {"name": "terminal", "arguments": "{}"}}]}
+    tool = {"role": "tool", "tool_call_id": "c", "content": "{}"}
+    done = {"role": "assistant", "content": "done"}
+    stamped = [dict(item) for item in (user, call, tool, call, tool, call, tool, done)]
+    depth = common.stamp_conversation_turns(stamped)
+    assert depth == 4
+    assert [item["turn"] for item in stamped] == [1, 2, 2, 3, 3, 4, 4, 4]
+    record = {
+        "status": "complete",
+        "id": "deep",
+        "grades": [{"turn": depth, "cases": [{"id": "a", "passed": True}]}],
+    }
+    summary = common.summarize_records([record], [1, 4], benchmark="skillsbench", run="r")
+    assert summary["macro_success_at_k"]["1"] == 0.0
+    assert summary["macro_success_at_k"]["4"] == 1.0
+
+
+def test_summarize_rewrites_a_grade_labeled_turn_1_from_the_transcript(tmp_path: Path, monkeypatch):
+    monkeypatch.setattr(common, "benchmark_root", lambda: tmp_path / "benchmark")
+    run_dir = tmp_path / "benchmark" / "experiments" / "skillsbench" / "exp"
+    record = {
+        "status": "complete",
+        "id": "deep",
+        "grades": [{"turn": 1, "cases": [{"id": "a", "passed": True}]}],
+    }
+    _write(run_dir / "agent" / "deep" / "result.json", json.dumps(record))
+    lines = [
+        {"task": "deep", "turn": 1, "type": "turn", "exit_code": 0, "session_ids": ["s"]},
+        {"task": "deep", "turn": 1, "role": "user", "content": "task"},
+        {"task": "deep", "turn": 1, "role": "assistant", "tool_calls": [{"id": "c1", "function": {"name": "terminal", "arguments": "{}"}}]},
+        {"task": "deep", "turn": 1, "role": "tool", "tool_call_id": "c1", "content": "{}"},
+        {"task": "deep", "turn": 1, "role": "assistant", "tool_calls": [{"id": "c2", "function": {"name": "terminal", "arguments": "{}"}}]},
+        {"task": "deep", "turn": 1, "role": "tool", "tool_call_id": "c2", "content": "{}"},
+        {"task": "deep", "turn": 1, "role": "assistant", "content": "done"},
+    ]
+    _write(run_dir / "trajectory.jsonl", "".join(json.dumps(line) + "\n" for line in lines))
+    spec = common.Spec(
+        "skillsbench", "skillsbench", "https://example.invalid/bench.git",
+        lambda *_args: ([], ""), lambda *_args: None, lambda *_args: ("", ""), lambda *_args: [],
+    )
+    summary_path = tmp_path / "summary.json"
+    code = common.cli(spec, ["summarize", "--run", "exp", "--turns", "1,3", "--summary", str(summary_path), "--report", str(tmp_path / "summary.txt")])
+    assert code == 0
+    body = json.loads(summary_path.read_text(encoding="utf-8"))
+    assert body["macro_success_at_k"]["1"] == 0.0
+    assert body["macro_success_at_k"]["3"] == 1.0
+    stored = json.loads((run_dir / "agent" / "deep" / "result.json").read_text(encoding="utf-8"))
+    assert stored["grades"][0]["turn"] == 3
+
+
+def test_experiment_trajectory_is_one_shared_file(tmp_path: Path):
+    home = tmp_path / ".hermes"
+    home.mkdir()
+    import sqlite3
+    con = sqlite3.connect(home / "state.db")
+    con.execute("CREATE TABLE sessions (id TEXT, started_at TEXT)")
+    con.executemany("INSERT INTO sessions VALUES (?, ?)", [("s1", "1"), ("s2", "2"), ("s3", "3")])
+    con.commit()
+    con.close()
+    assert common.list_session_ids(home) == ["s1", "s2", "s3"]
+    assert common.sessions_started_since(["s1"], ["s1", "s2", "s3"]) == ["s2", "s3"]
+    path = tmp_path / "experiments" / "skillsbench" / "exp" / "trajectory.jsonl"
+    common.append_trajectory_lines(path, [
+        {"task": "a", "turn": 1, "role": "user", "content": "go"},
+        {"task": "b", "turn": 1, "role": "user", "content": "other"},
+    ])
+    common.forget_task_trajectory(path, "a")
+    common.append_trajectory_lines(path, [
+        {"task": "a", "turn": 2, "role": "assistant", "content": "again"},
+    ])
+    lines = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    assert [(line["task"], line.get("content")) for line in lines] == [("b", "other"), ("a", "again")]
+    kept = common._trajectory_message("a", 2, "s2", {"role": "assistant", "content": "", "tool_calls": [{"id": "c"}]})
+    assert kept["task"] == "a"
+    assert kept["tool_calls"] == [{"id": "c"}]
+    assert "content" not in kept
 
 
 def test_summarize_any_k_counts_passes_at_or_before_k(tmp_path: Path, monkeypatch):

@@ -18,14 +18,19 @@ Reviewing a skill PR: check the target directory — heavy-dep or niche skills g
 Git submodule [DistriAI/SkillLib](https://github.com/DistriAI/SkillLib), checked out at `skill-lib/`.
 It is a domain → scenario → skill catalog (tens of thousands of skills), not a third `SKILL.md`
 tree: do not add it to `skills.external_dirs` or the prompt index will try to list every card.
-The agent reaches it through `skill_library_find`, `skill_library_load`, and `skill_library_visit`
-(`tools/skill_library_tool.py`, `agent/skill_library.py`). `check_fn` is true only when
-`skill-lib/catalog/routing_cards.jsonl` exists. The system prompt gains the library's short domain
-list (`skillrepo.sorting.promptpack.DOMAIN_SENTENCES`) only when those three tools are in the
-session's tool list, and that fragment is appended outside the skills-index cache so it stays
-byte-stable. The tools sit on the `skill_library` toolset (and on the core list so platform
+The agent reaches it through the host tools defined by ``skilllib.integrate``
+(``skill_library_find``, ``skill_library_load``, ``skill_library_visit``). Hermes only
+locates the checkout and registers those specs (`tools/skill_library_tool.py`,
+`agent/skill_library.py`). Do not rewrite the prompt, the tool descriptions, or the
+tool-result wording in this repository: another host that does so gives the model a
+different contract for the same library. `check_fn` is true only when
+`skill-lib/catalog/routing_cards.jsonl` exists. The system prompt gains
+``resident_prompt()`` only when those three tools are in the session's tool list, and
+that fragment is appended outside the skills-index cache so it stays byte-stable.
+The tools sit on the `skill_library` toolset (and on the core list so platform
 bundles offer them). Background review whitelists the `skills` toolset only, so it does not
-search or check out this catalog.
+search or check out this catalog. The contract is `skill-lib/docs/interface.md` under
+"Integrating an agent".
 
 ## SKILL.md frontmatter
 

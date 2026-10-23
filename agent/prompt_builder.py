@@ -1276,9 +1276,9 @@ def build_skills_system_prompt(
     finally:
         if _home_token is not None:
             reset_hermes_home_override(_home_token)
-    # Appended outside the skills-index cache: the fragment is the library's
-    # domain list, constant for the conversation, and only when this session's
-    # tool list offers the skill_library tools.
+    # Appended outside the skills-index cache. The text is skilllib.integrate
+    # resident_prompt(), constant for the conversation, and only when this
+    # session's tool list offers the skill_library tools.
     from agent.skill_library import library_prompt
     extra = library_prompt(available_tools)
     if not extra:

@@ -6,13 +6,13 @@ from pathlib import Path
 import pytest
 
 from agent.skill_library import (
-    _LIBRARY_TOOLS,
     _clear_finder_cache,
     find_in_library,
     library_available,
     library_prompt,
     load_from_library,
     package_root,
+    tool_names,
     visit_in_library,
 )
 
@@ -128,12 +128,13 @@ def test_visit_rejects_a_malformed_repository_id(tmp_path):
 def test_prompt_uses_the_library_domain_sentences():
     if package_root() is None or not library_available():
         pytest.skip("skill-lib catalog is not checked out")
-    from agent.skill_library import _prompt_constants
-    text = library_prompt(set(_LIBRARY_TOOLS))
-    sentences, load_cap = _prompt_constants()
-    for name, sentence in sentences:
+    from agent.skill_library import skilllib_module
+    skilllib_module()
+    from skilllib.sorting.promptpack import DOMAIN_SENTENCES, LOAD_CAP
+    text = library_prompt(set(tool_names()))
+    for name, sentence in DOMAIN_SENTENCES:
         assert f"- {name}: {sentence}" in text
-    assert f"at most {load_cap}" in text
+    assert f"at most {LOAD_CAP}" in text
     assert "skill_library_find" in text
     assert "skill_library_visit" in text
 
@@ -146,7 +147,7 @@ def test_skills_system_prompt_appends_the_fragment_only_when_tools_are_offered(m
     clear_skills_system_prompt_cache(clear_snapshot=True)
     try:
         withheld = build_skills_system_prompt(available_tools={"skill_view", "skills_list"})
-        offered = build_skills_system_prompt(available_tools=set(_LIBRARY_TOOLS))
+        offered = build_skills_system_prompt(available_tools=set(tool_names()))
     finally:
         clear_skills_system_prompt_cache(clear_snapshot=True)
     assert "## Skill library" not in withheld
