@@ -157,7 +157,7 @@ def prepare(replica: Path, workspace: Path, skill_mode: str) -> tuple[str, str]:
         "",
         row.get("task_inst") or "",
     ]
-    if skill_mode == "task" and row.get("domain_knowledge"):
+    if common.skill_sources(skill_mode).benchmark and row.get("domain_knowledge"):
         parts.extend(["", "Domain knowledge:", str(row["domain_knowledge"])])
     parts.extend([
         "",

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -58,9 +59,16 @@ def test_skillsbench_hides_oracle_and_skills(tmp_path: Path):
     prompt, error = skillsbench.prepare(dest, workspace, "library")
     assert error == ""
     assert (workspace / "input.txt").is_file()
-    assert not (workspace / "skills").exists()
+    assert (workspace / "skills" / "helper" / "SKILL.md").read_text(encoding="utf-8") == "secret"
+    assert "Read each SKILL.md" in prompt
     assert "skill_library_find" in prompt
+    assert "Do not call" not in prompt
     assert "/root/input.txt" not in prompt
+    only_ws = tmp_path / "only-ws"
+    only_prompt, _ = skillsbench.prepare(dest, only_ws, "library-only")
+    assert not (only_ws / "skills").exists()
+    assert "Read each SKILL.md" not in only_prompt
+    assert "skill_library_find" in only_prompt
     task_prompt, _ = skillsbench.prepare(dest, tmp_path / "task-ws", "task")
     assert (tmp_path / "task-ws" / "skills" / "helper" / "SKILL.md").is_file()
     assert "Do not call skill_library_find" in task_prompt
@@ -104,8 +112,10 @@ def test_science_domain_knowledge_and_cases(tmp_path: Path):
     assert (dest / "datasets" / "example_data" / "train.csv").is_file()
     library, _ = scienceagentbench.prepare(dest, tmp_path / "lib", "library")
     task, _ = scienceagentbench.prepare(dest, tmp_path / "task", "task")
-    assert "use scipy" not in library
+    only, _ = scienceagentbench.prepare(dest, tmp_path / "only", "library-only")
+    assert "use scipy" in library
     assert "use scipy" in task
+    assert "use scipy" not in only
     workspace = tmp_path / "ws"
     workspace.mkdir()
     _write(workspace / "pred_plot.py", "from pathlib import Path\nPath('out.csv').write_text('a\\n')\n")
@@ -501,7 +511,7 @@ def test_run_is_isolated_and_resumes(tmp_path: Path, monkeypatch):
         assert home.name == ".hermes"
         assert home.parent.name in {"r1", "r2"}
         assert not (home.parent / "agent" / "t" / ".hermes").exists()
-        assert kwargs["disable_skill_library"] is False
+        assert kwargs["skill_mode"] == "library"
         assert kwargs["model"] == "Qwen/Qwen3.6-27B"
         assert kwargs["provider"] == "qwen-31"
         Path(kwargs["usage"]).write_text(
@@ -544,3 +554,134 @@ def test_run_is_isolated_and_resumes(tmp_path: Path, monkeypatch):
     assert body["provider"] == "qwen-31"
     assert body["final_macro_success"] == 1.0
     assert body["input_tokens"]["all_tasks"]["mean"] == 3
+
+
+def test_skill_modes_choose_hermes_benchmark_and_library():
+    assert common.skill_sources("task") == common.SkillSources(True, True, False)
+    assert common.skill_sources("library") == common.SkillSources(False, True, True)
+    assert common.skill_sources("library-compatible") == common.SkillSources(True, True, True)
+    assert common.skill_sources("library-only") == common.SkillSources(False, False, True)
+    assert common.skill_sources("none") == common.SkillSources(False, False, False)
+    assert common.disabled_toolsets("task") == ["skill_library"]
+    assert common.disabled_toolsets("library") == ["skills"]
+    assert common.disabled_toolsets("library-compatible") == []
+    assert common.disabled_toolsets("library-only") == ["skills"]
+    assert common.disabled_toolsets("none") == ["skills", "skill_library"]
+
+
+def test_skill_note_names_the_sources_a_mode_offers(tmp_path: Path):
+    workspace = tmp_path / "workspace"
+    task = common.skill_note("task", workspace, has_task_skills=True)
+    assert "Read each SKILL.md" in task
+    assert "Do not call" in task and "skill_library_find" in task
+    library = common.skill_note("library", workspace, has_task_skills=True)
+    assert "Read each SKILL.md" in library and "skill_library_find" in library
+    assert "Do not call" not in library
+    compatible = common.skill_note("library-compatible", workspace, has_task_skills=True)
+    assert "Read each SKILL.md" in compatible and "skill_library_load" in compatible
+    assert "Do not call" not in compatible
+    only = common.skill_note("library-only", workspace, has_task_skills=False)
+    assert "Read each SKILL.md" not in only
+    assert "skill_library_find" in only and "Do not call" not in only
+    none = common.skill_note("none", workspace, has_task_skills=False)
+    assert "Read each SKILL.md" not in none
+    assert "Do not call" in none
+
+
+def test_prepare_copies_task_skills_only_when_the_mode_includes_them(tmp_path: Path):
+    replica = tmp_path / "replica"
+    _write(replica / "environment" / "skills" / "pid" / "SKILL.md", "pid procedure\n")
+    _write(replica / "environment" / "sensor_data.csv", "t\n")
+    _write(replica / "task.md", "Implement it under /root.\n")
+    for mode, present in (
+        ("task", True),
+        ("library", True),
+        ("library-compatible", True),
+        ("library-only", False),
+        ("none", False),
+    ):
+        workspace = tmp_path / mode
+        prompt, error = skillsbench.prepare(replica, workspace, mode)
+        assert error == ""
+        assert (workspace / "sensor_data.csv").is_file()
+        assert (workspace / "skills" / "pid" / "SKILL.md").is_file() is present
+        assert ("Read each SKILL.md" in prompt) is present
+
+
+def test_science_domain_knowledge_follows_the_benchmark_source(tmp_path: Path):
+    replica = tmp_path / "replica"
+    _write(replica / "task.json", json.dumps({
+        "gold_program_name": "run.py",
+        "task_inst": "fit the curve",
+        "domain_knowledge": "use a PID loop",
+        "dataset_folder_tree": "",
+        "dataset_preview": "",
+        "output_fname": "out.csv",
+    }))
+    for mode, present in (("library", True), ("library-only", False), ("task", True), ("none", False)):
+        prompt, error = scienceagentbench.prepare(replica, tmp_path / mode, mode)
+        assert error == ""
+        assert ("use a PID loop" in prompt) is present
+
+
+def test_ensure_hermes_skills_syncs_into_the_experiment_home(tmp_path: Path, monkeypatch):
+    import tools.skills_sync as sync
+
+    seen = {}
+
+    def fake_sync(quiet=False):
+        seen["home"] = os.environ["HERMES_HOME"]
+        seen["quiet"] = quiet
+        return {}
+
+    monkeypatch.setattr(sync, "sync_skills", fake_sync)
+    home = tmp_path / "exp" / ".hermes"
+    home.mkdir(parents=True)
+    monkeypatch.setenv("HERMES_HOME", str(tmp_path / "source"))
+    common.ensure_hermes_skills(home)
+    assert seen == {"home": str(home), "quiet": True}
+    assert os.environ["HERMES_HOME"] == str(tmp_path / "source")
+
+
+def test_run_seeds_hermes_skills_only_for_modes_that_include_them(tmp_path: Path, monkeypatch):
+    monkeypatch.setattr(common, "benchmark_root", lambda: tmp_path / "benchmark")
+    seeded = []
+    monkeypatch.setattr(common, "ensure_hermes_skills", lambda home: seeded.append(home))
+
+    def fake_worker(**kwargs):
+        Path(kwargs["usage"]).write_text(
+            json.dumps({"session_id": "s", "input_tokens": 1, "output_tokens": 1, "total_tokens": 2}),
+            encoding="utf-8",
+        )
+        return 0, "", ""
+
+    monkeypatch.setattr(common, "invoke_worker", fake_worker)
+
+    def list_tasks(_root, _split=None):
+        return [{"id": "t"}], ""
+
+    def replicate(_root, _task_id, dest: Path):
+        dest.mkdir(parents=True, exist_ok=True)
+
+    def prepare(_replica, workspace: Path, _skill_mode):
+        workspace.mkdir(parents=True, exist_ok=True)
+        return "do the task", ""
+
+    def grade(_replica, _workspace, _task_dir):
+        return [{"id": "c", "passed": True, "detail": "", "graded": True}]
+
+    spec = common.Spec(
+        "skillsbench", "skillsbench", "https://example.invalid/bench.git",
+        list_tasks, replicate, prepare, grade,
+    )
+    source = tmp_path / "hermes"
+    _write(source / "config.yaml", "model: m\n")
+    argv = ["run", "--run", "seed", "--turns", "1", "--skill-mode", "library", "--hermes-home", str(source)]
+    assert common.cli(spec, argv) == 0
+    assert seeded == []
+    argv[argv.index("library")] = "task"
+    argv[argv.index("seed")] = "seed-task"
+    assert common.cli(spec, argv) == 0
+    assert len(seeded) == 1
+    assert seeded[0].name == ".hermes"
+    assert seeded[0].parent.name == "seed-task"

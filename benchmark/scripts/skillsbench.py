@@ -37,7 +37,7 @@ def prepare(replica: Path, workspace: Path, skill_mode: str) -> tuple[str, str]:
     task_md = replica / "task.md"
     if not task_md.is_file():
         return "", f"missing {task_md}"
-    include = skill_mode == "task"
+    include = common.skill_sources(skill_mode).benchmark
     common.copy_inputs(replica / "environment", workspace, include_skills=include)
     prompt = common.relocate(common.instruction_body(task_md.read_text(encoding="utf-8")), "/root", workspace)
     prompt = prompt.rstrip() + common.layout_note(workspace)

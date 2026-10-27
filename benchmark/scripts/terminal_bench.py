@@ -37,10 +37,12 @@ def prepare(replica: Path, workspace: Path, skill_mode: str) -> tuple[str, str]:
     instruction = replica / "instruction.md"
     if not instruction.is_file():
         return "", f"missing {instruction}"
-    common.copy_inputs(replica / "environment", workspace, include_skills=False)
+    include = common.skill_sources(skill_mode).benchmark
+    common.copy_inputs(replica / "environment", workspace, include_skills=include)
     prompt = common.relocate(instruction.read_text(encoding="utf-8").strip(), "/app", workspace)
     prompt = prompt.rstrip() + common.layout_note(workspace)
-    return prompt.rstrip() + common.skill_note(skill_mode, workspace, has_task_skills=False), ""
+    has_skills = include and (replica / "environment" / "skills").is_dir()
+    return prompt.rstrip() + common.skill_note(skill_mode, workspace, has_task_skills=has_skills), ""
 
 
 def grade(replica: Path, workspace: Path, task_dir: Path) -> list[dict]:

@@ -65,7 +65,7 @@ python benchmark/scripts/skillsbench.py run --run "$RUN" --start 0 --end 4 --tur
 | `--task ID` | One id, or a comma-separated list, kept only when it also falls in the index range. |
 | `--limit N` | After the index range, keep at most N tasks. |
 | `--turns 1,2,4,8` | On `run`, conversation-turn budgets. A turn is a user message or an assistant tool-call message. The agent is graded after each invocation and stops once the conversation reaches the largest budget or the verifier accepts the workspace. Default `1,2,4,8`. On `summarize` and `regrade`, the k values to report from those stored grades. |
-| `--skill-mode library\|task\|none` | Default `library`. |
+| `--skill-mode MODE` | `task`, `library` (default), `library-compatible`, `library-only`, or `none`. See the skill-mode table below. |
 | `--model ID` | Model id, such as `Qwen/Qwen3.6-27B`. With `--provider` and no model, that provider's `default_model` is used. |
 | `--provider NAME` | A name under `providers:` in the replicated profile, such as `qwen-local` or `qwen-31`. A model without this flag keeps `model.provider` from the profile. |
 | `--timeout SECONDS` | Wall-clock limit for one task, across its conversation turns. |
@@ -78,11 +78,15 @@ python benchmark/scripts/skillsbench.py run --run "$RUN" --start 0 --end 4 --tur
 
 `--model` and `--provider` are stored in `run.json`, each task's `result.json`, and the summary. Omit both and the agent uses `model.default` and `model.provider` from the copied profile.
 
-| Skill mode | What the agent gets |
-|---|---|
-| `library` | Task statement and inputs. The task prompt appends SkillLib's `task_instruction()`, which tells the agent to call `skill_library_find` and `skill_library_load` (at most three). |
-| `task` | SkillsBench `environment/skills/` is copied in. ScienceAgentBench `domain_knowledge` is included. The SkillLib tools are off. |
-| `none` | Statement and workspace only. The SkillLib tools are off. |
+| Skill mode | Hermes skills | Task skills | SkillLib |
+|---|---|---|---|
+| `task` | Synced into the experiment profile. `skills_list`, `skill_view`, and `skill_manage` stay on. | Copied into the workspace. SkillsBench uses `environment/skills/`. ScienceAgentBench includes `domain_knowledge`. The prompt says to read each `SKILL.md`. | Off. |
+| `library` | Off. The `skills` toolset is removed. | Same task skills as `task`. | On. The prompt also appends SkillLib's `task_instruction()`. |
+| `library-compatible` | On, as in `task`. | On, as in `task`. | On, as in `library`. |
+| `library-only` | Off. | Not copied, and `domain_knowledge` is omitted. | On. |
+| `none` | Off. | Off. | Off. |
+
+Hermes skills are the bundled skills from this checkout. The runner syncs them into the experiment's `.hermes/skills/` when the mode includes them. It does not copy the source profile's `skills/` directory. SkillLib reads `skill-lib/skilllib.json` from the checkout, which is shared by every experiment.
 
 ## Metrics
 

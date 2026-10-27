@@ -38,6 +38,7 @@ import json
 import os
 import re
 import shutil
+from dataclasses import dataclass
 import statistics
 import subprocess
 import sys
@@ -99,22 +100,86 @@ def instruction_body(text: str) -> str:
     return text.strip()
 
 
+@dataclass(frozen=True)
+class SkillSources:
+    """Which skill sources one ``--skill-mode`` offers the agent.
+
+    ``hermes`` is the agent's own bundled skills (``skills_list``, ``skill_view``,
+    ``skill_manage``). ``benchmark`` is the task's attached skills.
+    ``library`` is SkillLib.
+    """
+
+    hermes: bool
+    benchmark: bool
+    library: bool
+
+
+_SKILL_SOURCES = {
+    "task": SkillSources(hermes=True, benchmark=True, library=False),
+    "library": SkillSources(hermes=False, benchmark=True, library=True),
+    "library-compatible": SkillSources(hermes=True, benchmark=True, library=True),
+    "library-only": SkillSources(hermes=False, benchmark=False, library=True),
+    "none": SkillSources(hermes=False, benchmark=False, library=False),
+}
+SKILL_MODES = tuple(_SKILL_SOURCES)
+
+
+def skill_sources(mode: str) -> SkillSources:
+    try:
+        return _SKILL_SOURCES[mode]
+    except KeyError:
+        raise SystemExit(f"unknown --skill-mode {mode!r}") from None
+
+
+def disabled_toolsets(mode: str) -> list[str]:
+    """Toolsets to subtract so a mode cannot call the sources it does not offer."""
+    sources = skill_sources(mode)
+    disabled = []
+    if not sources.hermes:
+        disabled.append("skills")
+    if not sources.library:
+        disabled.append("skill_library")
+    return disabled
+
+
+def ensure_hermes_skills(home: Path) -> None:
+    """Copy this checkout's bundled skills into the experiment profile.
+
+    The runner does not copy the source profile's ``skills/`` directory.
+    Syncing here is what makes Hermes' own skills present for modes that
+    include them, and it writes only under this experiment's ``.hermes``.
+    """
+    previous = os.environ.get("HERMES_HOME")
+    os.environ["HERMES_HOME"] = str(home)
+    try:
+        from tools.skills_sync import sync_skills
+        sync_skills(quiet=True)
+    finally:
+        if previous is None:
+            os.environ.pop("HERMES_HOME", None)
+        else:
+            os.environ["HERMES_HOME"] = previous
+
+
 def skill_note(mode: str, workspace: Path, *, has_task_skills: bool) -> str:
     from agent.skill_library import task_instruction, tool_names
-    names = ", ".join(tool_names())
-    if mode == "library":
-        text = task_instruction()
-        return f"\n\n{text}" if text else ""
-    if mode == "task" and has_task_skills:
-        return (
-            f"\n\nThis task ships skills under {workspace / 'skills'}. "
-            "Read each SKILL.md and follow those procedures. "
-            f"Do not call {names}."
+    sources = skill_sources(mode)
+    parts: list[str] = []
+    if sources.benchmark and has_task_skills:
+        parts.append(
+            f"This task ships skills under {workspace / 'skills'}. "
+            "Read each SKILL.md and follow those procedures."
         )
-    return (
-        "\n\nSolve this from the task statement and the files in the workspace. "
-        f"Do not call {names}."
-    )
+    if sources.library:
+        text = task_instruction()
+        if text:
+            parts.append(text)
+    else:
+        ban = f"Do not call {', '.join(tool_names())}."
+        if not (sources.benchmark and has_task_skills):
+            ban = "Solve this from the task statement and the files in the workspace. " + ban
+        parts.append(ban)
+    return "\n\n" + "\n\n".join(parts) if parts else ""
 
 
 def layout_note(workspace: Path) -> str:
@@ -987,6 +1052,22 @@ def grade_with_pytest(test_file: Path, workspace: Path, mounts: list[tuple[str, 
             text = relocate(text, mount, dest)
         copied = tmp / test_file.name
         copied.write_text(text, encoding="utf-8")
+        # A verifier may consist of several sibling modules: the test file
+        # imports helpers that live next to it (in the task's Docker image
+        # the whole verifier dir is present and test.sh runs it in place).
+        # Copy the siblings, with the same mount relocations applied, so the
+        # relocated test can import them from its new location.
+        for sibling in sorted(test_file.parent.iterdir()):
+            if not sibling.is_file() or sibling.name == test_file.name:
+                continue
+            try:
+                sib_text = sibling.read_text(encoding="utf-8")
+            except (UnicodeDecodeError, OSError):
+                shutil.copy2(sibling, tmp / sibling.name)
+                continue
+            for mount, dest in mounts:
+                sib_text = relocate(sib_text, mount, dest)
+            (tmp / sibling.name).write_text(sib_text, encoding="utf-8")
         report = tmp / "junit.xml"
         command = pytest_command(copied, report, tmp)
         if not command:
@@ -1195,7 +1276,7 @@ def forget_task_trajectory(path: Path, task_id: str) -> None:
     path.write_text("".join(line + "\n" for line in kept), encoding="utf-8")
 
 
-def invoke_worker(*, workspace, prompt, usage, hermes_home, resume, model, provider, disable_skill_library, timeout):
+def invoke_worker(*, workspace, prompt, usage, hermes_home, resume, model, provider, skill_mode, timeout):
     prompt_path = Path(usage).parent / "prompt.txt"
     prompt_path.write_text(prompt, encoding="utf-8")
     cmd = [
@@ -1211,8 +1292,7 @@ def invoke_worker(*, workspace, prompt, usage, hermes_home, resume, model, provi
         cmd.extend(["--model", model])
     if provider:
         cmd.extend(["--provider", provider])
-    if disable_skill_library:
-        cmd.append("--disable-skill-library")
+    cmd.extend(["--skill-mode", skill_mode])
     env = os.environ.copy()
     env["HERMES_HOME"] = str(hermes_home)
     try:
@@ -1231,7 +1311,7 @@ def _append(path: Path, text: str) -> None:
         handle.write(text)
 
 
-def _run_task_turns(spec, record, agent_dir, replica, workspace, prompt, home, *, trajectory_path, task_id, disable_skill_library, turns_max, model, provider, timeout, started, deadline, session_id):
+def _run_task_turns(spec, record, agent_dir, replica, workspace, prompt, home, *, trajectory_path, task_id, skill_mode, turns_max, model, provider, timeout, started, deadline, session_id):
     forget_task_trajectory(trajectory_path, task_id)
     runner_turn = 0
     while runner_turn < turns_max:
@@ -1257,7 +1337,7 @@ def _run_task_turns(spec, record, agent_dir, replica, workspace, prompt, home, *
             resume=session_id,
             model=model,
             provider=provider,
-            disable_skill_library=disable_skill_library,
+            skill_mode=skill_mode,
             timeout=remaining,
         )
         _append(agent_dir / "agent.stdout", f"\n--- runner turn {runner_turn} ---\n{stdout}")
@@ -1361,7 +1441,7 @@ def run_task(spec: Spec, run_dir: Path, task: dict, *, skill_mode: str, turns: l
         return _run_task_turns(
             spec, record, agent_dir, replica, workspace, prompt, home,
             trajectory_path=trajectory_path, task_id=task_id,
-            disable_skill_library=skill_mode != "library", turns_max=max_k, model=model, provider=provider,
+            skill_mode=skill_mode, turns_max=max_k, model=model, provider=provider,
             timeout=timeout, started=started, deadline=deadline, session_id=None,
         )
     finally:
@@ -1525,6 +1605,8 @@ def cmd_run(args, spec: Spec) -> int:
     meta["model"] = chosen_model
     meta["provider"] = chosen_provider
     (run_dir / "run.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+    if skill_sources(args.skill_mode).hermes:
+        ensure_hermes_skills(run_dir / ".hermes")
     print(f"model: {chosen_model or '(profile default)'}  provider: {chosen_provider or '(profile default)'}")
     print(f"workspace: {run_dir}")
     pending_ids = {
@@ -1601,7 +1683,18 @@ def _add_selection(parser: argparse.ArgumentParser, spec: Spec, *, running: bool
     parser.add_argument("--run", required=True, help="Experiment name. One name is one shared Hermes profile and task tree.")
     _add_range(parser)
     if running:
-        parser.add_argument("--skill-mode", choices=("library", "task", "none"), default="library")
+        parser.add_argument(
+            "--skill-mode",
+            choices=SKILL_MODES,
+            default="library",
+            help=(
+                "task: Hermes skills and this task's skills. "
+                "library: this task's skills and SkillLib. "
+                "library-compatible: Hermes skills, this task's skills, and SkillLib. "
+                "library-only: SkillLib. "
+                "none: none of those. Default: library."
+            ),
+        )
         parser.add_argument(
             "--turns",
             default="1,2,4,8",
@@ -1679,7 +1772,7 @@ def worker(argv: list[str]) -> int:
     parser.add_argument("--resume", default="")
     parser.add_argument("--model", default="")
     parser.add_argument("--provider", default="")
-    parser.add_argument("--disable-skill-library", action="store_true")
+    parser.add_argument("--skill-mode", choices=SKILL_MODES, default="library")
     args = parser.parse_args(argv)
     os.environ["HERMES_HOME"] = args.hermes_home
     os.chdir(args.workspace)
@@ -1687,7 +1780,7 @@ def worker(argv: list[str]) -> int:
     from hermes_cli.oneshot import run_oneshot
 
     prompt = Path(args.prompt).read_text(encoding="utf-8")
-    disabled = ["skill_library"] if args.disable_skill_library else None
+    disabled = disabled_toolsets(args.skill_mode)
     return run_oneshot(
         prompt,
         model=args.model or None,
