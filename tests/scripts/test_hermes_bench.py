@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -11,6 +13,7 @@ SCRIPTS = Path(__file__).resolve().parents[2] / "benchmark" / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 import common
+import jail
 import paperbench
 import scienceagentbench
 import skillsbench
@@ -160,8 +163,13 @@ def test_conversation_stops_on_the_benchmark_verifier(tmp_path: Path):
     assert common.verifier_finished(tmp_path, tmp_path, passed)
     assert not common.verifier_finished(tmp_path, tmp_path, failed)
     assert not common.verifier_finished(tmp_path, tmp_path, unjudged)
-    assert "test_ok" in common.followup_prompt(failed)
-    assert "mass_report.json" in common.followup_prompt(failed)
+    followup = common.followup_prompt(failed)
+    assert "test_ok" not in followup
+    assert "mass_report.json" not in followup
+    assert "not accepted" in followup
+    assert "task statement is the only spec" in followup
+    assert "stop without changing the design" in followup
+    assert "change only that part" in followup
     workspace = tmp_path / "workspace"
     assert not paperbench.finished(tmp_path, workspace, unjudged)
     readme = workspace / "submission" / "README.md"
@@ -685,3 +693,67 @@ def test_run_seeds_hermes_skills_only_for_modes_that_include_them(tmp_path: Path
     assert len(seeded) == 1
     assert seeded[0].name == ".hermes"
     assert seeded[0].parent.name == "seed-task"
+
+
+def test_grader_paths_cover_verifier_oracle_and_rubric(tmp_path: Path):
+    bench = tmp_path / "benchmark"
+    _write(bench / "skillsbench" / "tasks" / "demo" / "verifier" / "test_outputs.py", "SECRET\n")
+    _write(bench / "skillsbench" / "tasks" / "demo" / "oracle" / "solve.sh", "ORACLE\n")
+    _write(bench / "skillsbench" / "tasks" / "demo" / "environment" / "input.txt", "data\n")
+    _write(bench / "terminal-bench" / "tasks" / "demo" / "tests" / "test_outputs.py", "SECRET\n")
+    _write(bench / "frontier-evals" / "paper" / "rubric.json", "{}\n")
+    _write(bench / "experiments" / "run" / "agent" / "demo" / "workspace" / "answer.txt", "yes\n")
+    directories, rubrics = jail.grader_paths(bench)
+    names = {path.name for path in directories}
+    assert {"verifier", "oracle", "tests"} <= names
+    assert rubrics == [bench / "frontier-evals" / "paper" / "rubric.json"]
+    assert all("workspace" not in path.parts for path in directories)
+
+
+def test_jail_mounts_hide_graders_and_keep_the_workspace(tmp_path: Path):
+    repo = tmp_path / "repo"
+    bench = repo / "benchmark"
+    verifier = bench / "skillsbench" / "tasks" / "demo" / "verifier" / "test_outputs.py"
+    _write(verifier, "SECRET\n")
+    agent = bench / "experiments" / "run" / "agent" / "demo"
+    _write(agent / "workspace" / "answer.txt", "yes\n")
+    home = bench / "experiments" / "run" / ".hermes"
+    home.mkdir(parents=True)
+    blank = tmp_path / "blank"
+    blank.write_text("", encoding="utf-8")
+    args = jail.mount_args(repo=repo, agent_dir=agent, hermes_home=home, blank_file=blank)
+    assert f"{verifier.parent}:ro" in args
+    assert f"{agent}:{agent}" in args
+    assert str(verifier) not in args
+
+
+def test_container_cannot_read_the_adaptive_cruise_verifier():
+    if shutil.which("docker") is None:
+        return
+    repo = Path(__file__).resolve().parents[2]
+    verifier = repo / "benchmark/skillsbench/tasks/adaptive-cruise-control/verifier/test_outputs.py"
+    if not verifier.is_file():
+        return
+    jail.ensure_image()
+    agent = Path("/tmp/bench-jail-test-agent")
+    home = Path("/tmp/bench-jail-test-home")
+    agent.mkdir(parents=True, exist_ok=True)
+    home.mkdir(parents=True, exist_ok=True)
+    blank = agent / "blank"
+    blank.write_text("", encoding="utf-8")
+    script = (
+        "import os,sys\n"
+        f"sys.exit(0 if not os.path.isfile({str(verifier)!r}) else 2)\n"
+    )
+    proc = subprocess.run(
+        [
+            "docker", "run", "--rm", "--network", "host",
+            "--user", f"{os.getuid()}:{os.getgid()}",
+            "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
+            "--entrypoint", sys.executable,
+            *jail.mount_args(repo=repo, agent_dir=agent, hermes_home=home, blank_file=blank),
+            jail.JAIL_IMAGE, "-c", script,
+        ],
+        capture_output=True, text=True, check=False,
+    )
+    assert proc.returncode == 0, proc.stderr

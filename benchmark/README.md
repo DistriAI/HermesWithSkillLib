@@ -30,7 +30,7 @@ git submodule update --init --recursive
 
 ```
 .hermes/                     the run's Hermes profile (config and .env)
-tasks/<task-id>/             copy of that task, including grader files
+tasks/<task-id>/             copy of that task, including grader files the agent cannot read
 agent/<task-id>/workspace/   files that task's agent writes
 agent/<task-id>/result.json  grades, time, and tokens
 agent/<task-id>/turns/<n>/   prompt and usage for the nth time the runner invoked the agent
@@ -40,6 +40,8 @@ summary.txt
 ```
 
 The profile copy includes `config.yaml`, `.env`, and other small profile text files. Session databases from the source profile are not copied. Later tasks in the same run share the sessions this run creates under that one `.hermes`. A different `--run` name gets a different directory.
+
+The worker runs in a container. The container can write that task's `agent/` directory and the run's `.hermes`. It sees the repository read-only, with grader paths covered: directories named `verifier`, `oracle`, `eval_programs`, `gold_programs`, or `scoring_rubrics`, a Terminal-Bench `tests` directory that holds `test_outputs.py`, and PaperBench `rubric.json`. The checkout and other experiments are not a way to open those files.
 
 `trajectory.jsonl` is one file for the whole run. Each line is one JSON object and carries `task` and `turn`. `turn` is the conversation depth: a user message starts a turn, and an assistant message that calls tools starts the next one. Tool results keep the turn of the call they answer. A turn header (`type`, `exit_code`, `session_ids`, `runner_turn`) marks each time the runner invoked the agent and records the depth reached then. Starting a task again removes that task's previous lines and appends the new ones.
 
@@ -90,7 +92,7 @@ Hermes skills are the bundled skills from this checkout. The runner syncs them i
 
 ## Metrics
 
-`--turns` is a comma-separated list of conversation-turn budgets, default `1,2,4,8`. A turn is one user message or one assistant message that calls tools. Tool results belong to that tool-call turn. An assistant reply with no tool call does not open another turn. The first user message is the task prompt. After each time the runner invokes the agent, it grades the workspace and stores that grade at the conversation depth reached. A task that needed several tool-call rounds therefore does not count at success@1. The runner sends another user message only while checks are still failing and the depth is still under the largest budget. That message names the failing checks. The conversation stops when the verifier accepts the workspace.
+`--turns` is a comma-separated list of conversation-turn budgets, default `1,2,4,8`. A turn is one user message or one assistant message that calls tools. Tool results belong to that tool-call turn. An assistant reply with no tool call does not open another turn. The first user message is the task prompt. After each time the runner invokes the agent, it grades the workspace and stores that grade at the conversation depth reached. A task that needed several tool-call rounds therefore does not count at success@1. The runner sends another user message only while checks are still failing and the depth is still under the largest budget. That message says the workspace is not accepted yet and tells the agent to re-check the task statement. If those written checks already pass, the agent is told to stop without changing the design. If a written requirement is still unmet, it is told to change only that part. The message does not name the checks or quote the assertion. The conversation stops when the verifier accepts the workspace, or when the agent stops because its own check of the statement already passes.
 
 | Benchmark | The conversation stops when |
 |---|---|

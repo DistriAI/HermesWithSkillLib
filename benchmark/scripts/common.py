@@ -39,6 +39,8 @@ import os
 import re
 import shutil
 from dataclasses import dataclass
+
+import jail
 import statistics
 import subprocess
 import sys
@@ -49,7 +51,10 @@ from pathlib import Path
 
 CONTINUE_PROMPT = (
     "The benchmark verifier has not accepted the workspace yet. "
-    "Finish the outputs it checks. Keep files you already created."
+    "The task statement is the only spec. "
+    "Re-check each required file and each numeric target in that statement yourself. "
+    "If those checks already pass, stop without changing the design. "
+    "If a written requirement is still unmet, change only that part and keep every file that already meets the statement."
 )
 _SKIP_FILES = {"Dockerfile", "docker-compose.yml", "docker-compose.yaml", ".dockerignore"}
 _LFS_MARK = "version https://git-lfs.github.com/spec/v1"
@@ -995,19 +1000,15 @@ def verifier_finished(_replica: Path, _workspace: Path, cases: list[dict]) -> bo
 
 
 def followup_prompt(cases: list[dict]) -> str:
-    """Tell the agent which verifier checks are still open."""
-    failed = [case for case in cases if case.get("graded") is not False and not case.get("passed")]
-    if not failed:
-        return CONTINUE_PROMPT
-    lines = [
-        "The benchmark verifier ran on the current workspace. These checks failed:",
-    ]
-    for case in failed[:12]:
-        detail = (case.get("detail") or "").strip().replace("\n", " ")
-        suffix = f": {detail[:300]}" if detail else ""
-        lines.append(f"- {case.get('id')}{suffix}")
-    lines.append("Fix those checks. Keep files that already satisfy the verifier.")
-    return "\n".join(lines)
+    """Tell the agent the workspace is not accepted yet.
+
+    Check ids and assertion text stay with the grader. ``cases`` is unused so a
+    later turn cannot quote them. The message also tells the agent to stop when
+    its own check of the task statement already passes, so a hidden failure does
+    not start a new design.
+    """
+    del cases
+    return CONTINUE_PROMPT
 
 
 def uv_executable() -> str | None:
@@ -1295,13 +1296,29 @@ def invoke_worker(*, workspace, prompt, usage, hermes_home, resume, model, provi
     cmd.extend(["--skill-mode", skill_mode])
     env = os.environ.copy()
     env["HERMES_HOME"] = str(hermes_home)
+    agent_dir = Path(usage).parents[2]
+    scratch = Path(tempfile.mkdtemp(prefix="bench-jail-"))
+    env_file = scratch / "env"
+    blank_file = scratch / "blank"
+    blank_file.write_text("", encoding="utf-8")
+    jail.write_env_file(env_file, env)
     try:
+        argv = jail.command(
+            cmd,
+            workspace=Path(workspace),
+            hermes_home=Path(hermes_home),
+            agent_dir=agent_dir,
+            env_file=env_file,
+            blank_file=blank_file,
+        )
         proc = subprocess.run(
-            cmd, cwd=str(workspace), capture_output=True, text=True,
+            argv, cwd=str(workspace), capture_output=True, text=True,
             timeout=timeout, env=env, check=False,
         )
     except subprocess.TimeoutExpired as exc:
         return None, exc.stdout or "", exc.stderr or ""
+    finally:
+        shutil.rmtree(scratch, ignore_errors=True)
     return proc.returncode, proc.stdout or "", proc.stderr or ""
 
 
