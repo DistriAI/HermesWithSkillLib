@@ -15,6 +15,7 @@ _HERMES_CORE_TOOLS = [
     "vision_analyze", "image_generate",
     "skills_list", "skill_view", "skill_manage",
     "skill_library_find", "skill_library_load", "skill_library_visit",
+    "skill_router_find", "skill_router_load",
     "browser_navigate", "browser_snapshot", "browser_click",
     "browser_type", "browser_scroll", "browser_back",
     "browser_press", "browser_get_images",
@@ -110,6 +111,11 @@ TOOLSETS = {
         "Search and load the hierarchical skill-lib catalog (domain, scenario, skill). "
         "Present only when the skill-lib submodule catalog is checked out.",
         ["skill_library_find", "skill_library_load", "skill_library_visit"],
+    ),
+    "skill_router": _ts(
+        "Rank and load skills from the SkillRouter baseline pool. "
+        "Present only when that pool and its Python dependencies are installed.",
+        ["skill_router_find", "skill_router_load"],
     ),
     # web_search belongs to `web`/`search` only. Listing it here too let
     # `disabled_toolsets: [browser]` (headless/Docker deployments) strip

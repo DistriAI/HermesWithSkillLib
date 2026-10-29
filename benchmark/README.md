@@ -41,7 +41,7 @@ summary.txt
 
 The profile copy includes `config.yaml`, `.env`, and other small profile text files. Session databases from the source profile are not copied. Later tasks in the same run share the sessions this run creates under that one `.hermes`. A different `--run` name gets a different directory.
 
-The worker runs in a container. The container can write that task's `agent/` directory and the run's `.hermes`. It sees the repository read-only, with grader paths covered: directories named `verifier`, `oracle`, `eval_programs`, `gold_programs`, or `scoring_rubrics`, a Terminal-Bench `tests` directory that holds `test_outputs.py`, and PaperBench `rubric.json`. The checkout and other experiments are not a way to open those files.
+The worker runs in a container. The container can write that task's `agent/` directory, the run's `.hermes`, and, for a SkillRouter run, `baselines/SkillRouter/outputs` and `baselines/SkillRouter/models`. It sees the repository read-only, with grader paths covered: directories named `verifier`, `oracle`, `eval_programs`, `gold_programs`, or `scoring_rubrics`, a Terminal-Bench `tests` directory that holds `test_outputs.py`, and PaperBench `rubric.json`. The checkout and other experiments are not a way to open those files.
 
 `trajectory.jsonl` is one file for the whole run. Each line is one JSON object and carries `task` and `turn`. `turn` is the conversation depth: a user message starts a turn, and an assistant message that calls tools starts the next one. Tool results keep the turn of the call they answer. A turn header (`type`, `exit_code`, `session_ids`, `runner_turn`) marks each time the runner invoked the agent and records the depth reached then. Starting a task again removes that task's previous lines and appends the new ones.
 
@@ -67,7 +67,7 @@ python benchmark/scripts/skillsbench.py run --run "$RUN" --start 0 --end 4 --tur
 | `--task ID` | One id, or a comma-separated list, kept only when it also falls in the index range. |
 | `--limit N` | After the index range, keep at most N tasks. |
 | `--turns 1,2,4,8` | On `run`, conversation-turn budgets. A turn is a user message or an assistant tool-call message. The agent is graded after each invocation and stops once the conversation reaches the largest budget or the verifier accepts the workspace. Default `1,2,4,8`. On `summarize` and `regrade`, the k values to report from those stored grades. |
-| `--skill-mode MODE` | `task`, `library` (default), `library-compatible`, `library-only`, or `none`. See the skill-mode table below. |
+| `--skill-mode MODE` | `task`, `library` (default), `library-compatible`, `library-only`, `router`, `router-compatible`, `router-only`, or `none`. See the skill-mode table below. |
 | `--model ID` | Model id, such as `Qwen/Qwen3.6-27B`. With `--provider` and no model, that provider's `default_model` is used. |
 | `--provider NAME` | A name under `providers:` in the replicated profile, such as `qwen-local` or `qwen-31`. A model without this flag keeps `model.provider` from the profile. |
 | `--timeout SECONDS` | Wall-clock limit for one task, across its conversation turns. |
@@ -80,15 +80,29 @@ python benchmark/scripts/skillsbench.py run --run "$RUN" --start 0 --end 4 --tur
 
 `--model` and `--provider` are stored in `run.json`, each task's `result.json`, and the summary. Omit both and the agent uses `model.default` and `model.provider` from the copied profile.
 
-| Skill mode | Hermes skills | Task skills | SkillLib |
-|---|---|---|---|
-| `task` | Synced into the experiment profile. `skills_list`, `skill_view`, and `skill_manage` stay on. | Copied into the workspace. SkillsBench uses `environment/skills/`. ScienceAgentBench includes `domain_knowledge`. The prompt says to read each `SKILL.md`. | Off. |
-| `library` | Off. The `skills` toolset is removed. | Same task skills as `task`. | On. The prompt also appends SkillLib's `task_instruction()`. |
-| `library-compatible` | On, as in `task`. | On, as in `task`. | On, as in `library`. |
-| `library-only` | Off. | Not copied, and `domain_knowledge` is omitted. | On. |
-| `none` | Off. | Off. | Off. |
+| Skill mode | Hermes skills | Task skills | SkillLib | SkillRouter |
+|---|---|---|---|---|
+| `task` | Synced into the experiment profile. `skills_list`, `skill_view`, and `skill_manage` stay on. | Copied into the workspace. SkillsBench uses `environment/skills/`. ScienceAgentBench includes `domain_knowledge`. The prompt says to read each `SKILL.md`. | Off. | Off. |
+| `library` | Off. The `skills` toolset is removed. | Same task skills as `task`. | On. The prompt also appends SkillLib's `task_instruction()`. | Off. |
+| `library-compatible` | On, as in `task`. | On, as in `task`. | On, as in `library`. | Off. |
+| `library-only` | Off. | Not copied, and `domain_knowledge` is omitted. | On. | Off. |
+| `router` | Off. | Same task skills as `task`. | Off. | On. The agent calls `skill_router_find` and `skill_router_load`. |
+| `router-compatible` | On, as in `task`. | On, as in `task`. | Off. | On, as in `router`. |
+| `router-only` | Off. | Not copied, and `domain_knowledge` is omitted. | Off. | On. |
+| `none` | Off. | Off. | Off. | Off. |
 
-Hermes skills are the bundled skills from this checkout. The runner syncs them into the experiment's `.hermes/skills/` when the mode includes them. It does not copy the source profile's `skills/` directory. SkillLib reads `skill-lib/skilllib.json` from the checkout, which is shared by every experiment.
+Hermes skills are the bundled skills from this checkout. The runner syncs them into the experiment's `.hermes/skills/` when the mode includes them. It does not copy the source profile's `skills/` directory. SkillLib reads `skill-lib/skilllib.json` from the checkout, which is shared by every experiment. SkillRouter reads the pool under `baselines/SkillRouter/data/eval_core/`. Optional `baselines/skillrouter.json` may set `tier` (`hard` or `easy`), `encoder`, `reranker`, and `device` (`auto`, `cpu`, or `cuda`). The default tier is `hard`.
+
+Preparing SkillRouter is separate from the Hermes lock. `torch` and `transformers` are not installed by `uv sync`. The tools stay hidden until the pool shards exist and those packages import in the same Python that runs the worker.
+
+```bash
+git submodule update --init baselines/SkillRouter
+cd baselines/SkillRouter
+uv pip install --python ../../.venv/bin/python -r requirements.txt huggingface_hub
+HF_ENDPOINT=https://hf-mirror.com bash scripts/download_eval_data.sh
+```
+
+Drop `HF_ENDPOINT` when `huggingface.co` is reachable. The first `skill_router_find` downloads `pipizhao/SkillRouter-Embedding-0.6B` and `pipizhao/SkillRouter-Reranker-0.6B` into `baselines/SkillRouter/models` and writes the pool embedding cache to `baselines/SkillRouter/outputs/`. Those weights, shards, and the cache are not git-indexed. The vLLM server on this machine already fills the GPU; set `"device": "cpu"` in `baselines/skillrouter.json` when the two processes would share that GPU.
 
 ## Metrics
 
@@ -110,8 +124,57 @@ Hermes skills are the bundled skills from this checkout. The runner syncs them i
 | `execution_time_sec` | Mean and sample standard deviation of wall time, for tasks that passed on the last turn, and for every completed task. |
 | `input_tokens`, `output_tokens`, `total_tokens` | The same two groups. Counts add the main request and auxiliary calls. |
 | `skill_library` | Counts of `skill_library_find`, `skill_library_load`, and `skill_library_visit`, the cards offered, the skill ids loaded, visits, gaps, and errors. `final_macro` is also split by calling behavior: any call, no call, a load, or find without a load. |
+| `skill_retrieval` | Two retrieval scores on the first find result. The SkillRouter score uses `core_gt_ids` from `baselines/SkillRouter/data/eval_core/relevance.json` when the task is listed there and is not `generic_only`; otherwise the gold ids are the task's `environment/skills` directory names. A retrieved id matches when the strings are equal or their skill-name component is equal. `pipeline` is that score on the reranked list (`Hit@1`, `Precision@3`, `MRR@10`, `Recall@10`, `Recall@20`, `Recall@50`, `FullCoverage@3`, `FullCoverage@5`, `FullCoverage@10`, `nDCG@1`, `nDCG@3`, `nDCG@10`). `candidates` is the same score on the cosine top 50. `single` and `multi` split by how many of those gold skills the task has. `catalog` is the SkillLib score: a `skill_library_find` id hits a task skill only when `benchmark/scripts/data/skillsbench_skilllib_map.json` lists it. Metrics on the full skill set count an unmapped skill as a miss. `FullCoverageCovered@k` is 1 when every skill the map links for that task is inside the top k, and is 1 when the map links none. `on_covered_gold` repeats the SkillRouter metrics using only the linked skills, averaged over tasks that have at least one. |
 
 One completed task has standard deviation 0. Interrupted tasks are left out of the rates until a rerun finishes them.
+
+### Skill retrieval map
+
+SkillsBench is the retrieval benchmark: each task ships the skills a correct retrieval should return. SkillLib cards are not the same files. `benchmark/scripts/data/skillsbench_skilllib_map.json` records, for every `tasks/<id>/environment/skills/<name>/SKILL.md`, the SkillLib card ids that count as that skill, and which tasks ship which skills.
+
+A card matches when its cached file has the same SHA-256 as the task skill, or, failing that, when the card has the same skill name and either contains the task skill's tokens (containment at least 0.95) or shares a token Jaccard of at least 0.75. Same-name cards below both cuts are left unmapped. Their nearest candidate is stored on the skill. The current map covers 229 of 232 task skills. The three left out are `multilingual-video-dubbing/ffmpeg-video-editing`, `sales-pivot-analysis/pdf`, and `sales-pivot-analysis/xlsx`.
+
+`FullCoverage@k` on the catalog score is 1 only when every skill shipped with the task is retrieved. `FullCoverageCovered@k` is 1 when every skill the map links into SkillLib is retrieved. A task whose skills are all absent from SkillLib scores 1 on that variant, because there is no mapped skill left to miss, and it stays out of `on_covered_gold`.
+
+Rebuild the map after the catalog or the SkillsBench tasks change:
+
+```bash
+python benchmark/scripts/skill_map.py
+```
+
+`retrieval_metrics.evaluate_library(task_id, ranked_ids)` scores a ranking with no agent run. The ids have to be catalog card ids or source occurrence ids from the map.
+
+### Skill retrieval baselines
+
+`benchmark/scripts/retrieval_baselines.py` ranks the SkillLib catalog for every SkillsBench task and scores the ranking with the map. The query is the task statement in `task.md`. BM25 and the dense encoders score `name | description | body`, with the description capped at 300 characters and the body at 2,500, the same field caps as SkillRouter. The SkillLib method is the finder that ranks routing cards. A reranker reorders the first 20 candidates and leaves the rest of the list in retrieval order, so Hit@1 reflects the reranker and Recall@50 still sees the encoder's list.
+
+The method names are the open systems in SkillRouter's retrieval grid and retrieve-and-rerank table: `bm25`, `bge-large`, `e5-large`, `gte-large`, `qwen3-emb-0.6b`, `qwen3-emb-8b`, `nv-embed-v2`, `skillrouter`, `qwen3-0.6b-rerank`, and `skillrouter-rerank`. `skilllib` is this catalog's own ranker. `text-embedding-3-large` and `gemini-embedding-001` are the paper's API baselines; this script does not call them. `--model` and `--reranker` accept another Hugging Face id.
+
+`--start` and `--end` are inclusive 0-based indexes into the sorted task ids. Omit both to score all 87 tasks. The retriever still searches the full catalog. Results go to `benchmark/experiments/retrieval/<method>.json`, which stays untracked. The first dense run writes an embedding cache beside that file and reuses it when the catalog text is unchanged.
+
+```bash
+python benchmark/scripts/retrieval_baselines.py --method skilllib
+python benchmark/scripts/retrieval_baselines.py --method bm25
+python benchmark/scripts/retrieval_baselines.py --method bm25 --start 0 --end 0
+
+# The GPU is often already serving the agent. These download weights on first use.
+HF_HUB_OFFLINE=0 TRANSFORMERS_OFFLINE=0 \
+  python benchmark/scripts/retrieval_baselines.py --method bge-large --device cpu
+HF_HUB_OFFLINE=0 TRANSFORMERS_OFFLINE=0 \
+  python benchmark/scripts/retrieval_baselines.py --method e5-large --device cpu
+HF_HUB_OFFLINE=0 TRANSFORMERS_OFFLINE=0 \
+  python benchmark/scripts/retrieval_baselines.py --method gte-large --device cpu
+HF_HUB_OFFLINE=0 TRANSFORMERS_OFFLINE=0 \
+  python benchmark/scripts/retrieval_baselines.py --method qwen3-emb-0.6b --device cpu
+HF_HUB_OFFLINE=0 TRANSFORMERS_OFFLINE=0 \
+  python benchmark/scripts/retrieval_baselines.py --method skillrouter --device cpu
+HF_HUB_OFFLINE=0 TRANSFORMERS_OFFLINE=0 \
+  python benchmark/scripts/retrieval_baselines.py --method skillrouter-rerank --device cpu
+HF_HUB_OFFLINE=0 TRANSFORMERS_OFFLINE=0 \
+  python benchmark/scripts/retrieval_baselines.py --method qwen3-0.6b-rerank --device cpu
+```
+
+`qwen3-emb-8b` and `nv-embed-v2` use the same command with `--device cuda` when a GPU is free. A local checkpoint replaces the preset with `--model /path/to/encoder`. `--reranker Qwen/Qwen3-Reranker-0.6B` reorders the top 20 of whichever method is selected.
 
 Re-running the same `--run` command skips a task whose `result.json` status is `complete`. Status `running`, `timeout`, or `error` starts that task over. `--fresh` runs completed tasks again inside the same experiment.
 

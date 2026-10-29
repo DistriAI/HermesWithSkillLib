@@ -1280,7 +1280,8 @@ def build_skills_system_prompt(
     # resident_prompt(), constant for the conversation, and only when this
     # session's tool list offers the skill_library tools.
     from agent.skill_library import library_prompt
-    extra = library_prompt(available_tools)
+    from agent.skill_router import router_prompt
+    extra = "\n\n".join(text for text in (library_prompt(available_tools), router_prompt(available_tools)) if text)
     if not extra:
         return index
     if not index:

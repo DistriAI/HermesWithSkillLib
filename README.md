@@ -232,7 +232,7 @@ mkdir -p "$HERMES_HOME"
 
 Put API keys in `$HERMES_HOME/.env` and settings in `$HERMES_HOME/config.yaml`. `hermes setup` and `hermes chat` then read this profile. Each benchmark experiment copies that profile into its own directory and keeps its sessions there.
 
-SkillLib and the four benchmark trees are submodules. After the first clone, check them out at the commits this project records, and run the same command again when a later pull moves one:
+SkillLib, SkillRouter (`baselines/SkillRouter`), and the four benchmark trees are submodules. After the first clone, check them out at the commits this project records, and run the same command again when a later pull moves one:
 
 ```bash
 git submodule update --init --recursive

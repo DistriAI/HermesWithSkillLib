@@ -111,12 +111,13 @@ class SkillSources:
 
     ``hermes`` is the agent's own bundled skills (``skills_list``, ``skill_view``,
     ``skill_manage``). ``benchmark`` is the task's attached skills.
-    ``library`` is SkillLib.
+    ``library`` is SkillLib. ``router`` is the SkillRouter baseline.
     """
 
     hermes: bool
     benchmark: bool
     library: bool
+    router: bool = False
 
 
 _SKILL_SOURCES = {
@@ -124,6 +125,9 @@ _SKILL_SOURCES = {
     "library": SkillSources(hermes=False, benchmark=True, library=True),
     "library-compatible": SkillSources(hermes=True, benchmark=True, library=True),
     "library-only": SkillSources(hermes=False, benchmark=False, library=True),
+    "router": SkillSources(hermes=False, benchmark=True, library=False, router=True),
+    "router-compatible": SkillSources(hermes=True, benchmark=True, library=False, router=True),
+    "router-only": SkillSources(hermes=False, benchmark=False, library=False, router=True),
     "none": SkillSources(hermes=False, benchmark=False, library=False),
 }
 SKILL_MODES = tuple(_SKILL_SOURCES)
@@ -144,6 +148,8 @@ def disabled_toolsets(mode: str) -> list[str]:
         disabled.append("skills")
     if not sources.library:
         disabled.append("skill_library")
+    if not sources.router:
+        disabled.append("skill_router")
     return disabled
 
 
@@ -168,6 +174,7 @@ def ensure_hermes_skills(home: Path) -> None:
 
 def skill_note(mode: str, workspace: Path, *, has_task_skills: bool) -> str:
     from agent.skill_library import task_instruction, tool_names
+    from agent.skill_router import router_available, task_instruction as router_instruction, tool_names as router_names
     sources = skill_sources(mode)
     parts: list[str] = []
     if sources.benchmark and has_task_skills:
@@ -181,9 +188,19 @@ def skill_note(mode: str, workspace: Path, *, has_task_skills: bool) -> str:
             parts.append(text)
     else:
         ban = f"Do not call {', '.join(tool_names())}."
-        if not (sources.benchmark and has_task_skills):
+        if not (sources.benchmark and has_task_skills) and not sources.router:
             ban = "Solve this from the task statement and the files in the workspace. " + ban
         parts.append(ban)
+    if sources.router and router_available():
+        parts.append(router_instruction())
+    elif sources.router:
+        parts.append(
+            "SkillRouter's skill pool is not available in this process, so "
+            "skill_router_find and skill_router_load are not offered. "
+            "Solve from the task statement and the files in the workspace."
+        )
+    else:
+        parts.append(f"Do not call {', '.join(router_names())}.")
     return "\n\n" + "\n\n".join(parts) if parts else ""
 
 
@@ -632,6 +649,11 @@ def observe_skill_library(usage: dict, lines: list[dict]) -> dict:
     return usage
 
 
+def _retrieval_summary(records: list[dict]) -> dict:
+    import retrieval_metrics
+    return retrieval_metrics.summary(records)
+
+
 def skill_library_summary(records: list[dict]) -> dict:
     """Calling behavior, and final success split by whether those calls happened.
 
@@ -752,6 +774,7 @@ def summarize_records(records: list[dict], turns: list[int], *, benchmark: str, 
         "output_tokens": cost_block("output_tokens"),
         "total_tokens": cost_block("total_tokens"),
         "skill_library": skill_library_summary(complete),
+        "skill_retrieval": _retrieval_summary(complete),
         "definitions": {
             "conversation_turn": "One user message, or one assistant message that calls tools, inside the task conversation. Tool results belong to the tool-call turn they answer.",
             "macro_success_at_k": "Fraction of completed tasks that passed every test case on any stored conversation turn at or before k.",
@@ -765,6 +788,16 @@ def summarize_records(records: list[dict], turns: list[int], *, benchmark: str, 
                 "involved means at least one of those calls. loaded means skill_library_load was called. "
                 "find_only means find was called and load was not. "
                 "final_macro_success splits the last-turn pass rate by that calling behavior."
+            ),
+            "skill_retrieval": (
+                "SkillRouter's retrieval metrics on the first find result in the trajectory, "
+                "macro-averaged over tasks that have a gold skill set and a ranking. "
+                "Hit@1, MRR@10, Recall@10/20/50, FullCoverage@3/5/10, Precision@3, and nDCG@1/3/10. "
+                "pipeline is the reranked list. candidates is the cosine list when the tool returned one. "
+                "single and multi split tasks by how many gold skills they have. "
+                "catalog is the same metrics for a skill_library_find ranking scored through the "
+                "SkillsBench–SkillLib map. FullCoverageCovered@k is 1 when every mapped skill is inside "
+                "the top k. on_covered_gold repeats the metrics on tasks the map links at least one skill for."
             ),
         },
     }
@@ -832,6 +865,39 @@ def format_report(summary: dict, incomplete: list[str]) -> str:
         loaded_names = library.get("skills_loaded") or []
         if loaded_names:
             lines.append("skill_library loaded_ids=" + ",".join(loaded_names))
+    retrieval = summary.get("skill_retrieval") or {}
+    pipeline = (retrieval.get("pipeline") or {}).get("all") or {}
+    if retrieval:
+        lines.append(
+            "skill_retrieval "
+            f"ranked={retrieval.get('n_ranked', 0)}/{retrieval.get('n_with_gold', 0)} "
+            f"Hit@1={_fmt_rate(pipeline.get('Hit@1'))} "
+            f"MRR@10={_fmt_rate(pipeline.get('MRR@10'))} "
+            f"Recall@10={_fmt_rate(pipeline.get('Recall@10'))} "
+            f"Recall@20={_fmt_rate(pipeline.get('Recall@20'))} "
+            f"Recall@50={_fmt_rate(pipeline.get('Recall@50'))} "
+            f"FullCoverage@5={_fmt_rate(pipeline.get('FullCoverage@5'))} "
+            f"FullCoverage@10={_fmt_rate(pipeline.get('FullCoverage@10'))} "
+            f"nDCG@10={_fmt_rate(pipeline.get('nDCG@10'))}"
+        )
+        catalog = retrieval.get("catalog") or {}
+        catalog_pipeline = catalog.get("pipeline") or {}
+        covered = catalog.get("on_covered_gold") or {}
+        if catalog.get("n_ranked"):
+            lines.append(
+                "skill_retrieval catalog "
+                f"ranked={catalog.get('n_ranked', 0)} "
+                f"coverage={_fmt_rate(catalog.get('coverage'))} "
+                f"Hit@1={_fmt_rate(catalog_pipeline.get('Hit@1'))} "
+                f"Recall@10={_fmt_rate(catalog_pipeline.get('Recall@10'))} "
+                f"FullCoverage@10={_fmt_rate(catalog_pipeline.get('FullCoverage@10'))} "
+                f"FullCoverageCovered@5={_fmt_rate(catalog_pipeline.get('FullCoverageCovered@5'))} "
+                f"FullCoverageCovered@10={_fmt_rate(catalog_pipeline.get('FullCoverageCovered@10'))} "
+                f"on_covered n={catalog.get('n_with_covered_gold', 0)} "
+                f"Hit@1={_fmt_rate(covered.get('Hit@1'))} "
+                f"Recall@10={_fmt_rate(covered.get('Recall@10'))} "
+                f"FullCoverage@10={_fmt_rate(covered.get('FullCoverage@10'))}"
+            )
     if incomplete:
         lines.extend(["", "incomplete: " + ",".join(incomplete)])
     lines.append("")
@@ -936,6 +1002,8 @@ def write_summary(run_dir: Path, summary_path: Path, report_path: Path, turns: l
     complete, incomplete = load_run_records(run_dir)
     attach_conversation_turns(run_dir, complete)
     attach_skill_library(run_dir, complete)
+    import retrieval_metrics
+    retrieval_metrics.attach(complete, _trajectory_lines_by_task(run_dir))
     summary = summarize_records(complete, turns, benchmark=benchmark, run=run)
     meta = load_json(run_dir / "run.json") or {}
     summary["model"] = meta.get("model")
@@ -1296,6 +1364,12 @@ def invoke_worker(*, workspace, prompt, usage, hermes_home, resume, model, provi
     cmd.extend(["--skill-mode", skill_mode])
     env = os.environ.copy()
     env["HERMES_HOME"] = str(hermes_home)
+    if skill_sources(skill_mode).router:
+        from agent.skill_router import model_cache
+        cache = model_cache()
+        if cache is not None:
+            env["HF_HOME"] = str(cache)
+            env["HF_HUB_CACHE"] = str(cache / "hub")
     agent_dir = Path(usage).parents[2]
     scratch = Path(tempfile.mkdtemp(prefix="bench-jail-"))
     env_file = scratch / "env"
@@ -1371,6 +1445,8 @@ def _run_task_turns(spec, record, agent_dir, replica, workspace, prompt, home, *
         depth = next((int(line["turn"]) for line in transcript if line.get("type") == "turn"), int(record.get("conversation_turns") or 0) + 1)
         record["conversation_turns"] = depth
         observe_skill_library(record.setdefault("skill_library", empty_skill_library_usage()), transcript)
+        import retrieval_metrics
+        retrieval_metrics.observe(record.setdefault("skill_retrieval", retrieval_metrics.gold_block(task_id, replica)), transcript)
         usage = load_json(usage_path) or {}
         incoming, outgoing, total = token_counts(usage)
         record["input_tokens"] += incoming
@@ -1423,6 +1499,7 @@ def run_task(spec: Spec, run_dir: Path, task: dict, *, skill_mode: str, turns: l
     workspace.mkdir(parents=True)
     prompt, error = spec.prepare(replica, workspace, skill_mode)
     (agent_dir / "prompt.txt").write_text((prompt or "") + ("\n" if prompt else ""), encoding="utf-8")
+    import retrieval_metrics
     record = {
         "bench": spec.name,
         "id": task_id,
@@ -1440,6 +1517,7 @@ def run_task(spec: Spec, run_dir: Path, task: dict, *, skill_mode: str, turns: l
         "duration_sec": 0.0,
         "turns_run": 0,
         "skill_library": empty_skill_library_usage(),
+        "skill_retrieval": retrieval_metrics.gold_block(task_id, replica),
     }
     home = run_dir / ".hermes"
     record["hermes_home"] = str(home)
@@ -1709,6 +1787,9 @@ def _add_selection(parser: argparse.ArgumentParser, spec: Spec, *, running: bool
                 "library: this task's skills and SkillLib. "
                 "library-compatible: Hermes skills, this task's skills, and SkillLib. "
                 "library-only: SkillLib. "
+                "router: this task's skills and SkillRouter. "
+                "router-compatible: Hermes skills, this task's skills, and SkillRouter. "
+                "router-only: SkillRouter. "
                 "none: none of those. Default: library."
             ),
         )

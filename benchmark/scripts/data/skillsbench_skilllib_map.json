@@ -1,0 +1,3240 @@
+{
+  "schema_version": 1,
+  "benchmark": "skillsbench",
+  "containment_min": 0.95,
+  "jaccard_min": 0.75,
+  "n_tasks": 87,
+  "n_skills": 232,
+  "n_covered_skills": 229,
+  "coverage": 0.9871,
+  "tasks": {
+    "3d-scan-calc": {
+      "skills": [
+        {
+          "skill": "mesh-analysis",
+          "gold_id": "3d-scan-calc/mesh-analysis",
+          "sha256": "b0c908a5e74b53e73d53105526a57949b90a3e733ea35c14fe8406342b84f7fe",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/3d-scan-calc/environment/skills/mesh-analysis/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "ada-bathroom-plan-repair": {
+      "skills": [
+        {
+          "skill": "ada-plan-view-accessibility",
+          "gold_id": "ada-bathroom-plan-repair/ada-plan-view-accessibility",
+          "sha256": "d6177e0345a6b98f8d6f085a1dc8ccaad6ea4f5f3404387ece958d3c9af6ac83",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/ada-bathroom-plan-repair/environment/skills/ada-plan-view-accessibility/SKILL.md"
+          ]
+        },
+        {
+          "skill": "architectural-dxf-extraction",
+          "gold_id": "ada-bathroom-plan-repair/architectural-dxf-extraction",
+          "sha256": "843682ecc8b8230245fa52e3e1f00f48bec3df2e669516fb7a0ac3ead62ebb98",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/ada-bathroom-plan-repair/environment/skills/architectural-dxf-extraction/SKILL.md"
+          ]
+        },
+        {
+          "skill": "geometric-layout-repair",
+          "gold_id": "ada-bathroom-plan-repair/geometric-layout-repair",
+          "sha256": "9fc46125c19311703f6c752ad2cffd9ad9f9cd2db6983fcb9b76800f8b7d9c8a",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/ada-bathroom-plan-repair/environment/skills/geometric-layout-repair/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "adaptive-cruise-control": {
+      "skills": [
+        {
+          "skill": "csv-processing",
+          "gold_id": "adaptive-cruise-control/csv-processing",
+          "sha256": "bba82e4a401fefe9cd040ff6ba9ccaaed6062876264e358c306089fdb7a13cee",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/adaptive-cruise-control/environment/skills/csv-processing/SKILL.md"
+          ]
+        },
+        {
+          "skill": "pid-controller",
+          "gold_id": "adaptive-cruise-control/pid-controller",
+          "sha256": "d274422849bf5f73b7f643db36f9ebd23e488271ad69f0f62a457b3ee0b2b828",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/adaptive-cruise-control/environment/skills/pid-controller/SKILL.md"
+          ]
+        },
+        {
+          "skill": "simulation-metrics",
+          "gold_id": "adaptive-cruise-control/simulation-metrics",
+          "sha256": "9e145fd19a2c4e7c20cda3343a7156caecb7b7660592c8f655de83d8e814b351",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/adaptive-cruise-control/environment/skills/simulation-metrics/SKILL.md"
+          ]
+        },
+        {
+          "skill": "vehicle-dynamics",
+          "gold_id": "adaptive-cruise-control/vehicle-dynamics",
+          "sha256": "bc320079e421dfea427609d9e369283a8a74c5aa520204300bd70dad1c40f1cb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/adaptive-cruise-control/environment/skills/vehicle-dynamics/SKILL.md"
+          ]
+        },
+        {
+          "skill": "yaml-config",
+          "gold_id": "adaptive-cruise-control/yaml-config",
+          "sha256": "6a53aad718ab75c93dfc00ed0644b06a85a55e516fc7a1ed716ee4889396eff8",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/adaptive-cruise-control/environment/skills/yaml-config/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 5,
+      "n_covered": 5,
+      "coverage": 1.0
+    },
+    "azure-bgp-oscillation-route-leak": {
+      "skills": [
+        {
+          "skill": "azure-bgp",
+          "gold_id": "azure-bgp-oscillation-route-leak/azure-bgp",
+          "sha256": "f66f553092bf7831bf944f4d26690c8e2825b1640c5ce0993bad6f9251d3d669",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/azure-bgp-oscillation-route-leak/environment/skills/azure-bgp/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "bike-rebalance": {
+      "skills": [
+        {
+          "skill": "geospatial-routing-data",
+          "gold_id": "bike-rebalance/geospatial-routing-data",
+          "sha256": "0e278fce8dbfa2f6092826592b7eb0d740472ce5ae97bd2e05bd310933b3bda2",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/bike-rebalance/environment/skills/geospatial-routing-data/SKILL.md"
+          ]
+        },
+        {
+          "skill": "logistics-rules-to-optimization",
+          "gold_id": "bike-rebalance/logistics-rules-to-optimization",
+          "sha256": "d7702a4eb61d1135a89824cd59e33901eb838db4412aaa0972142bcfd0174510",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/bike-rebalance/environment/skills/logistics-rules-to-optimization/SKILL.md"
+          ]
+        },
+        {
+          "skill": "routing-subtour-elimination",
+          "gold_id": "bike-rebalance/routing-subtour-elimination",
+          "sha256": "211306948184411fc1f63aee8c7a59b02673a44f942a7e86cc60ebaa6ab0d12a",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/bike-rebalance/environment/skills/routing-subtour-elimination/SKILL.md"
+          ]
+        },
+        {
+          "skill": "scip-opt",
+          "gold_id": "bike-rebalance/scip-opt",
+          "sha256": "17f98241df7040646ec6a5ba7285aa3337b99cb5a03efa0c38f65e6ebadb3ff2",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/bike-rebalance/environment/skills/scip-opt/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 4,
+      "n_covered": 4,
+      "coverage": 1.0
+    },
+    "citation-check": {
+      "skills": [
+        {
+          "skill": "citation-management",
+          "gold_id": "citation-check/citation-management",
+          "sha256": "2dff78725d4952afe1cc83240649b9240a4ef3d5fb817d076ddd930d574f831d",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/citation-check/environment/skills/citation-management/SKILL.md",
+            "combined::citation-management"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "civ6-adjacency-optimizer": {
+      "skills": [
+        {
+          "skill": "civ6lib",
+          "gold_id": "civ6-adjacency-optimizer/civ6lib",
+          "sha256": "488097528b9dfca403fd079eb673c8303b1826514ea7b73e825df759d1ff12ee",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/civ6-adjacency-optimizer/environment/skills/civ6lib/SKILL.md"
+          ]
+        },
+        {
+          "skill": "hex-grid-spatial",
+          "gold_id": "civ6-adjacency-optimizer/hex-grid-spatial",
+          "sha256": "3370ef7f3f47f86c9ea84a336c90706da4bc8c1a95daf5801e2c4fc133e0aefc",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/civ6-adjacency-optimizer/environment/skills/hex-grid-spatial/SKILL.md"
+          ]
+        },
+        {
+          "skill": "map-optimization-strategy",
+          "gold_id": "civ6-adjacency-optimizer/map-optimization-strategy",
+          "sha256": "7d712d7dd4e6ddcf0d871ce5e93081342d2477e8f83229205a739fae8b7e46ef",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/civ6-adjacency-optimizer/environment/skills/map-optimization-strategy/SKILL.md"
+          ]
+        },
+        {
+          "skill": "sqlite-map-parser",
+          "gold_id": "civ6-adjacency-optimizer/sqlite-map-parser",
+          "sha256": "a6694d231676963073b1891422262cad009303569adbee2be7fa20a3d85dd870",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/civ6-adjacency-optimizer/environment/skills/sqlite-map-parser/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 4,
+      "n_covered": 4,
+      "coverage": 1.0
+    },
+    "court-form-filling": {
+      "skills": [
+        {
+          "skill": "pdf",
+          "gold_id": "court-form-filling/pdf",
+          "sha256": "38d8559d4899602f82f3560052132aa0c40cfca80203037729756bdb4fb8e0cb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "FreedomIntelligence/OpenClaw-Medical-Skills::skills/pdf-anthropic/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "crystallographic-wyckoff-position-analysis": {
+      "skills": [
+        {
+          "skill": "pymatgen",
+          "gold_id": "crystallographic-wyckoff-position-analysis/pymatgen",
+          "sha256": "eeb3616b03e293072332847795e055413becfa42d74dfaeb48ac6aa90e21654f",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/crystallographic-wyckoff-position-analysis/environment/skills/pymatgen/SKILL.md",
+            "combined::pymatgen"
+          ]
+        },
+        {
+          "skill": "sympy",
+          "gold_id": "crystallographic-wyckoff-position-analysis/sympy",
+          "sha256": "1464cb81c992472072bdd66249623f55fa1709a74ca4148f7f5f40fa6cbb6616",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/crystallographic-wyckoff-position-analysis/environment/skills/sympy/SKILL.md",
+            "combined::sympy"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "dapt-intrusion-detection": {
+      "skills": [
+        {
+          "skill": "pcap-analysis",
+          "gold_id": "dapt-intrusion-detection/pcap-analysis",
+          "sha256": "26c80622440b880cd8ac10c0f9990b9ee3686ca9dc48f317d0f66c22f4969fb9",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/dapt-intrusion-detection/environment/skills/pcap-analysis/SKILL.md"
+          ]
+        },
+        {
+          "skill": "threat-detection",
+          "gold_id": "dapt-intrusion-detection/threat-detection",
+          "sha256": "456e491ca6f033a77e871005f913d04a119992ad8ea834669b145ddc66d0de86",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/dapt-intrusion-detection/environment/skills/threat-detection/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "data-to-d3": {
+      "skills": [
+        {
+          "skill": "d3-visualization",
+          "gold_id": "data-to-d3/d3-visualization",
+          "sha256": "6f056e2ab0cfc36461f27747ceabf72cff51e8776ba2d2deb1cdacd894e39f19",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/data-to-d3/environment/skills/d3-visualization/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "debug-trl-grpo": {
+      "skills": [
+        {
+          "skill": "grpo",
+          "gold_id": "debug-trl-grpo/grpo",
+          "sha256": "90ef5f123f4b6107d85c69d53d6878aec29e5c08950dc52b9bd6fd872187804c",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/debug-trl-grpo/environment/skills/grpo/SKILL.md"
+          ]
+        },
+        {
+          "skill": "rl-post-training",
+          "gold_id": "debug-trl-grpo/rl-post-training",
+          "sha256": "3ff7177b02003bb50dc6a9783fec7a7835b3aeb184b0f161d649de498f65eb99",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/debug-trl-grpo/environment/skills/rl-post-training/SKILL.md"
+          ]
+        },
+        {
+          "skill": "trl",
+          "gold_id": "debug-trl-grpo/trl",
+          "sha256": "96e11df1379f5488435028ea9c073006917319d29540cd42baca0a97c6f2edcd",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/debug-trl-grpo/environment/skills/trl/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "dialogue-parser": {
+      "skills": [
+        {
+          "skill": "dialogue-graph",
+          "gold_id": "dialogue-parser/dialogue-graph",
+          "sha256": "03d711b93219cec1cd70d823d595e7c5adffc058c5910b94886fe6cc374f08d8",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/dialogue-parser/environment/skills/dialogue-graph/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "drone-planning-control": {
+      "skills": [
+        {
+          "skill": "attitude-controller-planner",
+          "gold_id": "drone-planning-control/attitude-controller-planner",
+          "sha256": "e2f325e78f3f31db9d39857d2f7a6e87cacb81c7d60d570a250e7c576495a19f",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/drone-planning-control/environment/skills/attitude-controller-planner/SKILL.md"
+          ]
+        },
+        {
+          "skill": "flight-plan-parser",
+          "gold_id": "drone-planning-control/flight-plan-parser",
+          "sha256": "74acf1d6c9d8ebbebdf5509169a6bdde674faf874968ec55e383e56a11b1f127",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/drone-planning-control/environment/skills/flight-plan-parser/SKILL.md"
+          ]
+        },
+        {
+          "skill": "motor-model-dynamics",
+          "gold_id": "drone-planning-control/motor-model-dynamics",
+          "sha256": "f4e773904e97fc13334b4001bb6c4c63be5867584297e2167dd4b6e27b0602ca",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/drone-planning-control/environment/skills/motor-model-dynamics/SKILL.md"
+          ]
+        },
+        {
+          "skill": "plot-quadrotor",
+          "gold_id": "drone-planning-control/plot-quadrotor",
+          "sha256": "d02c76fb625a42eb856a481cb0fb976faad91a03ab65eda9511e0b2faec9cd08",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/drone-planning-control/environment/skills/plot-quadrotor/SKILL.md"
+          ]
+        },
+        {
+          "skill": "position-controller-trajectory-planner",
+          "gold_id": "drone-planning-control/position-controller-trajectory-planner",
+          "sha256": "ec6d098be4ef7e024109a16d3adedbdf4806085cfd8936b8ef826eb1bbabf555",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/drone-planning-control/environment/skills/position-controller-trajectory-planner/SKILL.md"
+          ]
+        },
+        {
+          "skill": "stepinfo-3d",
+          "gold_id": "drone-planning-control/stepinfo-3d",
+          "sha256": "e139d7322aaaeeb261b2dd008920435caa375f9632137c8acc7a642605477c32",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/drone-planning-control/environment/skills/stepinfo-3d/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 6,
+      "n_covered": 6,
+      "coverage": 1.0
+    },
+    "dynamic-object-aware-egomotion": {
+      "skills": [
+        {
+          "skill": "dyn-object-masks",
+          "gold_id": "dynamic-object-aware-egomotion/dyn-object-masks",
+          "sha256": "f39ddb6700d3a0c4626b3764c3921fba7e0557433690294d852f9127b5c7c870",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/dynamic-object-aware-egomotion/environment/skills/dyn-object-masks/SKILL.md"
+          ]
+        },
+        {
+          "skill": "egomotion-estimation",
+          "gold_id": "dynamic-object-aware-egomotion/egomotion-estimation",
+          "sha256": "ae9c89b1c228c3868938cd71d474e3ac20766991d2ed94a45721842a03ad4d70",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/dynamic-object-aware-egomotion/environment/skills/egomotion-estimation/SKILL.md"
+          ]
+        },
+        {
+          "skill": "output-validation",
+          "gold_id": "dynamic-object-aware-egomotion/output-validation",
+          "sha256": "fccdbde222731c06fcd34838a39b9ba4c6fe660d57a9a2b2b3f5546188545f7a",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/dynamic-object-aware-egomotion/environment/skills/output-validation/SKILL.md"
+          ]
+        },
+        {
+          "skill": "sampling-and-indexing",
+          "gold_id": "dynamic-object-aware-egomotion/sampling-and-indexing",
+          "sha256": "317046cac52d42837875d1d4a24d30b3597f4bcfd67ab42fde25aaf2bf4a26f9",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/dynamic-object-aware-egomotion/environment/skills/sampling-and-indexing/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 4,
+      "n_covered": 4,
+      "coverage": 1.0
+    },
+    "earthquake-phase-association": {
+      "skills": [
+        {
+          "skill": "gamma-phase-associator",
+          "gold_id": "earthquake-phase-association/gamma-phase-associator",
+          "sha256": "ce2c7375fccbf2e99c921e979437e77b91fb39573f6bcb2b7ce4a1136fe46526",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/earthquake-phase-association/environment/skills/gamma-phase-associator/SKILL.md"
+          ]
+        },
+        {
+          "skill": "obspy-data-api",
+          "gold_id": "earthquake-phase-association/obspy-data-api",
+          "sha256": "669584da3b2f685dc8939449b6f8c09dc9e857ed335154739aaf78f03b9a67df",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/earthquake-phase-association/environment/skills/obspy-data-api/SKILL.md"
+          ]
+        },
+        {
+          "skill": "seisbench-model-api",
+          "gold_id": "earthquake-phase-association/seisbench-model-api",
+          "sha256": "32923bed92731f01669a29f9f3db964efc052a0ee5f4b6fc0115573fc99657e1",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/earthquake-phase-association/environment/skills/seisbench-model-api/SKILL.md"
+          ]
+        },
+        {
+          "skill": "seismic-picker-selection",
+          "gold_id": "earthquake-phase-association/seismic-picker-selection",
+          "sha256": "20ff09362d2154c6424b3b533238440bcfcf6d81f1de97d6903197577a9a174a",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/earthquake-phase-association/environment/skills/seismic-picker-selection/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 4,
+      "n_covered": 4,
+      "coverage": 1.0
+    },
+    "earthquake-plate-calculation": {
+      "skills": [
+        {
+          "skill": "geospatial-analysis",
+          "gold_id": "earthquake-plate-calculation/geospatial-analysis",
+          "sha256": "9ec15d10424e46ab4339f8a1ca9bb0f3b71a76659d69e652e846abfdfd258336",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/earthquake-plate-calculation/environment/skills/geospatial-analysis/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "econ-detrending-correlation": {
+      "skills": [
+        {
+          "skill": "timeseries-detrending",
+          "gold_id": "econ-detrending-correlation/timeseries-detrending",
+          "sha256": "1169a82443b6b4571dbc37017c41e1b2b1e05e86e9d0b304af726c711111d4cd",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/econ-detrending-correlation/environment/skills/timeseries-detrending/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "edit-pdf": {
+      "skills": [
+        {
+          "skill": "pdf-editing",
+          "gold_id": "edit-pdf/pdf-editing",
+          "sha256": "7e0f4a10b79463733a43b80d2325e7f7ccd717d0485db7453ffb244b02c0ae88",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/edit-pdf/environment/skills/pdf-editing/SKILL.md"
+          ]
+        },
+        {
+          "skill": "text-parser",
+          "gold_id": "edit-pdf/text-parser",
+          "sha256": "42da49f3d8f0d2ddef67fc6b7b1438fc8919b80f137f4c8efdce5f5327862123",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/edit-pdf/environment/skills/text-parser/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "energy-ac-optimal-power-flow": {
+      "skills": [
+        {
+          "skill": "ac-branch-pi-model",
+          "gold_id": "energy-ac-optimal-power-flow/ac-branch-pi-model",
+          "sha256": "90202c50b81adcfc4f61e5352c2d01824c4d45f849f1ad520161635f1a24da32",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-ac-optimal-power-flow/environment/skills/ac-branch-pi-model/SKILL.md"
+          ]
+        },
+        {
+          "skill": "casadi-ipopt-nlp",
+          "gold_id": "energy-ac-optimal-power-flow/casadi-ipopt-nlp",
+          "sha256": "f207a0b131e41bb3d2954038e08d491b6674d87358537c8331d6d5996622ff0c",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-ac-optimal-power-flow/environment/skills/casadi-ipopt-nlp/SKILL.md"
+          ]
+        },
+        {
+          "skill": "power-flow-data",
+          "gold_id": "energy-ac-optimal-power-flow/power-flow-data",
+          "sha256": "7c6544423d4106746ca831e431e6725292015c768e7958a168c57db140051846",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-ac-optimal-power-flow/environment/skills/power-flow-data/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "energy-market-pricing": {
+      "skills": [
+        {
+          "skill": "dc-power-flow",
+          "gold_id": "energy-market-pricing/dc-power-flow",
+          "sha256": "461a4a93c6baf5f84eaa16881b11d76d0542907c8bb50745eceeb21d217e480e",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-market-pricing/environment/skills/dc-power-flow/SKILL.md"
+          ]
+        },
+        {
+          "skill": "economic-dispatch",
+          "gold_id": "energy-market-pricing/economic-dispatch",
+          "sha256": "907586a8ab5d697d20efaafb190809fbe737bcbac4082c0f94458c1e6489b82f",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-market-pricing/environment/skills/economic-dispatch/SKILL.md"
+          ]
+        },
+        {
+          "skill": "locational-marginal-prices",
+          "gold_id": "energy-market-pricing/locational-marginal-prices",
+          "sha256": "c48851e863afad9f416e52d57f5b065cc9a7a1ab2146b829abae4ac85412f2ac",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-market-pricing/environment/skills/locational-marginal-prices/SKILL.md"
+          ]
+        },
+        {
+          "skill": "power-flow-data",
+          "gold_id": "energy-market-pricing/power-flow-data",
+          "sha256": "7c6544423d4106746ca831e431e6725292015c768e7958a168c57db140051846",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-ac-optimal-power-flow/environment/skills/power-flow-data/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 4,
+      "n_covered": 4,
+      "coverage": 1.0
+    },
+    "energy-unit-commitment": {
+      "skills": [
+        {
+          "skill": "milp-solver-workflow",
+          "gold_id": "energy-unit-commitment/milp-solver-workflow",
+          "sha256": "a7952b16cfda72bd0576f0f1ff1c222a0c05d5343195d00013e81ed56b8eddc4",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-unit-commitment/environment/skills/milp-solver-workflow/SKILL.md"
+          ]
+        },
+        {
+          "skill": "unit-commitment-data-modeling",
+          "gold_id": "energy-unit-commitment/unit-commitment-data-modeling",
+          "sha256": "b67192fb7fccb9c6e04df287bf2049fbc0f26571d7d702f7bcacc1c1b0566d19",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-unit-commitment/environment/skills/unit-commitment-data-modeling/SKILL.md"
+          ]
+        },
+        {
+          "skill": "unit-commitment-operating-rules",
+          "gold_id": "energy-unit-commitment/unit-commitment-operating-rules",
+          "sha256": "e44bbc07a1f2b53a11ac0773962fc6dbf9daf1534244f358878919971d9caa2c",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-unit-commitment/environment/skills/unit-commitment-operating-rules/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "enterprise-information-search": {
+      "skills": [
+        {
+          "skill": "enterprise-artifact-search",
+          "gold_id": "enterprise-information-search/enterprise-artifact-search",
+          "sha256": "00e31df6ee3a502e9636cdbd3ce45350a8bb307c1840e7aa75823f6da4e0ef41",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/enterprise-information-search/environment/skills/enterprise-artifact-search/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "exam-block-sequencing": {
+      "skills": [
+        {
+          "skill": "mip-solver-and-solution-audit",
+          "gold_id": "exam-block-sequencing/mip-solver-and-solution-audit",
+          "sha256": "34ab1c8cd80ab01f65ad7287776994efeceb15fe454c36216d7d4ba2fee442f7",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/exam-block-sequencing/environment/skills/mip-solver-and-solution-audit/SKILL.md"
+          ]
+        },
+        {
+          "skill": "ordered-window-sequencing-mip",
+          "gold_id": "exam-block-sequencing/ordered-window-sequencing-mip",
+          "sha256": "0e1aa2b96b164e0cb06045b8d6b3fdd56d693c002a7dbbf8fb093bca3216c514",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/exam-block-sequencing/environment/skills/ordered-window-sequencing-mip/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "exceltable-in-ppt": {
+      "skills": [
+        {
+          "skill": "pptx",
+          "gold_id": "exceltable-in-ppt/pptx",
+          "sha256": "7d39d6f9917d87886ebb89a3696394d7295f2dc1dd9bc1376bfa31d81e139532",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/exceltable-in-ppt/environment/skills/pptx/SKILL.md",
+            "combined::pptx"
+          ]
+        },
+        {
+          "skill": "xlsx",
+          "gold_id": "exceltable-in-ppt/xlsx",
+          "sha256": "9bdc1fee81f3be9cb34ac49f8890c094a3855d3d0236783d10e0ea6df1515e01",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "Prat011/awesome-llm-skills::document-skills/xlsx/SKILL.md",
+            "combined::xlsx",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/xlsx/SKILL.md",
+            "zLanqing/codex-claude-academic-skills::scientific-toolkit-skill/references/scientific-skills/xlsx/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "exoplanet-detection-period": {
+      "skills": [
+        {
+          "skill": "box-least-squares",
+          "gold_id": "exoplanet-detection-period/box-least-squares",
+          "sha256": "211179df6fb03596447dca91ce90146237ae0cbd8b9fecd305a97187760def7c",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/exoplanet-detection-period/environment/skills/box-least-squares/SKILL.md"
+          ]
+        },
+        {
+          "skill": "exoplanet-workflows",
+          "gold_id": "exoplanet-detection-period/exoplanet-workflows",
+          "sha256": "5ebc272409994a9b8289ba90e861244c1d25299e72ff49f3c40e8f95f14d027c",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/exoplanet-detection-period/environment/skills/exoplanet-workflows/SKILL.md"
+          ]
+        },
+        {
+          "skill": "light-curve-preprocessing",
+          "gold_id": "exoplanet-detection-period/light-curve-preprocessing",
+          "sha256": "a3f2f7dfdaf171bba27f1a5da7ee340d2755fba6061089defec29f85535a4177",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/exoplanet-detection-period/environment/skills/light-curve-preprocessing/SKILL.md"
+          ]
+        },
+        {
+          "skill": "lomb-scargle-periodogram",
+          "gold_id": "exoplanet-detection-period/lomb-scargle-periodogram",
+          "sha256": "9c99004068e8b93eab3d0c389e1972d7355d6dcd0c7771a95efeef4659a706b9",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/exoplanet-detection-period/environment/skills/lomb-scargle-periodogram/SKILL.md"
+          ]
+        },
+        {
+          "skill": "transit-least-squares",
+          "gold_id": "exoplanet-detection-period/transit-least-squares",
+          "sha256": "8ecf66396843055834c29bc31c3fbb66c854ece54977a64a6152daebd60d200a",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/exoplanet-detection-period/environment/skills/transit-least-squares/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 5,
+      "n_covered": 5,
+      "coverage": 1.0
+    },
+    "financial-modeling-qa": {
+      "skills": [
+        {
+          "skill": "pdf",
+          "gold_id": "financial-modeling-qa/pdf",
+          "sha256": "38d8559d4899602f82f3560052132aa0c40cfca80203037729756bdb4fb8e0cb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "FreedomIntelligence/OpenClaw-Medical-Skills::skills/pdf-anthropic/SKILL.md"
+          ]
+        },
+        {
+          "skill": "xlsx",
+          "gold_id": "financial-modeling-qa/xlsx",
+          "sha256": "020ccdb5932257b66c638ec1157ea248d57fa52c8c01f1f68b559b5970c7df35",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "FreedomIntelligence/OpenClaw-Medical-Skills::skills/xlsx-official/SKILL.md",
+            "Prat011/awesome-llm-skills::document-skills/xlsx/SKILL.md",
+            "combined::xlsx"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "fix-build-agentops": {
+      "skills": [
+        {
+          "skill": "analyze-ci",
+          "gold_id": "fix-build-agentops/analyze-ci",
+          "sha256": "f59a07dcffe019f17cfa6ec211cbfb070e6292257be7119ed55ffa0b9bce7197",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-build-agentops/environment/skills/analyze-ci/SKILL.md"
+          ]
+        },
+        {
+          "skill": "temporal-python-testing",
+          "gold_id": "fix-build-agentops/temporal-python-testing",
+          "sha256": "21e5d2382d474553eadb2771c764f4aa2b55a12bd75bc40894e68630c02db7bb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-build-agentops/environment/skills/temporal-python-testing/SKILL.md"
+          ]
+        },
+        {
+          "skill": "testing-python",
+          "gold_id": "fix-build-agentops/testing-python",
+          "sha256": "2741f4b02a7021658993213ce85095871e30ebfc1eba2bbef9d56f0bb71dea32",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-build-agentops/environment/skills/testing-python/SKILL.md"
+          ]
+        },
+        {
+          "skill": "uv-package-manager",
+          "gold_id": "fix-build-agentops/uv-package-manager",
+          "sha256": "85c71e75e63966eb06a72dc0a7ed2046c45c38bb5574d748603917c4a3801878",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-build-agentops/environment/skills/uv-package-manager/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 4,
+      "n_covered": 4,
+      "coverage": 1.0
+    },
+    "fix-build-google-auto": {
+      "skills": [
+        {
+          "skill": "maven-build-lifecycle",
+          "gold_id": "fix-build-google-auto/maven-build-lifecycle",
+          "sha256": "8d65a5ace544deb6beafebe9275eaa9f0673ac1286899c7f7ddecd3dfce03974",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-build-google-auto/environment/skills/maven-build-lifecycle/SKILL.md"
+          ]
+        },
+        {
+          "skill": "maven-dependency-management",
+          "gold_id": "fix-build-google-auto/maven-dependency-management",
+          "sha256": "d5a95c61cb189750beafbd7fea8e8ca8159ccf905d90974637b0a3e5495c7846",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-build-google-auto/environment/skills/maven-dependency-management/SKILL.md"
+          ]
+        },
+        {
+          "skill": "maven-plugin-configuration",
+          "gold_id": "fix-build-google-auto/maven-plugin-configuration",
+          "sha256": "ff8b766a8283c035d0fba5cf71f0dd194c14a21e136c2a2916bf7bff3fcdd01c",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-build-google-auto/environment/skills/maven-plugin-configuration/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "fix-druid-loophole-cve": {
+      "skills": [
+        {
+          "skill": "jackson-security",
+          "gold_id": "fix-druid-loophole-cve/jackson-security",
+          "sha256": "30227192653488b41c91c5824d0b4a62bf780e9e9040600172687ab563d21c57",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-druid-loophole-cve/environment/skills/jackson-security/SKILL.md"
+          ]
+        },
+        {
+          "skill": "senior-java",
+          "gold_id": "fix-druid-loophole-cve/senior-java",
+          "sha256": "c22b277c5a72e4f3ae5e23daedee1b354b59c97cb9375e3874e29214e9e2c5e5",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-druid-loophole-cve/environment/skills/senior-java/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "fix-erlang-ssh-cve": {
+      "skills": [
+        {
+          "skill": "erlang-concurrency",
+          "gold_id": "fix-erlang-ssh-cve/erlang-concurrency",
+          "sha256": "eb762a07fbdc3162047bed8bab4674f7e3b8676c698b6c2afdfe10179237b36b",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-erlang-ssh-cve/environment/skills/erlang-concurrency/SKILL.md"
+          ]
+        },
+        {
+          "skill": "erlang-distribution",
+          "gold_id": "fix-erlang-ssh-cve/erlang-distribution",
+          "sha256": "4d49e72f775b25fd5a64dfa0dbc36177a275a0a069812ecd5f1d81fcaf9b6b1b",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-erlang-ssh-cve/environment/skills/erlang-distribution/SKILL.md"
+          ]
+        },
+        {
+          "skill": "erlang-otp-behaviors",
+          "gold_id": "fix-erlang-ssh-cve/erlang-otp-behaviors",
+          "sha256": "7ecab88cc814a45a9aa328ecf9c1faa4fc46033242ca30db8d7ddf8cf7a1a0c7",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-erlang-ssh-cve/environment/skills/erlang-otp-behaviors/SKILL.md"
+          ]
+        },
+        {
+          "skill": "find-bugs",
+          "gold_id": "fix-erlang-ssh-cve/find-bugs",
+          "sha256": "edad456696ade7d64c855594e55b9064689a6ce354e667dc2a64e83362a56a8e",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-erlang-ssh-cve/environment/skills/find-bugs/SKILL.md",
+            "combined::find-bugs"
+          ]
+        },
+        {
+          "skill": "senior-security",
+          "gold_id": "fix-erlang-ssh-cve/senior-security",
+          "sha256": "d7e26f159d81a9e5ca9a7bc9ff3af116876068349d727b894c6b50020efbd7a7",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-erlang-ssh-cve/environment/skills/senior-security/SKILL.md",
+            "combined::senior-security"
+          ]
+        },
+        {
+          "skill": "ssh-penetration-testing",
+          "gold_id": "fix-erlang-ssh-cve/ssh-penetration-testing",
+          "sha256": "a7605138ec97cfe2fa54af6d3b0bd08c7246028dbc0bfb580b8dd0bfa9c53be3",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-erlang-ssh-cve/environment/skills/ssh-penetration-testing/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 6,
+      "n_covered": 6,
+      "coverage": 1.0
+    },
+    "fix-visual-stability": {
+      "skills": [
+        {
+          "skill": "browser-testing",
+          "gold_id": "fix-visual-stability/browser-testing",
+          "sha256": "cb1a9611c3d062555c6779d641d02f56cc5ecef5d769c0abbb4a9506149ee80a",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-visual-stability/environment/skills/browser-testing/SKILL.md"
+          ]
+        },
+        {
+          "skill": "react-best-practices",
+          "gold_id": "fix-visual-stability/react-best-practices",
+          "sha256": "66e4e2f0be453c3082087a0c52e1f702c43355c4e46a68ed5c649ebb10c65f3c",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-visual-stability/environment/skills/react-best-practices/SKILL.md",
+            "combined::react-best-practices"
+          ]
+        },
+        {
+          "skill": "web-interface-guidelines",
+          "gold_id": "fix-visual-stability/web-interface-guidelines",
+          "sha256": "4ecd4428603ab5e53bf8c9b31a5da738a77a3bccc77db1ebd92831ef414ed795",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-visual-stability/environment/skills/web-interface-guidelines/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "flink-query": {
+      "skills": [
+        {
+          "skill": "pdf",
+          "gold_id": "flink-query/pdf",
+          "sha256": "38d8559d4899602f82f3560052132aa0c40cfca80203037729756bdb4fb8e0cb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "FreedomIntelligence/OpenClaw-Medical-Skills::skills/pdf-anthropic/SKILL.md"
+          ]
+        },
+        {
+          "skill": "senior-data-engineer",
+          "gold_id": "flink-query/senior-data-engineer",
+          "sha256": "ee543c63131cf0a853dff39adeb54e0d0901990f234d2891a78970de3d541fd6",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/flink-query/environment/skills/senior-data-engineer/SKILL.md",
+            "combined::senior-data-engineer"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "flood-risk-analysis": {
+      "skills": [
+        {
+          "skill": "flood-detection",
+          "gold_id": "flood-risk-analysis/flood-detection",
+          "sha256": "14e55948af7ac9e90e039985d116fbc2c605f12bb3996c8b49d52167ddf4696d",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/flood-risk-analysis/environment/skills/flood-detection/SKILL.md"
+          ]
+        },
+        {
+          "skill": "nws-flood-thresholds",
+          "gold_id": "flood-risk-analysis/nws-flood-thresholds",
+          "sha256": "f0a534dad20748e094e2188b2fb8078264a4c0451757827b54f921146453418f",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/flood-risk-analysis/environment/skills/nws-flood-thresholds/SKILL.md"
+          ]
+        },
+        {
+          "skill": "usgs-data-download",
+          "gold_id": "flood-risk-analysis/usgs-data-download",
+          "sha256": "82f0ec56e7bbfdeadac0bf05a51683d3e90e183d9b27165923f70860183a825e",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/flood-risk-analysis/environment/skills/usgs-data-download/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "glm-lake-mendota": {
+      "skills": [
+        {
+          "skill": "glm-basics",
+          "gold_id": "glm-lake-mendota/glm-basics",
+          "sha256": "77fc4c820ce8689c90bdbaa364e9e9b50f26fd0c285b869588f9b0a16dc8d054",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/glm-lake-mendota/environment/skills/glm-basics/SKILL.md"
+          ]
+        },
+        {
+          "skill": "glm-calibration",
+          "gold_id": "glm-lake-mendota/glm-calibration",
+          "sha256": "a1342ccb629765767821481333fcbf2b5fd25d93fa8f4a41ed78c62d022a4ed1",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/glm-lake-mendota/environment/skills/glm-calibration/SKILL.md"
+          ]
+        },
+        {
+          "skill": "glm-output",
+          "gold_id": "glm-lake-mendota/glm-output",
+          "sha256": "26530fb95a70059f6071734cca709db018dcc00ade4fe34011a7229d82bf1187",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/glm-lake-mendota/environment/skills/glm-output/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "gravitational-wave-detection": {
+      "skills": [
+        {
+          "skill": "conditioning",
+          "gold_id": "gravitational-wave-detection/conditioning",
+          "sha256": "bf7580c93e48e3215442820bfb8e77f372450bf56182b5efe1b8b73d875b03d2",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/gravitational-wave-detection/environment/skills/conditioning/SKILL.md"
+          ]
+        },
+        {
+          "skill": "matched-filtering",
+          "gold_id": "gravitational-wave-detection/matched-filtering",
+          "sha256": "9daa057b05d878189bd5556dca8a6a18a65839ff0a5b8313fbdaa2ba10a6f4b4",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/gravitational-wave-detection/environment/skills/matched-filtering/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "grid-dispatch-operator": {
+      "skills": [
+        {
+          "skill": "dc-power-flow",
+          "gold_id": "grid-dispatch-operator/dc-power-flow",
+          "sha256": "461a4a93c6baf5f84eaa16881b11d76d0542907c8bb50745eceeb21d217e480e",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-market-pricing/environment/skills/dc-power-flow/SKILL.md"
+          ]
+        },
+        {
+          "skill": "economic-dispatch",
+          "gold_id": "grid-dispatch-operator/economic-dispatch",
+          "sha256": "907586a8ab5d697d20efaafb190809fbe737bcbac4082c0f94458c1e6489b82f",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-market-pricing/environment/skills/economic-dispatch/SKILL.md"
+          ]
+        },
+        {
+          "skill": "power-flow-data",
+          "gold_id": "grid-dispatch-operator/power-flow-data",
+          "sha256": "7c6544423d4106746ca831e431e6725292015c768e7958a168c57db140051846",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/energy-ac-optimal-power-flow/environment/skills/power-flow-data/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "hvac-control": {
+      "skills": [
+        {
+          "skill": "excitation-signal-design",
+          "gold_id": "hvac-control/excitation-signal-design",
+          "sha256": "2a95543b6a10befec4f4ab98c9912d93af2c3fa54397a2a1d421db5c2e59d7c9",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/hvac-control/environment/skills/excitation-signal-design/SKILL.md"
+          ]
+        },
+        {
+          "skill": "first-order-model-fitting",
+          "gold_id": "hvac-control/first-order-model-fitting",
+          "sha256": "96c792fe902e2a22ba2afb5bd0b02823fe200a4fb40197825f4e06cd49d0c865",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/hvac-control/environment/skills/first-order-model-fitting/SKILL.md"
+          ]
+        },
+        {
+          "skill": "imc-tuning-rules",
+          "gold_id": "hvac-control/imc-tuning-rules",
+          "sha256": "2388dcb94f078c67d69acd615adb336d4604aecfdb198302ce880f872282e7cf",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/hvac-control/environment/skills/imc-tuning-rules/SKILL.md"
+          ]
+        },
+        {
+          "skill": "safety-interlocks",
+          "gold_id": "hvac-control/safety-interlocks",
+          "sha256": "2f655c05c1a8262b23af135f24e72fed0f0bee9634ad84efa4c3f94c2bf9da45",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/hvac-control/environment/skills/safety-interlocks/SKILL.md"
+          ]
+        },
+        {
+          "skill": "scipy-curve-fit",
+          "gold_id": "hvac-control/scipy-curve-fit",
+          "sha256": "a250a563dcb8cd453070bc47db9e520e70bfb7253b5abb13b8b02afe0e57ef85",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/hvac-control/environment/skills/scipy-curve-fit/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 5,
+      "n_covered": 5,
+      "coverage": 1.0
+    },
+    "invoice-fraud-detection": {
+      "skills": [
+        {
+          "skill": "fuzzy-match",
+          "gold_id": "invoice-fraud-detection/fuzzy-match",
+          "sha256": "531e4f484546b24db8a2aa76143e488b487ce4619f9f331bedb5d84751da6907",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/invoice-fraud-detection/environment/skills/fuzzy-match/SKILL.md"
+          ]
+        },
+        {
+          "skill": "pdf",
+          "gold_id": "invoice-fraud-detection/pdf",
+          "sha256": "38d8559d4899602f82f3560052132aa0c40cfca80203037729756bdb4fb8e0cb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "FreedomIntelligence/OpenClaw-Medical-Skills::skills/pdf-anthropic/SKILL.md"
+          ]
+        },
+        {
+          "skill": "xlsx",
+          "gold_id": "invoice-fraud-detection/xlsx",
+          "sha256": "9bdc1fee81f3be9cb34ac49f8890c094a3855d3d0236783d10e0ea6df1515e01",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "Prat011/awesome-llm-skills::document-skills/xlsx/SKILL.md",
+            "combined::xlsx",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/xlsx/SKILL.md",
+            "zLanqing/codex-claude-academic-skills::scientific-toolkit-skill/references/scientific-skills/xlsx/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "jax-computing-basics": {
+      "skills": [
+        {
+          "skill": "jax-skills",
+          "gold_id": "jax-computing-basics/jax-skills",
+          "sha256": "2cff1fe8e449fe60ab8009980c4e44eaf0d6bc7ca14ae03fc1e5c7f7e82eb6d1",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/jax-computing-basics/environment/skills/jax-skills/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "jpg-ocr-stat": {
+      "skills": [
+        {
+          "skill": "image-ocr",
+          "gold_id": "jpg-ocr-stat/image-ocr",
+          "sha256": "69dd1065075d53f02c33d3c9c7b3f07eaab26686048675a971fb3a2f8c297359",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/jpg-ocr-stat/environment/skills/image-ocr/SKILL.md",
+            "combined::image-ocr"
+          ]
+        },
+        {
+          "skill": "openai-vision",
+          "gold_id": "jpg-ocr-stat/openai-vision",
+          "sha256": "5023bf779904e73d82cd1a55373eedb001fff59fc97410e22671991c63a83e3c",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/jpg-ocr-stat/environment/skills/openai-vision/SKILL.md"
+          ]
+        },
+        {
+          "skill": "pdf",
+          "gold_id": "jpg-ocr-stat/pdf",
+          "sha256": "38d8559d4899602f82f3560052132aa0c40cfca80203037729756bdb4fb8e0cb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "FreedomIntelligence/OpenClaw-Medical-Skills::skills/pdf-anthropic/SKILL.md"
+          ]
+        },
+        {
+          "skill": "video-frame-extraction",
+          "gold_id": "jpg-ocr-stat/video-frame-extraction",
+          "sha256": "b8109889c9b72953b52c55d17d0fa1d6f1083f6a6d1d378cdda6b6509c38fa18",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks-extra/pedestrian-traffic-counting/environment/skills/video-frame-extraction/SKILL.md"
+          ]
+        },
+        {
+          "skill": "xlsx",
+          "gold_id": "jpg-ocr-stat/xlsx",
+          "sha256": "9bdc1fee81f3be9cb34ac49f8890c094a3855d3d0236783d10e0ea6df1515e01",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "Prat011/awesome-llm-skills::document-skills/xlsx/SKILL.md",
+            "combined::xlsx",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/xlsx/SKILL.md",
+            "zLanqing/codex-claude-academic-skills::scientific-toolkit-skill/references/scientific-skills/xlsx/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 5,
+      "n_covered": 5,
+      "coverage": 1.0
+    },
+    "lab-unit-harmonization": {
+      "skills": [
+        {
+          "skill": "lab-unit-harmonization",
+          "gold_id": "lab-unit-harmonization/lab-unit-harmonization",
+          "sha256": "60eea92e906b140bafcfb50d7c26ecac645f2a434418080fe07ee5b8af115afe",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/lab-unit-harmonization/environment/skills/lab-unit-harmonization/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "lake-warming-attribution": {
+      "skills": [
+        {
+          "skill": "contribution-analysis",
+          "gold_id": "lake-warming-attribution/contribution-analysis",
+          "sha256": "ec9531b6b06a4e7a699da04bf0e86279af14cc0b7aba77476adbfc4766015c63",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/lake-warming-attribution/environment/skills/contribution-analysis/SKILL.md"
+          ]
+        },
+        {
+          "skill": "meteorology-driver-classification",
+          "gold_id": "lake-warming-attribution/meteorology-driver-classification",
+          "sha256": "5faebbffdf7c5a5a46c22a11b08d5950f378e71f3a4c967c9495ffb70f64fc2f",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/lake-warming-attribution/environment/skills/meteorology-driver-classification/SKILL.md"
+          ]
+        },
+        {
+          "skill": "pca-decomposition",
+          "gold_id": "lake-warming-attribution/pca-decomposition",
+          "sha256": "651fe7e01b2bc9abcf21a51d213398ef27c225ad2ea1a49b5bd681e934015ac2",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/lake-warming-attribution/environment/skills/pca-decomposition/SKILL.md"
+          ]
+        },
+        {
+          "skill": "trend-analysis",
+          "gold_id": "lake-warming-attribution/trend-analysis",
+          "sha256": "eec026677dd73c7407170d01fc2358ba10dacfd4b8b3b9bf669b8f922491514f",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/lake-warming-attribution/environment/skills/trend-analysis/SKILL.md",
+            "combined::trend-analysis"
+          ]
+        }
+      ],
+      "n_gold": 4,
+      "n_covered": 4,
+      "coverage": 1.0
+    },
+    "latex-formula-extraction": {
+      "skills": [
+        {
+          "skill": "marker",
+          "gold_id": "latex-formula-extraction/marker",
+          "sha256": "c931b6398d4a9fe59126c8fda56e5c0d275550e907726820547ea9e84302843d",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/latex-formula-extraction/environment/skills/marker/SKILL.md"
+          ]
+        },
+        {
+          "skill": "pdf",
+          "gold_id": "latex-formula-extraction/pdf",
+          "sha256": "38d8559d4899602f82f3560052132aa0c40cfca80203037729756bdb4fb8e0cb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "FreedomIntelligence/OpenClaw-Medical-Skills::skills/pdf-anthropic/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "lean4-proof": {
+      "skills": [
+        {
+          "skill": "lean4-memories",
+          "gold_id": "lean4-proof/lean4-memories",
+          "sha256": "158e14b3e8a10b5a09eecda01d3a83fe4fade2ceca0272d78e4946563b2450bd",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/lean4-proof/environment/skills/lean4-memories/SKILL.md"
+          ]
+        },
+        {
+          "skill": "lean4-theorem-proving",
+          "gold_id": "lean4-proof/lean4-theorem-proving",
+          "sha256": "ccdf91ca8b6e496b7a484668b80f749fc81b3090393448decafd9b6468a14fd8",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/lean4-proof/environment/skills/lean4-theorem-proving/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "llm-prefix-cache-replay": {
+      "skills": [
+        {
+          "skill": "cache-policy-comparison",
+          "gold_id": "llm-prefix-cache-replay/cache-policy-comparison",
+          "sha256": "353a7215727695b01e48ea69e63ed92c0b32174534a6bda38cee9b91382e5963",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/llm-prefix-cache-replay/environment/skills/cache-policy-comparison/SKILL.md"
+          ]
+        },
+        {
+          "skill": "prefix-cache-replay",
+          "gold_id": "llm-prefix-cache-replay/prefix-cache-replay",
+          "sha256": "28ced940ec272cc01cf06519912077492d948b10e08a933acba12dd9907220cf",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/llm-prefix-cache-replay/environment/skills/prefix-cache-replay/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "manufacturing-codebook-normalization": {
+      "skills": [
+        {
+          "skill": "manufacturing-failure-reason-codebook-normalization",
+          "gold_id": "manufacturing-codebook-normalization/manufacturing-failure-reason-codebook-normalization",
+          "sha256": "3aba5be4d0f33208d296198fef4bad8816d191bbdd3ec8594cda1de7aab055f0",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/manufacturing-codebook-normalization/environment/skills/manufacturing-failure-reason-codebook-normalization/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "manufacturing-equipment-maintenance": {
+      "skills": [
+        {
+          "skill": "reflow-machine-maintenance-guidance",
+          "gold_id": "manufacturing-equipment-maintenance/reflow-machine-maintenance-guidance",
+          "sha256": "133b383e8c2d573c8c834b7d4c4acfd8a6fba688356ed5ad649f6dd0c1a678fb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/manufacturing-equipment-maintenance/environment/skills/reflow-machine-maintenance-guidance/SKILL.md"
+          ]
+        },
+        {
+          "skill": "reflow-profile-compliance-toolkit",
+          "gold_id": "manufacturing-equipment-maintenance/reflow-profile-compliance-toolkit",
+          "sha256": "b21118d8a8c8acb65e26355e97eeba06e26feb183bf02ac75d3b63097e9f5192",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/manufacturing-equipment-maintenance/environment/skills/reflow-profile-compliance-toolkit/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "manufacturing-fjsp-optimization": {
+      "skills": [
+        {
+          "skill": "fjsp-baseline-repair-with-downtime-and-policy",
+          "gold_id": "manufacturing-fjsp-optimization/fjsp-baseline-repair-with-downtime-and-policy",
+          "sha256": "2668bd6b9c6977ccedcf1f1d4af4401afdfe215666d68f82df41b662852b2125",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/manufacturing-fjsp-optimization/environment/skills/fjsp-baseline-repair-with-downtime-and-policy/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "mario-coin-counting": {
+      "skills": [
+        {
+          "skill": "ffmpeg-keyframe-extraction",
+          "gold_id": "mario-coin-counting/ffmpeg-keyframe-extraction",
+          "sha256": "67d169e60ca71c40cd3aca75b8f6ca6d9dba8ba64fa4b15eb6ef50880f84e92e",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/mario-coin-counting/environment/skills/ffmpeg-keyframe-extraction/SKILL.md"
+          ]
+        },
+        {
+          "skill": "image-editing",
+          "gold_id": "mario-coin-counting/image-editing",
+          "sha256": "31e664a2fadbaf7506eef21d6faaeca95953453159c24f05cbee82be9dfdcf90",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/mario-coin-counting/environment/skills/image-editing/SKILL.md"
+          ]
+        },
+        {
+          "skill": "object-counter",
+          "gold_id": "mario-coin-counting/object-counter",
+          "sha256": "f2dca9d7b54d80cd7bb173f98d73db31f723e0ba800dc606d5a50da90e37a450",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/mario-coin-counting/environment/skills/object-counter/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "mars-clouds-clustering": {
+      "skills": [
+        {
+          "skill": "custom-distance-metrics",
+          "gold_id": "mars-clouds-clustering/custom-distance-metrics",
+          "sha256": "da204a3ce17e6a7e2eeb72e744346228284de017cb4d5c8a7082b0b37dd41370",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/mars-clouds-clustering/environment/skills/custom-distance-metrics/SKILL.md"
+          ]
+        },
+        {
+          "skill": "parallel-processing",
+          "gold_id": "mars-clouds-clustering/parallel-processing",
+          "sha256": "28428c421676d35e1342ff2240e08ccbe54ce5df6326424b35a9fa02bc270cca",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/mars-clouds-clustering/environment/skills/parallel-processing/SKILL.md"
+          ]
+        },
+        {
+          "skill": "pareto-optimization",
+          "gold_id": "mars-clouds-clustering/pareto-optimization",
+          "sha256": "ac1ed3486e61346b04f05ca7e75054593eb9aa59c874df53e912c7a0feb83b45",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/mars-clouds-clustering/environment/skills/pareto-optimization/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "multilingual-video-dubbing": {
+      "skills": [
+        {
+          "skill": "ffmpeg-audio-processing",
+          "gold_id": "multilingual-video-dubbing/ffmpeg-audio-processing",
+          "sha256": "001943d16329f201ce46274cc4984604fd84130fc159b2bc23aa1cde2ffc074c",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/multilingual-video-dubbing/environment/skills/ffmpeg-audio-processing/SKILL.md"
+          ]
+        },
+        {
+          "skill": "ffmpeg-format-conversion",
+          "gold_id": "multilingual-video-dubbing/ffmpeg-format-conversion",
+          "sha256": "6fcdc408c24f7de69852def7a49f9c58ad00bb9dda8ec763df44618628251f4c",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/multilingual-video-dubbing/environment/skills/ffmpeg-format-conversion/SKILL.md"
+          ]
+        },
+        {
+          "skill": "ffmpeg-media-info",
+          "gold_id": "multilingual-video-dubbing/ffmpeg-media-info",
+          "sha256": "38f1012b7e72fbaccae2a90e66da8c8832c3b33dab59796a513974efbd8b9c0a",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/multilingual-video-dubbing/environment/skills/ffmpeg-media-info/SKILL.md"
+          ]
+        },
+        {
+          "skill": "ffmpeg-video-editing",
+          "gold_id": "multilingual-video-dubbing/ffmpeg-video-editing",
+          "sha256": "707848935613f497d9d4a8992ec4184695ba2c9a1ac46b0a05ee7fd5d0067483",
+          "covered": false,
+          "method": "",
+          "score": 0.0,
+          "skilllib_ids": [],
+          "best_candidate": {
+            "skilllib_id": "benchflow-ai/skillsbench::tasks-extra/video-filler-word-remover/environment/skills/ffmpeg-video-editing/SKILL.md",
+            "jaccard": 0.2971,
+            "containment": 0.5547
+          }
+        },
+        {
+          "skill": "ffmpeg-video-filters",
+          "gold_id": "multilingual-video-dubbing/ffmpeg-video-filters",
+          "sha256": "8881bfa5b93551a93ba1658f1123bb4e564ef331b370c9fd23bd658d61db1507",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/multilingual-video-dubbing/environment/skills/ffmpeg-video-filters/SKILL.md"
+          ]
+        },
+        {
+          "skill": "text-to-speech",
+          "gold_id": "multilingual-video-dubbing/text-to-speech",
+          "sha256": "91e8f7dc19ff697fbdbc57d8c1228177ad1e60731b88fd7938e4d2f44444f60d",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/multilingual-video-dubbing/environment/skills/text-to-speech/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 6,
+      "n_covered": 5,
+      "coverage": 0.8333
+    },
+    "offer-letter-generator": {
+      "skills": [
+        {
+          "skill": "docx",
+          "gold_id": "offer-letter-generator/docx",
+          "sha256": "65c3442f51953a6b987e8aefa9abcb458f110344e80cc16c7c7efb931a13efea",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/offer-letter-generator/environment/skills/docx/SKILL.md",
+            "combined::docx"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "organize-messy-files": {
+      "skills": [
+        {
+          "skill": "docx",
+          "gold_id": "organize-messy-files/docx",
+          "sha256": "f63920be5bf299e6ba2fc77d57363425a9d9b88418318cd6a821fc2cfbd381a2",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "Prat011/awesome-llm-skills::document-skills/docx/SKILL.md",
+            "combined::docx",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/document-skills/docx/SKILL.md"
+          ]
+        },
+        {
+          "skill": "file-organizer",
+          "gold_id": "organize-messy-files/file-organizer",
+          "sha256": "bfd190964b2c4dfdd0c747d914db477bd15ffba2e136a540546a9f08cd7239a2",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/organize-messy-files/environment/skills/file-organizer/SKILL.md"
+          ]
+        },
+        {
+          "skill": "pdf",
+          "gold_id": "organize-messy-files/pdf",
+          "sha256": "38d8559d4899602f82f3560052132aa0c40cfca80203037729756bdb4fb8e0cb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "FreedomIntelligence/OpenClaw-Medical-Skills::skills/pdf-anthropic/SKILL.md"
+          ]
+        },
+        {
+          "skill": "planning-with-files",
+          "gold_id": "organize-messy-files/planning-with-files",
+          "sha256": "e22c50c824e6b99ac10ed311a1e7aec8944a2fdfda0708f67462c8c51897ba15",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/organize-messy-files/environment/skills/planning-with-files/SKILL.md",
+            "combined::planning-with-files"
+          ]
+        },
+        {
+          "skill": "pptx",
+          "gold_id": "organize-messy-files/pptx",
+          "sha256": "7d39d6f9917d87886ebb89a3696394d7295f2dc1dd9bc1376bfa31d81e139532",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/exceltable-in-ppt/environment/skills/pptx/SKILL.md",
+            "combined::pptx"
+          ]
+        }
+      ],
+      "n_gold": 5,
+      "n_covered": 5,
+      "coverage": 1.0
+    },
+    "paper-anonymizer": {
+      "skills": [
+        {
+          "skill": "academic-pdf-redaction",
+          "gold_id": "paper-anonymizer/academic-pdf-redaction",
+          "sha256": "587dbb503749a037f1f51983a1c7bca4177f8f647be82b25e5751b5408a52a8c",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/paper-anonymizer/environment/skills/academic-pdf-redaction/SKILL.md"
+          ]
+        },
+        {
+          "skill": "pdf",
+          "gold_id": "paper-anonymizer/pdf",
+          "sha256": "38d8559d4899602f82f3560052132aa0c40cfca80203037729756bdb4fb8e0cb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "FreedomIntelligence/OpenClaw-Medical-Skills::skills/pdf-anthropic/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "parallel-tfidf-search": {
+      "skills": [
+        {
+          "skill": "memory-optimization",
+          "gold_id": "parallel-tfidf-search/memory-optimization",
+          "sha256": "cc56c4b8119265a50ae48506c20f6e495bcb7972dfb7e78adc5405b840fb2ba8",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/parallel-tfidf-search/environment/skills/memory-optimization/SKILL.md"
+          ]
+        },
+        {
+          "skill": "python-parallelization",
+          "gold_id": "parallel-tfidf-search/python-parallelization",
+          "sha256": "cade40ed1ab5ae28c52ef8ebeaaf0d72b0323d73aa1886f54f5a995685a48a79",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/parallel-tfidf-search/environment/skills/python-parallelization/SKILL.md"
+          ]
+        },
+        {
+          "skill": "workload-balancing",
+          "gold_id": "parallel-tfidf-search/workload-balancing",
+          "sha256": "28260b9d369855ee36fab41bc2c084bb08e0473787888a3d20ca67d25d62ad5c",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/parallel-tfidf-search/environment/skills/workload-balancing/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "paratransit-routing": {
+      "skills": [
+        {
+          "skill": "ortools-pickup-delivery-routing",
+          "gold_id": "paratransit-routing/ortools-pickup-delivery-routing",
+          "sha256": "cad3ae9d92bd49da1426f612761fde5ff6aa9f0ffab5a6447ba8643af6c1473f",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/paratransit-routing/environment/skills/ortools-pickup-delivery-routing/SKILL.md"
+          ]
+        },
+        {
+          "skill": "ortools-routing-modeling",
+          "gold_id": "paratransit-routing/ortools-routing-modeling",
+          "sha256": "c563c6cdd94a278ca7c22bf172d20875198b9c618ecb111d5545ae10cdf53754",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/paratransit-routing/environment/skills/ortools-routing-modeling/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "pddl-airport-planning": {
+      "skills": [
+        {
+          "skill": "pddl-skills",
+          "gold_id": "pddl-airport-planning/pddl-skills",
+          "sha256": "adc4db64d2554074650a49a11f008698c7e95f69967e300ba219c5777f9ced4b",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/pddl-airport-planning/environment/skills/pddl-skills/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "pddl-tpp-planning": {
+      "skills": [
+        {
+          "skill": "pddl-skills",
+          "gold_id": "pddl-tpp-planning/pddl-skills",
+          "sha256": "adc4db64d2554074650a49a11f008698c7e95f69967e300ba219c5777f9ced4b",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/pddl-airport-planning/environment/skills/pddl-skills/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "pdf-excel-diff": {
+      "skills": [
+        {
+          "skill": "pdf",
+          "gold_id": "pdf-excel-diff/pdf",
+          "sha256": "38d8559d4899602f82f3560052132aa0c40cfca80203037729756bdb4fb8e0cb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "FreedomIntelligence/OpenClaw-Medical-Skills::skills/pdf-anthropic/SKILL.md"
+          ]
+        },
+        {
+          "skill": "xlsx",
+          "gold_id": "pdf-excel-diff/xlsx",
+          "sha256": "9bdc1fee81f3be9cb34ac49f8890c094a3855d3d0236783d10e0ea6df1515e01",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "Prat011/awesome-llm-skills::document-skills/xlsx/SKILL.md",
+            "combined::xlsx",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/xlsx/SKILL.md",
+            "zLanqing/codex-claude-academic-skills::scientific-toolkit-skill/references/scientific-skills/xlsx/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "powerlifting-coef-calc": {
+      "skills": [
+        {
+          "skill": "powerlifting",
+          "gold_id": "powerlifting-coef-calc/powerlifting",
+          "sha256": "8767b92aa10814cc7504b78c5c053d68925a1d33e1ac7c68e7f4d46f353949d6",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/powerlifting-coef-calc/environment/skills/powerlifting/SKILL.md"
+          ]
+        },
+        {
+          "skill": "senior-data-scientist",
+          "gold_id": "powerlifting-coef-calc/senior-data-scientist",
+          "sha256": "1e6974ea60451055b3b11ff8b12d6bbb8ef90ab2bf973830718271c8ed53de06",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/powerlifting-coef-calc/environment/skills/senior-data-scientist/SKILL.md",
+            "combined::senior-data-scientist",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/senior-data-scientist/SKILL.md"
+          ]
+        },
+        {
+          "skill": "xlsx",
+          "gold_id": "powerlifting-coef-calc/xlsx",
+          "sha256": "9bdc1fee81f3be9cb34ac49f8890c094a3855d3d0236783d10e0ea6df1515e01",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "Prat011/awesome-llm-skills::document-skills/xlsx/SKILL.md",
+            "combined::xlsx",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/xlsx/SKILL.md",
+            "zLanqing/codex-claude-academic-skills::scientific-toolkit-skill/references/scientific-skills/xlsx/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "pptx-reference-formatting": {
+      "skills": [
+        {
+          "skill": "pptx",
+          "gold_id": "pptx-reference-formatting/pptx",
+          "sha256": "7d39d6f9917d87886ebb89a3696394d7295f2dc1dd9bc1376bfa31d81e139532",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/exceltable-in-ppt/environment/skills/pptx/SKILL.md",
+            "combined::pptx"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "protein-expression-analysis": {
+      "skills": [
+        {
+          "skill": "xlsx",
+          "gold_id": "protein-expression-analysis/xlsx",
+          "sha256": "9bdc1fee81f3be9cb34ac49f8890c094a3855d3d0236783d10e0ea6df1515e01",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "Prat011/awesome-llm-skills::document-skills/xlsx/SKILL.md",
+            "combined::xlsx",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/xlsx/SKILL.md",
+            "zLanqing/codex-claude-academic-skills::scientific-toolkit-skill/references/scientific-skills/xlsx/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "python-scala-translation": {
+      "skills": [
+        {
+          "skill": "python-scala-collections",
+          "gold_id": "python-scala-translation/python-scala-collections",
+          "sha256": "bf85562526377b25585f66c85f6ac4edc40fb446bd7185a1323c9c1664e45377",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/python-scala-translation/environment/skills/python-scala-collections/SKILL.md"
+          ]
+        },
+        {
+          "skill": "python-scala-functional",
+          "gold_id": "python-scala-translation/python-scala-functional",
+          "sha256": "cf0986337f4b190b744a51ca7803fd3249ced2483439455a2f8efc1cdc526ddc",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/python-scala-translation/environment/skills/python-scala-functional/SKILL.md"
+          ]
+        },
+        {
+          "skill": "python-scala-idioms",
+          "gold_id": "python-scala-translation/python-scala-idioms",
+          "sha256": "fda000e8ebe06ec507e965bdfb1b2de5027e0a017322d0de9e45a8c204404529",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/python-scala-translation/environment/skills/python-scala-idioms/SKILL.md"
+          ]
+        },
+        {
+          "skill": "python-scala-libraries",
+          "gold_id": "python-scala-translation/python-scala-libraries",
+          "sha256": "aab0e5fdfc3331397ce6a679f7efc4882d39919b437407eb95798e5df066a374",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/python-scala-translation/environment/skills/python-scala-libraries/SKILL.md"
+          ]
+        },
+        {
+          "skill": "python-scala-oop",
+          "gold_id": "python-scala-translation/python-scala-oop",
+          "sha256": "71b407928329bbe26e55edc1adca846898c4c7ddb1e840634d75036a2e68fc29",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/python-scala-translation/environment/skills/python-scala-oop/SKILL.md"
+          ]
+        },
+        {
+          "skill": "python-scala-syntax-mapping",
+          "gold_id": "python-scala-translation/python-scala-syntax-mapping",
+          "sha256": "431bcff1cc97010dd1414ffb3d923a6168f4fe92e242224369f7179909683edc",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/python-scala-translation/environment/skills/python-scala-syntax-mapping/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 6,
+      "n_covered": 6,
+      "coverage": 1.0
+    },
+    "quantum-numerical-simulation": {
+      "skills": [
+        {
+          "skill": "qutip",
+          "gold_id": "quantum-numerical-simulation/qutip",
+          "sha256": "25d79e95290fe27f6e7360dfb816fb0f0082b6c9c846e02d94402d93c3974673",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/quantum-numerical-simulation/environment/skills/qutip/SKILL.md",
+            "combined::qutip"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "r2r-mpc-control": {
+      "skills": [
+        {
+          "skill": "finite-horizon-lqr",
+          "gold_id": "r2r-mpc-control/finite-horizon-lqr",
+          "sha256": "8ce87c503270a401f9bce17518a8f11d8cc421de2f15984678ddeb0b8c27575f",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/r2r-mpc-control/environment/skills/finite-horizon-lqr/SKILL.md"
+          ]
+        },
+        {
+          "skill": "integral-action-design",
+          "gold_id": "r2r-mpc-control/integral-action-design",
+          "sha256": "e3368f03c7c53e47f650272a2225602b0d437ae82c825b049291b02006d43220",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/r2r-mpc-control/environment/skills/integral-action-design/SKILL.md"
+          ]
+        },
+        {
+          "skill": "mpc-horizon-tuning",
+          "gold_id": "r2r-mpc-control/mpc-horizon-tuning",
+          "sha256": "fa85a6c22e728d92176f4aace0a3ad65e280bd4ecd061d1037a042b29ec47123",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/r2r-mpc-control/environment/skills/mpc-horizon-tuning/SKILL.md"
+          ]
+        },
+        {
+          "skill": "state-space-linearization",
+          "gold_id": "r2r-mpc-control/state-space-linearization",
+          "sha256": "1cd18b96f4f55ff004aa92c0acbf0cab2744032c94a42d750ce749055038835b",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/r2r-mpc-control/environment/skills/state-space-linearization/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 4,
+      "n_covered": 4,
+      "coverage": 1.0
+    },
+    "radar-vital-signs": {
+      "skills": [
+        {
+          "skill": "radar-signal-processing",
+          "gold_id": "radar-vital-signs/radar-signal-processing",
+          "sha256": "0f1194ad676bf02d4477fc14ffd799fe913dde632572cd5378788314c18f9e0f",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/radar-vital-signs/environment/skills/radar-signal-processing/SKILL.md"
+          ]
+        },
+        {
+          "skill": "radar-vital-signs",
+          "gold_id": "radar-vital-signs/radar-vital-signs",
+          "sha256": "b003f824a41198da0d5d3a373646edfa231d3d6a43ef4d94cb95578f5c97551a",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/radar-vital-signs/environment/skills/radar-vital-signs/SKILL.md"
+          ]
+        },
+        {
+          "skill": "vital-sign-extraction",
+          "gold_id": "radar-vital-signs/vital-sign-extraction",
+          "sha256": "aff09b876c5c3069161e3b8637cb63db5b4e32904dc3671ed91e66251942c673",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/radar-vital-signs/environment/skills/vital-sign-extraction/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "react-performance-debugging": {
+      "skills": [
+        {
+          "skill": "browser-testing",
+          "gold_id": "react-performance-debugging/browser-testing",
+          "sha256": "2fbcf10778c9b00e8fcefc18f2e5762a95e9d7ca7844edc4c80eb0ff49b38bde",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-visual-stability/environment/skills/browser-testing/SKILL.md"
+          ]
+        },
+        {
+          "skill": "react-best-practices",
+          "gold_id": "react-performance-debugging/react-best-practices",
+          "sha256": "0cc7e763ebc97e1fda8f41f9ae28a1c0ff0de2911450654505f11b13b41762a1",
+          "covered": true,
+          "method": "near_copy",
+          "score": 0.7784,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/fix-visual-stability/environment/skills/react-best-practices/SKILL.md",
+            "combined::react-best-practices"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "reserves-at-risk-calc": {
+      "skills": [
+        {
+          "skill": "xlsx",
+          "gold_id": "reserves-at-risk-calc/xlsx",
+          "sha256": "9bdc1fee81f3be9cb34ac49f8890c094a3855d3d0236783d10e0ea6df1515e01",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "Prat011/awesome-llm-skills::document-skills/xlsx/SKILL.md",
+            "combined::xlsx",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/xlsx/SKILL.md",
+            "zLanqing/codex-claude-academic-skills::scientific-toolkit-skill/references/scientific-skills/xlsx/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "sales-pivot-analysis": {
+      "skills": [
+        {
+          "skill": "pdf",
+          "gold_id": "sales-pivot-analysis/pdf",
+          "sha256": "332f39fecedcfef2fa73108937e1b2d8c6789a53067a92fed8cadd9ec9e62305",
+          "covered": false,
+          "method": "",
+          "score": 0.0,
+          "skilllib_ids": [],
+          "best_candidate": {
+            "skilllib_id": "combined::pdf",
+            "jaccard": 0.2393,
+            "containment": 0.4742
+          }
+        },
+        {
+          "skill": "xlsx",
+          "gold_id": "sales-pivot-analysis/xlsx",
+          "sha256": "845c73412be7cb9c1fcba4236a2102e8a52f0a83732496f03b3d95a0458c1ace",
+          "covered": false,
+          "method": "",
+          "score": 0.0,
+          "skilllib_ids": [],
+          "best_candidate": {
+            "skilllib_id": "combined::xlsx",
+            "jaccard": 0.2401,
+            "containment": 0.5488
+          }
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 0,
+      "coverage": 0.0
+    },
+    "sec-financial-report": {
+      "skills": [
+        {
+          "skill": "13f-analyzer",
+          "gold_id": "sec-financial-report/13f-analyzer",
+          "sha256": "fac0b5f05405e1e8631f0dcc8f34649e1eaf3252ae3dd8ef7eb9aadaf3c5290d",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/sec-financial-report/environment/skills/13f-analyzer/SKILL.md"
+          ]
+        },
+        {
+          "skill": "fuzzy-name-search",
+          "gold_id": "sec-financial-report/fuzzy-name-search",
+          "sha256": "d3a1180be787f8d19bc5bcb4a234b4db145ab88ba5ee1bdb1acde99bc97fef98",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/sec-financial-report/environment/skills/fuzzy-name-search/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "seismic-phase-picking": {
+      "skills": [
+        {
+          "skill": "obspy-data-api",
+          "gold_id": "seismic-phase-picking/obspy-data-api",
+          "sha256": "669584da3b2f685dc8939449b6f8c09dc9e857ed335154739aaf78f03b9a67df",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/earthquake-phase-association/environment/skills/obspy-data-api/SKILL.md"
+          ]
+        },
+        {
+          "skill": "obspy-datacenter-client",
+          "gold_id": "seismic-phase-picking/obspy-datacenter-client",
+          "sha256": "e17630a6c637bdb9732924c2af0965061c6d78fc953c0d00023da0e8f69adf25",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/seismic-phase-picking/environment/skills/obspy-datacenter-client/SKILL.md"
+          ]
+        },
+        {
+          "skill": "seisbench-model-api",
+          "gold_id": "seismic-phase-picking/seisbench-model-api",
+          "sha256": "32923bed92731f01669a29f9f3db964efc052a0ee5f4b6fc0115573fc99657e1",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/earthquake-phase-association/environment/skills/seisbench-model-api/SKILL.md"
+          ]
+        },
+        {
+          "skill": "seismic-picker-selection",
+          "gold_id": "seismic-phase-picking/seismic-picker-selection",
+          "sha256": "20ff09362d2154c6424b3b533238440bcfcf6d81f1de97d6903197577a9a174a",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/earthquake-phase-association/environment/skills/seismic-picker-selection/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 4,
+      "n_covered": 4,
+      "coverage": 1.0
+    },
+    "setup-fuzzing-py": {
+      "skills": [
+        {
+          "skill": "discover-important-function",
+          "gold_id": "setup-fuzzing-py/discover-important-function",
+          "sha256": "d935cc481fe8700ecfec482810dbf7fb56d0ee7e5fec7221ca5a77519d29ce29",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/setup-fuzzing-py/environment/skills/discover-important-function/SKILL.md"
+          ]
+        },
+        {
+          "skill": "fuzzing-python",
+          "gold_id": "setup-fuzzing-py/fuzzing-python",
+          "sha256": "718882130de22873f00e422d1c8d4d67febd002d5ee0163f314fea8890c0b835",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/setup-fuzzing-py/environment/skills/fuzzing-python/SKILL.md"
+          ]
+        },
+        {
+          "skill": "setup-env",
+          "gold_id": "setup-fuzzing-py/setup-env",
+          "sha256": "7b95dc92985ab21b131c5f1d14ec05cf27d145c5384e28bbf3022c7ea89f4202",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/setup-fuzzing-py/environment/skills/setup-env/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "shock-analysis-demand": {
+      "skills": [
+        {
+          "skill": "xlsx",
+          "gold_id": "shock-analysis-demand/xlsx",
+          "sha256": "9bdc1fee81f3be9cb34ac49f8890c094a3855d3d0236783d10e0ea6df1515e01",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "Prat011/awesome-llm-skills::document-skills/xlsx/SKILL.md",
+            "combined::xlsx",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/xlsx/SKILL.md",
+            "zLanqing/codex-claude-academic-skills::scientific-toolkit-skill/references/scientific-skills/xlsx/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "shock-analysis-supply": {
+      "skills": [
+        {
+          "skill": "xlsx",
+          "gold_id": "shock-analysis-supply/xlsx",
+          "sha256": "9bdc1fee81f3be9cb34ac49f8890c094a3855d3d0236783d10e0ea6df1515e01",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "Prat011/awesome-llm-skills::document-skills/xlsx/SKILL.md",
+            "combined::xlsx",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/xlsx/SKILL.md",
+            "zLanqing/codex-claude-academic-skills::scientific-toolkit-skill/references/scientific-skills/xlsx/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "simpo-code-reproduction": {
+      "skills": [
+        {
+          "skill": "nlp-research-repo-package-installment",
+          "gold_id": "simpo-code-reproduction/nlp-research-repo-package-installment",
+          "sha256": "65c77284858ffc4544dd8d85dbae5771855e6df44c37812f2877490e3afa70b2",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/simpo-code-reproduction/environment/skills/nlp-research-repo-package-installment/SKILL.md"
+          ]
+        },
+        {
+          "skill": "pdf",
+          "gold_id": "simpo-code-reproduction/pdf",
+          "sha256": "38d8559d4899602f82f3560052132aa0c40cfca80203037729756bdb4fb8e0cb",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "FreedomIntelligence/OpenClaw-Medical-Skills::skills/pdf-anthropic/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "software-dependency-audit": {
+      "skills": [
+        {
+          "skill": "cvss-score-extraction",
+          "gold_id": "software-dependency-audit/cvss-score-extraction",
+          "sha256": "5f9e2a22ec2a8230c9d6ed234fb7c48742e257631d397eb9bcabd5d12b7798d2",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/software-dependency-audit/environment/skills/cvss-score-extraction/SKILL.md"
+          ]
+        },
+        {
+          "skill": "trivy-offline-vulnerability-scanning",
+          "gold_id": "software-dependency-audit/trivy-offline-vulnerability-scanning",
+          "sha256": "594389f6d5d0d58c1c7714592bfce7f871154827a4b65f948d9829f2af3108a3",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/software-dependency-audit/environment/skills/trivy-offline-vulnerability-scanning/SKILL.md"
+          ]
+        },
+        {
+          "skill": "vulnerability-csv-reporting",
+          "gold_id": "software-dependency-audit/vulnerability-csv-reporting",
+          "sha256": "80c79f8543d118a2c4625cdcdb4b7576b3e834f9cb7f9adbe3ace6c7040a3439",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/software-dependency-audit/environment/skills/vulnerability-csv-reporting/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "spring-boot-jakarta-migration": {
+      "skills": [
+        {
+          "skill": "hibernate-upgrade",
+          "gold_id": "spring-boot-jakarta-migration/hibernate-upgrade",
+          "sha256": "b54208d472482e218ff9cd16e8e4bed12fa8df7f801af8aea22184df954f8bcd",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/spring-boot-jakarta-migration/environment/skills/hibernate-upgrade/SKILL.md"
+          ]
+        },
+        {
+          "skill": "jakarta-namespace",
+          "gold_id": "spring-boot-jakarta-migration/jakarta-namespace",
+          "sha256": "6af9ccbf16fff0f7cb65ed15a2433256cb48ca2328ebd86f5e556570f86f93a1",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/spring-boot-jakarta-migration/environment/skills/jakarta-namespace/SKILL.md"
+          ]
+        },
+        {
+          "skill": "restclient-migration",
+          "gold_id": "spring-boot-jakarta-migration/restclient-migration",
+          "sha256": "eb2568b08d96c567b2aaa15f7adfea49a1f71db5ef769a7245be92d2b8e9088e",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/spring-boot-jakarta-migration/environment/skills/restclient-migration/SKILL.md"
+          ]
+        },
+        {
+          "skill": "spring-boot-migration",
+          "gold_id": "spring-boot-jakarta-migration/spring-boot-migration",
+          "sha256": "0cc93cde9cc7cfd0d5af62edce6cedab6395f24b60de883cf5eb36a994e94b78",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/spring-boot-jakarta-migration/environment/skills/spring-boot-migration/SKILL.md"
+          ]
+        },
+        {
+          "skill": "spring-security-6",
+          "gold_id": "spring-boot-jakarta-migration/spring-security-6",
+          "sha256": "d4522347dbc38ba3280929376b054066fa5b202ca845b6fead78c085debb622d",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/spring-boot-jakarta-migration/environment/skills/spring-security-6/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 5,
+      "n_covered": 5,
+      "coverage": 1.0
+    },
+    "suricata-custom-exfil": {
+      "skills": [
+        {
+          "skill": "pcap-triage-tshark",
+          "gold_id": "suricata-custom-exfil/pcap-triage-tshark",
+          "sha256": "1070842f53661264a2e881666d586710a91e8ca463d703af1012645bde1b7e28",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/suricata-custom-exfil/environment/skills/pcap-triage-tshark/SKILL.md"
+          ]
+        },
+        {
+          "skill": "suricata-offline-evejson",
+          "gold_id": "suricata-custom-exfil/suricata-offline-evejson",
+          "sha256": "5ef330a5329e945c26aec25cef8b896e6e9fd74f6bbbe1e9d8da4432b6c4a4f1",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/suricata-custom-exfil/environment/skills/suricata-offline-evejson/SKILL.md"
+          ]
+        },
+        {
+          "skill": "suricata-rules-basics",
+          "gold_id": "suricata-custom-exfil/suricata-rules-basics",
+          "sha256": "12311a48a3bda4a363a9debbcf52c0bb978273aa10c472a2cff72593831f223d",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/suricata-custom-exfil/environment/skills/suricata-rules-basics/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "syzkaller-ppdev-syzlang": {
+      "skills": [
+        {
+          "skill": "syz-extract-constants",
+          "gold_id": "syzkaller-ppdev-syzlang/syz-extract-constants",
+          "sha256": "2fc1affd7993d5e0223033fdb8083cd26601994d4686b4e49feca7d83cc1a733",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/syzkaller-ppdev-syzlang/environment/skills/syz-extract-constants/SKILL.md"
+          ]
+        },
+        {
+          "skill": "syzkaller-build-loop",
+          "gold_id": "syzkaller-ppdev-syzlang/syzkaller-build-loop",
+          "sha256": "36d455ae98e5dfe11fcdce15b4abac58b3d37b3322ecde27b6bebbb2b619c6d6",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/syzkaller-ppdev-syzlang/environment/skills/syzkaller-build-loop/SKILL.md"
+          ]
+        },
+        {
+          "skill": "syzlang-ioctl-basics",
+          "gold_id": "syzkaller-ppdev-syzlang/syzlang-ioctl-basics",
+          "sha256": "f733ad59a34b426d8cc02fda55228feb88c15f8af40baae7b2944812d236c1c5",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/syzkaller-ppdev-syzlang/environment/skills/syzlang-ioctl-basics/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "threejs-structure-parser": {
+      "skills": [
+        {
+          "skill": "obj-exporter",
+          "gold_id": "threejs-structure-parser/obj-exporter",
+          "sha256": "92f851fcd69db38dc72e85f789f06557fc3e82c59d33d580fb977a72f8e587aa",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/threejs-structure-parser/environment/skills/obj-exporter/SKILL.md"
+          ]
+        },
+        {
+          "skill": "threejs",
+          "gold_id": "threejs-structure-parser/threejs",
+          "sha256": "ea480298751ea55effee4535b16b67ec79fd9540b971a89712e6f5b9ce8cd663",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/threejs-structure-parser/environment/skills/threejs/SKILL.md",
+            "combined::threejs"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "threejs-to-obj": {
+      "skills": [
+        {
+          "skill": "obj-exporter",
+          "gold_id": "threejs-to-obj/obj-exporter",
+          "sha256": "e6681249baeab46443a2ddd1ef7983099dced6851b18dba3572b3967e5548056",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/threejs-structure-parser/environment/skills/obj-exporter/SKILL.md"
+          ]
+        },
+        {
+          "skill": "threejs",
+          "gold_id": "threejs-to-obj/threejs",
+          "sha256": "ea480298751ea55effee4535b16b67ec79fd9540b971a89712e6f5b9ce8cd663",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/threejs-structure-parser/environment/skills/threejs/SKILL.md",
+            "combined::threejs"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    },
+    "tictoc-unnecessary-abort-detection": {
+      "skills": [
+        {
+          "skill": "transaction-concurrency-control-foundations",
+          "gold_id": "tictoc-unnecessary-abort-detection/transaction-concurrency-control-foundations",
+          "sha256": "e547c7f2b5ae65f6543d34c58d5b5db71145ee9f8dc8683a845671258937282e",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/tictoc-unnecessary-abort-detection/environment/skills/transaction-concurrency-control-foundations/SKILL.md"
+          ]
+        },
+        {
+          "skill": "transaction-protocol-reasoning",
+          "gold_id": "tictoc-unnecessary-abort-detection/transaction-protocol-reasoning",
+          "sha256": "8ce9b3a2c3b86940063505013d15bb477c2bb164fcc0fe6f0736383476da103b",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/tictoc-unnecessary-abort-detection/environment/skills/transaction-protocol-reasoning/SKILL.md"
+          ]
+        },
+        {
+          "skill": "transaction-trace-analysis",
+          "gold_id": "tictoc-unnecessary-abort-detection/transaction-trace-analysis",
+          "sha256": "c44409caad70c655144b26ec53e50d727dc2c9d0e0c244d648a0f99e5d51b929",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/tictoc-unnecessary-abort-detection/environment/skills/transaction-trace-analysis/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 3,
+      "n_covered": 3,
+      "coverage": 1.0
+    },
+    "travel-planning": {
+      "skills": [
+        {
+          "skill": "search-accommodations",
+          "gold_id": "travel-planning/search-accommodations",
+          "sha256": "b4d84f0d8f5ca68d6d9da711041be8208d509a8137c01cd7edcb9726b03a9e81",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/travel-planning/environment/skills/search-accommodations/SKILL.md"
+          ]
+        },
+        {
+          "skill": "search-attractions",
+          "gold_id": "travel-planning/search-attractions",
+          "sha256": "1a022a9c7ddfaed2f02a668535c491bd44e3196258258d5d84f00d8a26c0e7d8",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/travel-planning/environment/skills/search-attractions/SKILL.md"
+          ]
+        },
+        {
+          "skill": "search-cities",
+          "gold_id": "travel-planning/search-cities",
+          "sha256": "93df8526bfaa429af0770e9c8483ba4d183e6ab259dfb26c60ca4dcd5fcc0b0f",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/travel-planning/environment/skills/search-cities/SKILL.md"
+          ]
+        },
+        {
+          "skill": "search-driving-distance",
+          "gold_id": "travel-planning/search-driving-distance",
+          "sha256": "4d5c8c0b4249c47cda8d8b5c6400a085999c437c7c6837dfd81dd4ea01ec91d2",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/travel-planning/environment/skills/search-driving-distance/SKILL.md"
+          ]
+        },
+        {
+          "skill": "search-flights",
+          "gold_id": "travel-planning/search-flights",
+          "sha256": "455734cb845620f57b39341a6f4372d28a084e70c741ce277a6a6f4323d46e06",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/travel-planning/environment/skills/search-flights/SKILL.md"
+          ]
+        },
+        {
+          "skill": "search-restaurants",
+          "gold_id": "travel-planning/search-restaurants",
+          "sha256": "6a33f2c46d214f14ad02ad0c47613d2cf4ce816a3aaf41adc1ac549c755780d6",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/travel-planning/environment/skills/search-restaurants/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 6,
+      "n_covered": 6,
+      "coverage": 1.0
+    },
+    "video-silence-remover": {
+      "skills": [
+        {
+          "skill": "audio-extractor",
+          "gold_id": "video-silence-remover/audio-extractor",
+          "sha256": "519c65b662030cf4e67e1babbbafad4484e9c8f4d8dd03a931e4a8f9023b1aaa",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/video-silence-remover/environment/skills/audio-extractor/SKILL.md"
+          ]
+        },
+        {
+          "skill": "energy-calculator",
+          "gold_id": "video-silence-remover/energy-calculator",
+          "sha256": "4eb4e3e82f5044b38e934dee98cf66735bb3fa54ee0896e1369188354dda349f",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/video-silence-remover/environment/skills/energy-calculator/SKILL.md"
+          ]
+        },
+        {
+          "skill": "pause-detector",
+          "gold_id": "video-silence-remover/pause-detector",
+          "sha256": "3d8095f46ef213b6f0e4d5987a29bbcc709ae2e0caa326f2af7e8486ec900889",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/video-silence-remover/environment/skills/pause-detector/SKILL.md"
+          ]
+        },
+        {
+          "skill": "report-generator",
+          "gold_id": "video-silence-remover/report-generator",
+          "sha256": "33367acf4fed65325f60120cc54662e5c814562a49040f66f966270b19aa9d11",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/video-silence-remover/environment/skills/report-generator/SKILL.md",
+            "combined::report-generator"
+          ]
+        },
+        {
+          "skill": "segment-combiner",
+          "gold_id": "video-silence-remover/segment-combiner",
+          "sha256": "cc716f88354c1447f71f38890ae1efeb4a5ceed9c67b545831a58ea04afc1212",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/video-silence-remover/environment/skills/segment-combiner/SKILL.md"
+          ]
+        },
+        {
+          "skill": "silence-detector",
+          "gold_id": "video-silence-remover/silence-detector",
+          "sha256": "c5e4e03d8eb94edffbc0ddf09df7a07260d349041408dd12204d2d5b67a309ef",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/video-silence-remover/environment/skills/silence-detector/SKILL.md"
+          ]
+        },
+        {
+          "skill": "video-processor",
+          "gold_id": "video-silence-remover/video-processor",
+          "sha256": "33d90344f81f15d1da43d8b41231167c39c8f8d5f3a929d41ce051992b415148",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/video-silence-remover/environment/skills/video-processor/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 7,
+      "n_covered": 7,
+      "coverage": 1.0
+    },
+    "weighted-gdp-calc": {
+      "skills": [
+        {
+          "skill": "xlsx",
+          "gold_id": "weighted-gdp-calc/xlsx",
+          "sha256": "9bdc1fee81f3be9cb34ac49f8890c094a3855d3d0236783d10e0ea6df1515e01",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "Prat011/awesome-llm-skills::document-skills/xlsx/SKILL.md",
+            "combined::xlsx",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/xlsx/SKILL.md",
+            "zLanqing/codex-claude-academic-skills::scientific-toolkit-skill/references/scientific-skills/xlsx/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 1,
+      "n_covered": 1,
+      "coverage": 1.0
+    },
+    "xlsx-recover-data": {
+      "skills": [
+        {
+          "skill": "data-reconciliation",
+          "gold_id": "xlsx-recover-data/data-reconciliation",
+          "sha256": "341dd818dfc713e5413bb74923c905f9990996c0876037a3918bce826b6a0c8d",
+          "covered": true,
+          "method": "sha256",
+          "score": 1.0,
+          "skilllib_ids": [
+            "benchflow-ai/skillsbench::tasks/xlsx-recover-data/environment/skills/data-reconciliation/SKILL.md"
+          ]
+        },
+        {
+          "skill": "xlsx",
+          "gold_id": "xlsx-recover-data/xlsx",
+          "sha256": "9bdc1fee81f3be9cb34ac49f8890c094a3855d3d0236783d10e0ea6df1515e01",
+          "covered": true,
+          "method": "contained",
+          "score": 1.0,
+          "skilllib_ids": [
+            "Prat011/awesome-llm-skills::document-skills/xlsx/SKILL.md",
+            "combined::xlsx",
+            "foryourhealth111-pixel/Vibe-Skills::bundled/skills/xlsx/SKILL.md",
+            "zLanqing/codex-claude-academic-skills::scientific-toolkit-skill/references/scientific-skills/xlsx/SKILL.md"
+          ]
+        }
+      ],
+      "n_gold": 2,
+      "n_covered": 2,
+      "coverage": 1.0
+    }
+  }
+}

@@ -413,6 +413,10 @@ git submodule update --init skill-lib
 
 When `skill-lib/catalog/routing_cards.jsonl` is present, a normal session registers the three tools from SkillLib's integration module, `skilllib.integrate`: `skill_library_find`, `skill_library_load`, and `skill_library_visit`. The system prompt is that module's `resident_prompt()`, not a prompt written in Hermes. Disable the catalog with `disabled_toolsets: [skill_library]`. Leave `skill-lib` out of `skills.external_dirs`; that setting scans `SKILL.md` files into the prompt index, which this catalog is too large for. Another agent integrates the same way: register `tool_specs()` and append `resident_prompt()`. The contract is in the SkillLib repository at `docs/interface.md`.
 
+## SkillRouter baseline
+
+[`baselines/SkillRouter`](https://github.com/zhengyanzhao1997/SkillRouter) is a second checkout, used as a retrieval baseline. Hermes remains the agent. When the published skill-pool shards are on disk and `torch` imports in this environment, a session registers `skill_router_find` and `skill_router_load`. The benchmark runner selects that path with `--skill-mode router`, `router-compatible`, or `router-only`. Preparation and the retrieval metrics are in the repository file `benchmark/README.md`. Disable it with `disabled_toolsets: [skill_router]`. Do not point `skills.external_dirs` at the pool.
+
 ## External Skill Directories
 
 If you maintain skills outside of Hermes — for example, a shared `~/.agents/skills/` directory used by multiple AI tools — you can tell Hermes to scan those directories too.

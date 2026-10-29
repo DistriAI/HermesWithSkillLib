@@ -93,6 +93,12 @@ def mount_args(
     project_cache = repo / "skill-lib" / "cache"
     if project_cache.is_dir():
         args.extend(["-v", f"{project_cache}:{project_cache}"])
+    router = repo / "baselines" / "SkillRouter"
+    if (router / "src" / "common.py").is_file():
+        for name in ("outputs", "models"):
+            path = router / name
+            path.mkdir(parents=True, exist_ok=True)
+            args.extend(["-v", f"{path}:{path}"])
     args.extend([
         "-v", f"{agent_dir}:{agent_dir}",
         "-v", f"{hermes_home}:{hermes_home}",

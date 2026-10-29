@@ -60,6 +60,7 @@ run_datagen_megascience_glm4-6.sh
 data/*
 # Experiment workspaces stay untracked. Benchmark sources are submodules.
 # The procedure and the runner scripts stay tracked in this repo.
+/baselines/skillrouter.json
 /benchmark/*
 !/benchmark/README.md
 !/benchmark/scripts/

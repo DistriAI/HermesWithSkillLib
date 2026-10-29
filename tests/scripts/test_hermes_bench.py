@@ -65,7 +65,8 @@ def test_skillsbench_hides_oracle_and_skills(tmp_path: Path):
     assert (workspace / "skills" / "helper" / "SKILL.md").read_text(encoding="utf-8") == "secret"
     assert "Read each SKILL.md" in prompt
     assert "skill_library_find" in prompt
-    assert "Do not call" not in prompt
+    assert "Do not call skill_library_find" not in prompt
+    assert "Do not call skill_router_find" in prompt
     assert "/root/input.txt" not in prompt
     only_ws = tmp_path / "only-ws"
     only_prompt, _ = skillsbench.prepare(dest, only_ws, "library-only")
@@ -300,6 +301,180 @@ def test_success_curves_and_cost_stats():
     assert summary["execution_time_sec"]["all_tasks"]["mean"] == 20
     assert summary["input_tokens"]["successful_tasks"]["mean"] == 100
     assert summary["total_tokens"]["all_tasks"]["n"] == 2
+
+
+def test_skill_retrieval_metrics_follow_the_skillrouter_definitions():
+    import retrieval_metrics
+    one = retrieval_metrics.score(["gt/pid-controller", "other"], ["gt/pid-controller"], {"gt/pid-controller": 3})
+    assert one["Hit@1"] == 1.0
+    assert one["MRR@10"] == 1.0
+    assert one["Recall@10"] == 1.0
+    assert one["FullCoverage@10"] == 1.0
+    assert one["Precision@3"] == 1 / 3
+    assert one["nDCG@1"] == 1.0
+    two = retrieval_metrics.score(["other", "pid-controller"], ["gt/pid-controller", "gt/yaml-config"])
+    assert two["Hit@1"] == 0.0
+    assert two["MRR@10"] == 0.5
+    assert two["Recall@10"] == 0.5
+    assert two["FullCoverage@5"] == 0.0
+    assert retrieval_metrics.skill_name("skills/pid-controller/SKILL.md") == "pid-controller"
+    gold = retrieval_metrics.gold_block("adaptive-cruise-control", None)
+    assert "gt/pid-controller" in gold["gold_ids"]
+    assert gold["scored"] is True
+    skipped = retrieval_metrics.gold_block("not-a-real-task", None)
+    assert skipped["scored"] is False
+    lines = [{
+        "role": "tool",
+        "tool_call_id": "c1",
+        "content": json.dumps({"ranked_ids": ["gt/pid-controller"], "retrieval_ids": ["gt/pid-controller", "other"]}),
+    }, {
+        "role": "assistant",
+        "tool_calls": [{"id": "c1", "function": {"name": "skill_router_find", "arguments": "{}"}}],
+    }]
+    # The result has to follow the call. A result with no pending call is ignored.
+    ordered = [lines[1], lines[0]]
+    ranked, retrieved, tool = retrieval_metrics.ranked_ids_from_lines(ordered)
+    assert ranked == ["gt/pid-controller"]
+    assert retrieved == ["gt/pid-controller", "other"]
+    assert tool == "skill_router_find"
+    block = retrieval_metrics.apply_ranking(dict(gold), ranked, retrieved)
+    assert block["metrics"]["Hit@1"] == 1.0
+    assert block["candidate_metrics"]["Recall@10"] == 1 / len(gold["gold_ids"])
+    summary = retrieval_metrics.summary([{"skill_retrieval": block}, {"skill_retrieval": skipped}])
+    assert summary["n_with_gold"] == 1
+    assert summary["n_ranked"] == 1
+    assert summary["pipeline"]["all"]["Hit@1"] == 1.0
+    assert summary["pipeline"]["multi"]["n"] == 1
+    assert summary["catalog"]["n_ranked"] == 0
+
+
+def test_catalog_retrieval_uses_the_skill_map_and_covered_full_coverage():
+    import retrieval_metrics
+    skills = [
+        {"gold_id": "task/kept", "covered": True, "skilllib_ids": ["lib/kept"]},
+        {"gold_id": "task/missing", "covered": False, "skilllib_ids": []},
+    ]
+    found = retrieval_metrics.catalog_score(["lib/kept", "lib/other"], skills)
+    assert found["Hit@1"] == 1.0
+    assert found["Recall@10"] == 0.5
+    assert found["FullCoverage@10"] == 0.0
+    assert found["FullCoverageCovered@5"] == 1.0
+    assert found["coverage"] == 0.5
+    assert found["on_covered_gold"]["Recall@10"] == 1.0
+    assert found["on_covered_gold"]["FullCoverage@10"] == 1.0
+    # A same-named id that the map did not link is not a hit.
+    missed = retrieval_metrics.catalog_score(["task/kept"], skills)
+    assert missed["Hit@1"] == 0.0
+    assert missed["FullCoverageCovered@10"] == 0.0
+    empty = retrieval_metrics.catalog_score(["lib/anything"], [
+        {"gold_id": "task/gone", "covered": False, "skilllib_ids": []},
+    ])
+    assert empty["Hit@1"] == 0.0
+    assert empty["FullCoverageCovered@10"] == 1.0
+    assert empty["on_covered_gold"] is None
+    mapped = retrieval_metrics.evaluate_library(
+        "adaptive-cruise-control",
+        ["benchflow-ai/skillsbench::tasks/adaptive-cruise-control/environment/skills/pid-controller/SKILL.md"],
+    )
+    assert mapped is not None
+    assert mapped["n_covered"] == mapped["n_gold"]
+    assert mapped["Hit@1"] == 1.0
+    assert mapped["FullCoverage@10"] == 0.0
+    assert mapped["FullCoverageCovered@10"] == 0.0
+    assert mapped["Recall@10"] == 1 / mapped["n_gold"]
+    uncovered = retrieval_metrics.evaluate_library("sales-pivot-analysis", ["combined::pdf", "combined::xlsx"])
+    assert uncovered["coverage"] < 1.0
+    assert uncovered["Hit@1"] == 0.0
+    lines = [
+        {"role": "assistant", "tool_calls": [{"id": "c1", "function": {"name": "skill_library_find"}}]},
+        {"role": "tool", "tool_call_id": "c1", "content": json.dumps({"ranked_ids": ["lib/kept"]})},
+    ]
+    block = {"task_id": "task", "scored": True, "gold_ids": ["kept"], "relevance": {}}
+    retrieval_metrics.observe(block, lines)
+    assert block["catalog_metrics"] is None
+    block["task_id"] = "adaptive-cruise-control"
+    block["metrics"] = None
+    block.pop("catalog_metrics", None)
+    retrieval_metrics.observe(block, [
+        {"role": "assistant", "tool_calls": [{"id": "c2", "function": {"name": "skill_library_find"}}]},
+        {"role": "tool", "tool_call_id": "c2", "content": json.dumps({
+            "cards": [{"id": "benchflow-ai/skillsbench::tasks/adaptive-cruise-control/environment/skills/pid-controller/SKILL.md"}],
+        })},
+    ])
+    assert block["catalog_metrics"]["Hit@1"] == 1.0
+
+
+def test_skill_map_links_copies_and_leaves_different_same_name_skills_out():
+    import skill_map
+    document = skill_map.load()
+    cruise = skill_map.task_entry(document, "adaptive-cruise-control")
+    pid = next(item for item in cruise["skills"] if item["skill"] == "pid-controller")
+    assert pid["covered"] is True
+    assert pid["method"] == "sha256"
+    exporter = skill_map.task_entry(document, "threejs-to-obj")
+    obj = next(item for item in exporter["skills"] if item["skill"] == "obj-exporter")
+    assert obj["method"] == "contained"
+    video = skill_map.task_entry(document, "multilingual-video-dubbing")
+    ffmpeg = next(item for item in video["skills"] if item["skill"] == "ffmpeg-video-editing")
+    assert ffmpeg["covered"] is False
+    assert ffmpeg["best_candidate"]["jaccard"] < skill_map.JACCARD_MIN
+    assert document["n_tasks"] == 87
+    assert document["n_skills"] == 232
+    assert document["n_covered_skills"] == 229
+
+
+def test_retrieval_baselines_rank_the_skilllib_catalog_with_the_map():
+    import retrieval_baselines
+    import retrieval_pool
+    raw = "---\nname: example\n---\n\nImplement a PID speed loop.\n"
+    assert retrieval_pool.instruction_text(raw) == "Implement a PID speed loop."
+    text = retrieval_pool.all_field_text("pid", "d" * 400, "b" * 3000)
+    assert text.startswith("pid | ")
+    assert text.endswith("b" * 2500)
+    assert "d" * 301 not in text
+    documents = [
+        {"id": "lib/pid", "text": "pid controller speed loop throttle brake"},
+        {"id": "lib/other", "text": "video captions timeline export"},
+    ]
+    index = retrieval_pool.BM25Index(documents)
+    assert index.top("pid speed loop", 2)[0] == "lib/pid"
+    assert index.top("", 2) == []
+    skill_map_doc = {"tasks": {"demo": {"skills": [
+        {"gold_id": "demo/pid", "covered": True, "skilllib_ids": ["lib/pid"]},
+        {"gold_id": "demo/missing", "covered": False, "skilllib_ids": []},
+    ]}}}
+    summary = retrieval_baselines.score_rankings({"demo": ["lib/pid"]}, skill_map_doc)
+    assert summary["n_tasks"] == 1
+    assert summary["pipeline"]["all"]["Hit@1"] == 1.0
+    assert summary["pipeline"]["all"]["FullCoverage@10"] == 0.0
+    assert summary["pipeline"]["all"]["FullCoverageCovered@10"] == 1.0
+    assert summary["on_covered_gold"]["all"]["Recall@10"] == 1.0
+    assert summary["pipeline"]["single"]["n"] == 0
+    assert summary["pipeline"]["multi"]["n"] == 1
+    paper = {
+        "bm25", "bge-large", "e5-large", "gte-large", "qwen3-emb-0.6b",
+        "qwen3-emb-8b", "nv-embed-v2", "skillrouter", "qwen3-0.6b-rerank", "skillrouter-rerank",
+    }
+    assert paper <= set(retrieval_baselines.METHODS)
+    assert retrieval_baselines._spec("bm25", None, None, None)["kind"] == "bm25"
+    assert retrieval_baselines._spec("bm25", None, "Qwen/Qwen3-Reranker-0.6B", None)["kind"] == "bm25"
+    assert retrieval_baselines._spec("skilllib", None, "Qwen/Qwen3-Reranker-0.6B", None)["kind"] == "skilllib-pipeline"
+    paired = retrieval_baselines._spec("skillrouter-rerank", None, None, None)
+    assert paired["kind"] == "pipeline"
+    assert paired["model"].endswith("SkillRouter-Embedding-0.6B")
+    assert paired["reranker"].endswith("SkillRouter-Reranker-0.6B")
+    dense = retrieval_baselines._spec("bge-large", None, "Qwen/Qwen3-Reranker-0.6B", None)
+    assert dense["kind"] == "pipeline"
+    assert dense["pool"] == "cls"
+
+
+def test_skill_router_stays_off_without_its_pool():
+    from agent.skill_router import find, router_available, tool_names, unavailable_reason
+    assert tool_names() == ("skill_router_find", "skill_router_load")
+    assert router_available() is False
+    result = find("adaptive cruise control")
+    assert result["success"] is False
+    assert unavailable_reason()
 
 
 def test_skill_library_usage_splits_success_by_calls():
@@ -570,11 +745,17 @@ def test_skill_modes_choose_hermes_benchmark_and_library():
     assert common.skill_sources("library-compatible") == common.SkillSources(True, True, True)
     assert common.skill_sources("library-only") == common.SkillSources(False, False, True)
     assert common.skill_sources("none") == common.SkillSources(False, False, False)
-    assert common.disabled_toolsets("task") == ["skill_library"]
-    assert common.disabled_toolsets("library") == ["skills"]
-    assert common.disabled_toolsets("library-compatible") == []
-    assert common.disabled_toolsets("library-only") == ["skills"]
-    assert common.disabled_toolsets("none") == ["skills", "skill_library"]
+    assert common.disabled_toolsets("task") == ["skill_library", "skill_router"]
+    assert common.disabled_toolsets("library") == ["skills", "skill_router"]
+    assert common.disabled_toolsets("library-compatible") == ["skill_router"]
+    assert common.disabled_toolsets("library-only") == ["skills", "skill_router"]
+    assert common.disabled_toolsets("none") == ["skills", "skill_library", "skill_router"]
+    assert common.skill_sources("router") == common.SkillSources(False, True, False, True)
+    assert common.skill_sources("router-compatible") == common.SkillSources(True, True, False, True)
+    assert common.skill_sources("router-only") == common.SkillSources(False, False, False, True)
+    assert common.disabled_toolsets("router") == ["skills", "skill_library"]
+    assert common.disabled_toolsets("router-only") == ["skills", "skill_library"]
+    assert common.disabled_toolsets("router-compatible") == ["skill_library"]
 
 
 def test_skill_note_names_the_sources_a_mode_offers(tmp_path: Path):
@@ -584,13 +765,20 @@ def test_skill_note_names_the_sources_a_mode_offers(tmp_path: Path):
     assert "Do not call" in task and "skill_library_find" in task
     library = common.skill_note("library", workspace, has_task_skills=True)
     assert "Read each SKILL.md" in library and "skill_library_find" in library
-    assert "Do not call" not in library
+    assert "Do not call skill_library_find" not in library
+    assert "Do not call skill_router_find" in library
     compatible = common.skill_note("library-compatible", workspace, has_task_skills=True)
     assert "Read each SKILL.md" in compatible and "skill_library_load" in compatible
-    assert "Do not call" not in compatible
+    assert "Do not call skill_library_find" not in compatible
+    assert "Do not call skill_router_find" in compatible
     only = common.skill_note("library-only", workspace, has_task_skills=False)
     assert "Read each SKILL.md" not in only
-    assert "skill_library_find" in only and "Do not call" not in only
+    assert "skill_library_find" in only and "Do not call skill_library_find" not in only
+    assert "Do not call skill_router_find" in only
+    router = common.skill_note("router", workspace, has_task_skills=True)
+    assert "Read each SKILL.md" in router
+    assert "Do not call skill_library_find" in router
+    assert "skill_router_find" in router
     none = common.skill_note("none", workspace, has_task_skills=False)
     assert "Read each SKILL.md" not in none
     assert "Do not call" in none
@@ -606,6 +794,9 @@ def test_prepare_copies_task_skills_only_when_the_mode_includes_them(tmp_path: P
         ("library", True),
         ("library-compatible", True),
         ("library-only", False),
+        ("router", True),
+        ("router-compatible", True),
+        ("router-only", False),
         ("none", False),
     ):
         workspace = tmp_path / mode
