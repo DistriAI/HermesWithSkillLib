@@ -14,7 +14,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import resource
 import sys
+import time
 from pathlib import Path
 
 import retrieval_metrics
@@ -38,7 +40,7 @@ _BGE_QUERY = "Represent this sentence for searching relevant passages: "
 METHODS = {
     "skilllib": {
         "kind": "skilllib",
-        "label": "SkillLib finder (routing-card lexical ranker)",
+        "label": "SkillLib finder (BM25 over routing card and skill text)",
     },
     "bm25": {
         "kind": "bm25",
@@ -121,6 +123,78 @@ METHODS = {
 }
 
 
+class RunCost:
+    """Wall time and peak memory for one baseline command.
+
+    ``stages_sec`` splits catalog loading, index construction, query scoring,
+    reranking, and metric scoring. ``index_cached`` is true when a dense run
+    read an embedding matrix that a previous run wrote. Peak RSS is the
+    process high-water mark. GPU peaks are set only when the run places a
+    model on CUDA.
+    """
+
+    def __init__(self):
+        self.started = time.perf_counter()
+        self.stages: dict[str, float] = {}
+        self.device = "cpu"
+        self.cuda_armed = False
+        self.index_cached: bool | None = None
+
+    def stage(self, name: str):
+        cost = self
+
+        class _Stage:
+            def __enter__(self):
+                self.t0 = time.perf_counter()
+
+            def __exit__(self, *_args):
+                elapsed = time.perf_counter() - self.t0
+                cost.stages[name] = cost.stages.get(name, 0.0) + elapsed
+
+        return _Stage()
+
+    def arm_cuda(self, device) -> None:
+        if getattr(device, "type", None) != "cuda":
+            return
+        import torch
+
+        if not self.cuda_armed:
+            torch.cuda.reset_peak_memory_stats(device)
+            self.cuda_armed = True
+        self.device = "cuda"
+
+    def finish(self, n_queries: int) -> dict:
+        wall = time.perf_counter() - self.started
+        rss = _peak_rss_bytes()
+        gpu_allocated = gpu_reserved = None
+        if self.cuda_armed:
+            import torch
+
+            gpu_allocated = int(torch.cuda.max_memory_allocated())
+            gpu_reserved = int(torch.cuda.max_memory_reserved())
+        retrieve = self.stages.get("retrieve", 0.0)
+        return {
+            "wall_sec": round(wall, 3),
+            "peak_rss_bytes": rss,
+            "peak_rss_mib": round(rss / (1024 * 1024), 1),
+            "gpu_peak_allocated_bytes": gpu_allocated,
+            "gpu_peak_reserved_bytes": gpu_reserved,
+            "device": self.device,
+            "index_cached": self.index_cached,
+            "n_queries": n_queries,
+            "sec_per_query": round(retrieve / n_queries, 4) if n_queries else None,
+            "stages_sec": {key: round(value, 3) for key, value in self.stages.items()},
+        }
+
+
+def _peak_rss_bytes() -> int:
+    """Process high-water RSS. Linux reports ``ru_maxrss`` in kilobytes."""
+    usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if sys.platform == "linux":
+        return int(usage) * 1024
+    return int(usage)
+
+
 def _spec(name: str, model: str | None, reranker: str | None, pool: str | None) -> dict:
     """Resolve a preset plus optional encoder, reranker, and pooling overrides."""
     if name not in METHODS:
@@ -160,7 +234,7 @@ def _local_snapshot(repo: Path, model_id: str) -> str:
     return str(snapshots[0]) if snapshots else model_id
 
 
-def rank_skilllib(queries: list[dict], top_k: int, repo: Path) -> dict[str, list[str]]:
+def rank_skilllib(queries: list[dict], top_k: int, repo: Path, cost: RunCost | None = None) -> dict[str, list[str]]:
     root = repo / "skill-lib"
     src = str(root / "src")
     if src not in sys.path:
@@ -168,22 +242,26 @@ def rank_skilllib(queries: list[dict], top_k: int, repo: Path) -> dict[str, list
     from skilllib.sorting.cards import CARDS_PATH, load_routing_cards
     from skilllib.sorting.finder import Finder, default_families_path, load_families
 
-    finder = Finder(
-        load_routing_cards(root / CARDS_PATH),
-        load_families(default_families_path(root)),
-    )
+    with (cost or RunCost()).stage("index"):
+        finder = Finder(
+            load_routing_cards(root / CARDS_PATH),
+            load_families(default_families_path(root)),
+        )
     rankings = {}
-    for index, query in enumerate(queries, start=1):
-        found = finder.find(query["text"], limit=top_k, root=root)
-        rankings[query["task_id"]] = [card["id"] for card in found.get("cards") or [] if card.get("id")]
-        if index % 10 == 0 or index == len(queries):
-            print(f"skilllib {index}/{len(queries)}", file=sys.stderr)
+    with (cost or RunCost()).stage("retrieve"):
+        for index, query in enumerate(queries, start=1):
+            found = finder.find(query["text"], limit=top_k, root=root)
+            rankings[query["task_id"]] = [card["id"] for card in found.get("cards") or [] if card.get("id")]
+            if index % 10 == 0 or index == len(queries):
+                print(f"skilllib {index}/{len(queries)}", file=sys.stderr)
     return rankings
 
 
-def rank_bm25(documents: list[dict], queries: list[dict], top_k: int) -> dict[str, list[str]]:
-    index = retrieval_pool.BM25Index(documents)
-    return {query["task_id"]: index.top(query["text"], top_k) for query in queries}
+def rank_bm25(documents: list[dict], queries: list[dict], top_k: int, cost: RunCost | None = None) -> dict[str, list[str]]:
+    with (cost or RunCost()).stage("index"):
+        index = retrieval_pool.BM25Index(documents)
+    with (cost or RunCost()).stage("retrieve"):
+        return {query["task_id"]: index.top(query["text"], top_k) for query in queries}
 
 
 def _device(name: str):
@@ -276,7 +354,7 @@ def _document_matrix(spec: dict, documents: list[dict], repo: Path, device, batc
         saved = torch.load(cache, map_location="cpu", weights_only=False)
         if saved.get("ids") == [doc["id"] for doc in documents]:
             print(f"loaded index {cache}", file=sys.stderr)
-            return saved["embeddings"]
+            return saved["embeddings"], True
     model, tokenizer = _load_encoder(model_id, device)
     texts = [prefix + doc["text"] for doc in documents]
     matrix = _encode(model, tokenizer, texts, spec.get("pool") or "last", max_length, batch_size, device, "documents")
@@ -284,31 +362,37 @@ def _document_matrix(spec: dict, documents: list[dict], repo: Path, device, batc
     torch.save({"ids": [doc["id"] for doc in documents], "embeddings": matrix}, cache)
     print(f"wrote index {cache}", file=sys.stderr)
     del model
-    return matrix
+    return matrix, False
 
 
-def rank_dense(spec, documents, queries, repo, top_k, device_name, batch_size, max_length) -> dict[str, list[str]]:
+def rank_dense(spec, documents, queries, repo, top_k, device_name, batch_size, max_length, cost: RunCost | None = None) -> dict[str, list[str]]:
     import torch
 
     device = _device(device_name)
-    matrix = _document_matrix(spec, documents, repo, device, batch_size, max_length)
-    model_id = _local_snapshot(repo, spec["model"])
-    model, tokenizer = _load_encoder(model_id, device)
+    if cost is not None:
+        cost.arm_cuda(device)
+    with (cost or RunCost()).stage("index"):
+        matrix, cached = _document_matrix(spec, documents, repo, device, batch_size, max_length)
+    if cost is not None:
+        cost.index_cached = cached
     pool = spec.get("pool") or "last"
     prefix = "" if pool == "model" else (spec.get("query_prefix") or "")
     instruction = (spec.get("query_prefix") or "") if pool == "model" else ""
     texts = [prefix + query["text"][: retrieval_pool.QUERY_MAX] for query in queries]
-    query_matrix = _encode(
-        model, tokenizer, texts, pool, max_length, batch_size, device, "queries", instruction
-    )
-    scores = query_matrix @ matrix.T
-    k = min(top_k, scores.shape[1])
-    chosen = torch.topk(scores, k=k, dim=1).indices.tolist()
+    with (cost or RunCost()).stage("retrieve"):
+        model_id = _local_snapshot(repo, spec["model"])
+        model, tokenizer = _load_encoder(model_id, device)
+        query_matrix = _encode(
+            model, tokenizer, texts, pool, max_length, batch_size, device, "queries", instruction
+        )
+        scores = query_matrix @ matrix.T
+        k = min(top_k, scores.shape[1])
+        chosen = torch.topk(scores, k=k, dim=1).indices.tolist()
     ids = [doc["id"] for doc in documents]
     return {query["task_id"]: [ids[index] for index in row] for query, row in zip(queries, chosen)}
 
 
-def _rerank_ids(spec, documents, queries, first_pass, repo, rerank_k, device_name, batch_size) -> dict[str, list[str]]:
+def _rerank_ids(spec, documents, queries, first_pass, repo, rerank_k, device_name, batch_size, cost: RunCost | None = None) -> dict[str, list[str]]:
     """Reorder the first ``rerank_k`` of each list. The tail keeps retrieval order."""
     import torch
 
@@ -316,14 +400,22 @@ def _rerank_ids(spec, documents, queries, first_pass, repo, rerank_k, device_nam
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
     from src.common import load_reranker_model
-    from src.run_open_model_eval import score_candidates_with_reranker
 
     device = _device(device_name)
-    dtype = torch.bfloat16 if device.type == "cuda" else torch.float32
-    model_id = _local_snapshot(repo, spec["reranker"])
-    model, tokenizer = load_reranker_model(model_id, dtype=dtype)
-    model.to(device).eval()
+    if cost is not None:
+        cost.arm_cuda(device)
     by_id = {doc["id"]: doc for doc in documents}
+    with (cost or RunCost()).stage("rerank"):
+        dtype = torch.bfloat16 if device.type == "cuda" else torch.float32
+        model_id = _local_snapshot(repo, spec["reranker"])
+        model, tokenizer = load_reranker_model(model_id, dtype=dtype)
+        model.to(device).eval()
+        return _rerank_queries(model, tokenizer, queries, first_pass, by_id, rerank_k, device, batch_size)
+
+
+def _rerank_queries(model, tokenizer, queries, first_pass, by_id, rerank_k, device, batch_size) -> dict[str, list[str]]:
+    from src.run_open_model_eval import score_candidates_with_reranker
+
     rankings = {}
     for index, query in enumerate(queries, start=1):
         ranked = list(first_pass.get(query["task_id"]) or [])
@@ -353,21 +445,23 @@ def score_rankings(rankings: dict[str, list[str]], skill_map_doc: dict) -> dict:
     return retrieval_metrics.summarize_catalog(rows)
 
 
-def run(spec: dict, repo: Path, queries: list[dict], top_k: int, rerank_k: int, device: str, batch_size: int, max_length: int) -> dict:
+def run(spec: dict, repo: Path, queries: list[dict], top_k: int, rerank_k: int, device: str, batch_size: int, max_length: int, cost: RunCost | None = None) -> dict:
     kind = spec["kind"]
     documents: list[dict] = []
     if kind != "skilllib":
         cache = repo / "benchmark" / "experiments" / "retrieval" / "documents.jsonl"
-        documents = retrieval_pool.load_documents(repo, cache)
+        with (cost or RunCost()).stage("documents"):
+            documents = retrieval_pool.load_documents(repo, cache)
         print(f"documents {len(documents)}", file=sys.stderr)
     if kind in {"skilllib", "skilllib-pipeline"}:
-        rankings = rank_skilllib(queries, top_k, repo)
+        rankings = rank_skilllib(queries, top_k, repo, cost)
     elif kind == "bm25":
-        rankings = rank_bm25(documents, queries, top_k)
+        rankings = rank_bm25(documents, queries, top_k, cost)
     else:
-        rankings = rank_dense(spec, documents, queries, repo, top_k, device, batch_size, max_length)
+        rankings = rank_dense(spec, documents, queries, repo, top_k, device, batch_size, max_length, cost)
     if spec.get("reranker"):
-        rankings = _rerank_ids(spec, documents or retrieval_pool.load_documents(repo), queries, rankings, repo, rerank_k, device, batch_size)
+        pool = documents or retrieval_pool.load_documents(repo)
+        rankings = _rerank_ids(spec, pool, queries, rankings, repo, rerank_k, device, batch_size, cost)
     return rankings
 
 
@@ -394,6 +488,28 @@ def format_summary(summary: dict) -> str:
         f"Hit@1={rate(covered, 'Hit@1')} "
         f"Recall@10={rate(covered, 'Recall@10')} "
         f"FullCoverage@10={rate(covered, 'FullCoverage@10')}"
+    )
+
+
+def format_cost(cost: dict) -> str:
+    """One line of wall time, peak memory, and the timed stages."""
+    stages = cost.get("stages_sec") or {}
+    stage_text = " ".join(f"{name}_sec={value:.3f}" for name, value in stages.items())
+    gpu = cost.get("gpu_peak_allocated_bytes")
+    gpu_text = "n/a" if gpu is None else f"{gpu / (1024 * 1024):.1f}"
+    per_query = cost.get("sec_per_query")
+    per_query_text = "n/a" if per_query is None else f"{float(per_query):.4f}"
+    cached = cost.get("index_cached")
+    cached_text = "n/a" if cached is None else str(bool(cached)).lower()
+    return (
+        "cost "
+        f"wall_sec={float(cost.get('wall_sec') or 0):.3f} "
+        f"peak_rss_mib={float(cost.get('peak_rss_mib') or 0):.1f} "
+        f"gpu_peak_mib={gpu_text} "
+        f"sec_per_query={per_query_text} "
+        f"index_cached={cached_text} "
+        f"device={cost.get('device') or 'cpu'} "
+        + stage_text
     )
 
 
@@ -424,12 +540,16 @@ def main(argv: list[str] | None = None) -> None:
     repo = retrieval_pool.repo_root()
     spec = _spec(args.method, args.model, args.reranker, args.pool)
     document = skill_map.load()
-    queries = retrieval_pool.load_queries(document, repo, args.start, args.end)
+    cost = RunCost()
+    with cost.stage("queries"):
+        queries = retrieval_pool.load_queries(document, repo, args.start, args.end)
     if not queries:
         raise SystemExit("No SkillsBench task statements matched the skill map.")
     print(f"queries {len(queries)} method {args.method}", file=sys.stderr)
-    rankings = run(spec, repo, queries, args.top_k, args.rerank_k, args.device, args.batch_size, args.max_length)
-    summary = score_rankings(rankings, document)
+    rankings = run(spec, repo, queries, args.top_k, args.rerank_k, args.device, args.batch_size, args.max_length, cost)
+    with cost.stage("score"):
+        summary = score_rankings(rankings, document)
+    measured = cost.finish(len(queries))
     payload = {
         "method": args.method,
         "label": spec.get("label") or METHODS[args.method]["label"],
@@ -439,12 +559,14 @@ def main(argv: list[str] | None = None) -> None:
         "rerank_k": args.rerank_k,
         "n_queries": len(queries),
         "summary": summary,
+        "cost": measured,
         "rankings": rankings,
     }
     output = args.output or (repo / "benchmark" / "experiments" / "retrieval" / f"{args.method}.json")
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     print(format_summary(summary))
+    print(format_cost(measured))
     print(f"wrote {output}")
 
 

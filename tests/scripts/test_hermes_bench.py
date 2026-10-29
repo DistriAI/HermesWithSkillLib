@@ -466,6 +466,18 @@ def test_retrieval_baselines_rank_the_skilllib_catalog_with_the_map():
     dense = retrieval_baselines._spec("bge-large", None, "Qwen/Qwen3-Reranker-0.6B", None)
     assert dense["kind"] == "pipeline"
     assert dense["pool"] == "cls"
+    measured = retrieval_baselines.RunCost()
+    with measured.stage("retrieve"):
+        sum(range(1000))
+    report = measured.finish(4)
+    assert report["stages_sec"]["retrieve"] >= 0
+    assert report["wall_sec"] >= report["stages_sec"]["retrieve"]
+    assert report["peak_rss_bytes"] > 0
+    assert report["gpu_peak_allocated_bytes"] is None
+    assert report["sec_per_query"] is not None
+    assert report["n_queries"] == 4
+    assert "peak_rss_mib=" in retrieval_baselines.format_cost(report)
+    assert "gpu_peak_mib=n/a" in retrieval_baselines.format_cost(report)
 
 
 def test_skill_router_stays_off_without_its_pool():
