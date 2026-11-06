@@ -66,7 +66,7 @@ python benchmark/scripts/skillsbench.py run --run "$RUN" --start 0 --end 4 --tur
 | `--end N` | Last index in that split. 0-based, inclusive. Default: the last task when `--start` is set. `--start 0 --end 9` is the first 10 tasks. |
 | `--task ID` | One id, or a comma-separated list, kept only when it also falls in the index range. |
 | `--limit N` | After the index range, keep at most N tasks. |
-| `--turns 1,2,4,8` | On `run`, conversation-turn budgets. A turn is a user message or an assistant tool-call message. The agent is graded after each invocation and stops once the conversation reaches the largest budget or the verifier accepts the workspace. Default `1,2,4,8`. On `summarize` and `regrade`, the k values to report from those stored grades. |
+| `--turns 1,2,4,8` | On `run`, conversation-turn budgets. A turn is a user message or an assistant tool-call message. Each invocation's model-call cap keeps that episode inside the largest budget. The agent is graded after the invocation returns and stops once the conversation reaches that budget or the verifier accepts the workspace. Default `1,2,4,8`. On `summarize` and `regrade`, the k values to report from those stored grades. |
 | `--skill-mode MODE` | `task`, `library` (default), `library-compatible`, `library-only`, `router`, `router-compatible`, `router-only`, or `none`. See the skill-mode table below. |
 | `--model ID` | Model id, such as `Qwen/Qwen3.6-27B`. With `--provider` and no model, that provider's `default_model` is used. |
 | `--provider NAME` | A name under `providers:` in the replicated profile, such as `qwen-local` or `qwen-31`. A model without this flag keeps `model.provider` from the profile. |
@@ -80,16 +80,42 @@ python benchmark/scripts/skillsbench.py run --run "$RUN" --start 0 --end 4 --tur
 
 `--model` and `--provider` are stored in `run.json`, each task's `result.json`, and the summary. Omit both and the agent uses `model.default` and `model.provider` from the copied profile.
 
-| Skill mode | Hermes skills | Task skills | SkillLib | SkillRouter |
+`--skill-mode` is accepted by `run` on `skillsbench.py`, `terminal_bench.py`, `scienceagentbench.py`, and `paperbench.py`. The default is `library`. `list`, `summarize`, and `regrade` do not take it; they read the mode stored in that run's `result.json`. The retrieval script `retrieval_baselines.py` does not take it either. That script selects a ranker with `--method`.
+
+Each mode turns up to four sources on or off. A source that is off has its toolset removed, and the prompt tells the agent not to call those tools.
+
+| Source | What the agent gets when the mode turns it on |
+|---|---|
+| Hermes skills | This checkout's bundled skills, synced into the experiment's `.hermes/skills/`. Tools: `skills_list`, `skill_view`, `skill_manage`. |
+| Task skills | SkillsBench and Terminal-Bench copy `environment/skills/` into the workspace and tell the agent to read each `SKILL.md`. ScienceAgentBench appends that task's `domain_knowledge`. PaperBench has no task skills. |
+| SkillLib | `skill_library_find`, `skill_library_load`, and `skill_library_visit`, plus SkillLib's task instruction. |
+| SkillRouter | `skill_router_find` and `skill_router_load`. |
+
+| `--skill-mode` | Hermes skills | Task skills | SkillLib | SkillRouter |
 |---|---|---|---|---|
-| `task` | Synced into the experiment profile. `skills_list`, `skill_view`, and `skill_manage` stay on. | Copied into the workspace. SkillsBench uses `environment/skills/`. ScienceAgentBench includes `domain_knowledge`. The prompt says to read each `SKILL.md`. | Off. | Off. |
-| `library` | Off. The `skills` toolset is removed. | Same task skills as `task`. | On. The prompt also appends SkillLib's `task_instruction()`. | Off. |
-| `library-compatible` | On, as in `task`. | On, as in `task`. | On, as in `library`. | Off. |
-| `library-only` | Off. | Not copied, and `domain_knowledge` is omitted. | On. | Off. |
-| `router` | Off. | Same task skills as `task`. | Off. | On. The agent calls `skill_router_find` and `skill_router_load`. |
-| `router-compatible` | On, as in `task`. | On, as in `task`. | Off. | On, as in `router`. |
-| `router-only` | Off. | Not copied, and `domain_knowledge` is omitted. | Off. | On. |
-| `none` | Off. | Off. | Off. | Off. |
+| `task` | On | On | Off | Off |
+| `library` | Off | On | On | Off |
+| `library-compatible` | On | On | On | Off |
+| `library-only` | Off | Off | On | Off |
+| `router` | Off | On | Off | On |
+| `router-compatible` | On | On | Off | On |
+| `router-only` | Off | Off | Off | On |
+| `none` | Off | Off | Off | Off |
+
+`library` is the default: the task's own skills stay, Hermes skills stay off, and the agent searches SkillLib. `library-compatible` adds Hermes skills on top of that. `library-only` removes the task skills, so the only procedures are the ones SkillLib returns. The three `router` modes are the same pattern with SkillRouter in place of SkillLib. `task` is the benchmark's own skills plus Hermes skills, with both libraries off. `none` leaves the task statement and the workspace files.
+
+```bash
+python benchmark/scripts/skillsbench.py run --run exp-task --skill-mode task --start 0 --end 4
+python benchmark/scripts/skillsbench.py run --run exp-library --skill-mode library --start 0 --end 4
+python benchmark/scripts/skillsbench.py run --run exp-library-compatible --skill-mode library-compatible --start 0 --end 4
+python benchmark/scripts/skillsbench.py run --run exp-library-only --skill-mode library-only --start 0 --end 4
+python benchmark/scripts/skillsbench.py run --run exp-router --skill-mode router --start 0 --end 4
+python benchmark/scripts/skillsbench.py run --run exp-router-compatible --skill-mode router-compatible --start 0 --end 4
+python benchmark/scripts/skillsbench.py run --run exp-router-only --skill-mode router-only --start 0 --end 4
+python benchmark/scripts/skillsbench.py run --run exp-none --skill-mode none --start 0 --end 4
+```
+
+The same flag works on the other three runners. Swap the script name and, for PaperBench or ScienceAgentBench, add `--split`.
 
 Hermes skills are the bundled skills from this checkout. The runner syncs them into the experiment's `.hermes/skills/` when the mode includes them. It does not copy the source profile's `skills/` directory. SkillLib reads `skill-lib/skilllib.json` from the checkout, which is shared by every experiment. SkillRouter reads the pool under `baselines/SkillRouter/data/eval_core/`. Optional `baselines/skillrouter.json` may set `tier` (`hard` or `easy`), `encoder`, `reranker`, and `device` (`auto`, `cpu`, or `cuda`). The default tier is `hard`.
 
@@ -106,7 +132,7 @@ Drop `HF_ENDPOINT` when `huggingface.co` is reachable. The first `skill_router_f
 
 ## Metrics
 
-`--turns` is a comma-separated list of conversation-turn budgets, default `1,2,4,8`. A turn is one user message or one assistant message that calls tools. Tool results belong to that tool-call turn. An assistant reply with no tool call does not open another turn. The first user message is the task prompt. After each time the runner invokes the agent, it grades the workspace and stores that grade at the conversation depth reached. A task that needed several tool-call rounds therefore does not count at success@1. The runner sends another user message only while checks are still failing and the depth is still under the largest budget. That message says the workspace is not accepted yet and tells the agent to re-check the task statement. If those written checks already pass, the agent is told to stop without changing the design. If a written requirement is still unmet, it is told to change only that part. The message does not name the checks or quote the assertion. The conversation stops when the verifier accepts the workspace, or when the agent stops because its own check of the statement already passes.
+`--turns` is a comma-separated list of conversation-turn budgets, default `1,2,4,8`. A turn is one user message or one assistant message that calls tools. Tool results belong to that tool-call turn. An assistant reply with no tool call does not open another turn. The first user message is the task prompt. After each time the runner invokes the agent, it grades the workspace and stores that grade at the conversation depth reached. A task that needed several tool-call rounds therefore does not count at success@1. Before each invocation the runner sets the agent's model-call cap to `max(1, turns still left − 2)`. The user message that opens the invocation is one conversation turn, and an episode that spends the cap on tool calls ends with one more user message in which Hermes asks for a summary. That cap stops the episode at the largest budget. When fewer than three turns remain, the agent still gets one model call, so the stored depth can finish one or two past the budget. The runner sends another user message only while checks are still failing and the depth is still under the largest budget. That message says the workspace is not accepted yet and tells the agent to re-check the task statement. If those written checks already pass, the agent is told to stop without changing the design. If a written requirement is still unmet, it is told to change only that part. The message does not name the checks or quote the assertion. The conversation stops when the verifier accepts the workspace, or when the agent stops because its own check of the statement already passes.
 
 | Benchmark | The conversation stops when |
 |---|---|

@@ -248,6 +248,7 @@ def run_oneshot(
     cwd: Optional[str] = None,
     disabled_toolsets: Optional[list[str]] = None,
     skip_memory: bool = False,
+    max_turns: Optional[int] = None,
 ) -> int:
     """Execute a single prompt and print only the final content block.
 
@@ -256,7 +257,9 @@ def run_oneshot(
     the CLI layer: latest/title/--continue resolution) whose transcript is loaded and continued
     by this turn. ``cwd`` is the agent's working directory. ``disabled_toolsets`` is subtracted
     after the enabled set. ``skip_memory`` keeps the turn out of the memory provider. Returns
-    the exit code; the caller owns process termination.
+    the exit code; the caller owns process termination. ``max_turns`` is the
+    model-call cap for this episode (``AIAgent.max_iterations``). Omit it and
+    the episode keeps the unlimited default.
     """
     # Silence every stdlib logger: AIAgent, tools and provider adapters log to stderr through the
     # root logger. File handlers from setup_logging() keep working (level-independent).
@@ -313,6 +316,7 @@ def run_oneshot(
                 cwd=cwd,
                 disabled_toolsets=disabled_toolsets,
                 skip_memory=skip_memory,
+                max_turns=max_turns,
             )
         except BaseException as exc:
             # Capture anything escaping the agent (OSError from prompt_toolkit on a non-TTY pipe,
@@ -522,6 +526,7 @@ def _run_agent(
     cwd: Optional[str] = None,
     disabled_toolsets: Optional[list[str]] = None,
     skip_memory: bool = False,
+    max_turns: Optional[int] = None,
 ) -> tuple[str, dict]:
     """Build an AIAgent exactly like a normal CLI chat turn, run one conversation, and return
     ``(final_response, run_result)``. Imports are local to keep CLI startup cheap. *ledger* (set when
@@ -611,6 +616,7 @@ def _run_agent(
             # HERMES_INTERACTIVE (never set), hook approval via HERMES_ACCEPT_HOOKS=1, dangerous
             # commands via HERMES_YOLO_MODE=1, skill secret capture degrades gracefully.
             clarify_callback=_oneshot_clarify_callback,
+            max_iterations=max_turns if max_turns and max_turns > 0 else sys.maxsize,
         )
         # Belt-and-braces: no streaming display callbacks may bypass our stdout capture.
         agent.suppress_status_output = True

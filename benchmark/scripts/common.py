@@ -15,7 +15,8 @@ ordered list. ``list`` prints those indexes.
 assistant message that calls tools. Tool results stay on the tool-call turn
 they answer. The runner grades after each time it invokes the agent and records
 the conversation depth reached, so a solution that took several tool-call
-rounds does not count as success@1.
+rounds does not count as success@1. Each invocation also receives a model-call
+cap, :func:`model_call_budget`, so the episode stops inside the largest budget.
 
 * macro success@k — fraction of tasks that passed every test case on some stored conversation turn at or before k
 * micro success@k — fraction of test cases that passed on some stored conversation turn at or before k
@@ -1345,7 +1346,7 @@ def forget_task_trajectory(path: Path, task_id: str) -> None:
     path.write_text("".join(line + "\n" for line in kept), encoding="utf-8")
 
 
-def invoke_worker(*, workspace, prompt, usage, hermes_home, resume, model, provider, skill_mode, timeout):
+def invoke_worker(*, workspace, prompt, usage, hermes_home, resume, model, provider, skill_mode, timeout, max_turns):
     prompt_path = Path(usage).parent / "prompt.txt"
     prompt_path.write_text(prompt, encoding="utf-8")
     cmd = [
@@ -1361,7 +1362,7 @@ def invoke_worker(*, workspace, prompt, usage, hermes_home, resume, model, provi
         cmd.extend(["--model", model])
     if provider:
         cmd.extend(["--provider", provider])
-    cmd.extend(["--skill-mode", skill_mode])
+    cmd.extend(["--skill-mode", skill_mode, "--max-turns", str(max_turns)])
     env = os.environ.copy()
     env["HERMES_HOME"] = str(hermes_home)
     if skill_sources(skill_mode).router:
@@ -1402,6 +1403,18 @@ def _append(path: Path, text: str) -> None:
         handle.write(text)
 
 
+def model_call_budget(turns_max: int, prior_depth: int) -> int:
+    """Model calls this invocation may make while the depth stays within ``turns_max``.
+
+    The user prompt that opens the invocation counts as one conversation turn.
+    When every allowed call requests tools, Hermes appends one more user message
+    to ask for a summary, and that message counts too. The cap is the depth
+    still left after those two messages, and at least one so the agent can answer.
+    """
+    remaining = turns_max - max(0, prior_depth)
+    return max(1, remaining - 2)
+
+
 def _run_task_turns(spec, record, agent_dir, replica, workspace, prompt, home, *, trajectory_path, task_id, skill_mode, turns_max, model, provider, timeout, started, deadline, session_id):
     forget_task_trajectory(trajectory_path, task_id)
     runner_turn = 0
@@ -1420,6 +1433,7 @@ def _run_task_turns(spec, record, agent_dir, replica, workspace, prompt, home, *
         previous = record["grades"][-1]["cases"] if record["grades"] else []
         message = prompt if runner_turn == 1 else followup_prompt(previous)
         before = list_session_ids(home)
+        prior_depth = int(record.get("conversation_turns") or 0)
         code, stdout, stderr = invoke_worker(
             workspace=workspace,
             prompt=message,
@@ -1430,6 +1444,7 @@ def _run_task_turns(spec, record, agent_dir, replica, workspace, prompt, home, *
             provider=provider,
             skill_mode=skill_mode,
             timeout=remaining,
+            max_turns=model_call_budget(turns_max, prior_depth),
         )
         _append(agent_dir / "agent.stdout", f"\n--- runner turn {runner_turn} ---\n{stdout}")
         _append(agent_dir / "agent.stderr", f"\n--- runner turn {runner_turn} ---\n{stderr}")
@@ -1871,6 +1886,7 @@ def worker(argv: list[str]) -> int:
     parser.add_argument("--model", default="")
     parser.add_argument("--provider", default="")
     parser.add_argument("--skill-mode", choices=SKILL_MODES, default="library")
+    parser.add_argument("--max-turns", type=int, default=0)
     args = parser.parse_args(argv)
     os.environ["HERMES_HOME"] = args.hermes_home
     os.chdir(args.workspace)
@@ -1888,6 +1904,7 @@ def worker(argv: list[str]) -> int:
         disabled_toolsets=disabled,
         skip_memory=True,
         usage_file=args.usage,
+        max_turns=args.max_turns or None,
     )
 
 

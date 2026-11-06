@@ -751,6 +751,59 @@ def test_run_is_isolated_and_resumes(tmp_path: Path, monkeypatch):
     assert body["input_tokens"]["all_tasks"]["mean"] == 3
 
 
+def test_model_call_budget_reserves_the_opening_and_summary_turns():
+    assert common.model_call_budget(60, 0) == 58
+    assert common.model_call_budget(60, 36) == 22
+    assert common.model_call_budget(60, 59) == 1
+    assert common.model_call_budget(1, 0) == 1
+
+
+def test_run_passes_the_remaining_model_call_budget(tmp_path: Path, monkeypatch):
+    monkeypatch.setattr(common, "benchmark_root", lambda: tmp_path / "benchmark")
+    budgets = []
+    attempts = {"n": 0}
+
+    def list_tasks(_root, _split=None):
+        return [{"id": "t"}], ""
+
+    def replicate(_root, _task_id, dest: Path):
+        dest.mkdir(parents=True, exist_ok=True)
+
+    def prepare(_replica, workspace: Path, _skill_mode):
+        workspace.mkdir(parents=True, exist_ok=True)
+        return "do the task", ""
+
+    def grade(_replica, _workspace, _task_dir):
+        attempts["n"] += 1
+        return [{"id": "c", "passed": attempts["n"] >= 2, "detail": "", "graded": True}]
+
+    def fake_worker(**kwargs):
+        budgets.append(kwargs["max_turns"])
+        Path(kwargs["usage"]).write_text(
+            json.dumps({"session_id": "s", "input_tokens": 1, "output_tokens": 1, "total_tokens": 2}),
+            encoding="utf-8",
+        )
+        return 0, "", ""
+
+    monkeypatch.setattr(common, "invoke_worker", fake_worker)
+    spec = common.Spec(
+        "skillsbench", "skillsbench", "https://example.invalid/bench.git",
+        list_tasks, replicate, prepare, grade,
+    )
+    source = tmp_path / "hermes"
+    _write(source / "config.yaml", "model: m\n")
+    code = common.cli(spec, [
+        "run", "--run", "capped", "--turns", "10", "--hermes-home", str(source),
+    ])
+    assert code == 0
+    assert budgets == [8, 7]
+    record = json.loads((
+        tmp_path / "benchmark" / "experiments" / "skillsbench" / "capped" / "agent" / "t" / "result.json"
+    ).read_text(encoding="utf-8"))
+    assert record["status"] == "complete"
+    assert record["turns_run"] == 2
+
+
 def test_skill_modes_choose_hermes_benchmark_and_library():
     assert common.skill_sources("task") == common.SkillSources(True, True, False)
     assert common.skill_sources("library") == common.SkillSources(False, True, True)
