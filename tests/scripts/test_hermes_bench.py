@@ -810,17 +810,22 @@ def test_skill_modes_choose_hermes_benchmark_and_library():
     assert common.skill_sources("library-compatible") == common.SkillSources(True, True, True)
     assert common.skill_sources("library-only") == common.SkillSources(False, False, True)
     assert common.skill_sources("none") == common.SkillSources(False, False, False)
-    assert common.disabled_toolsets("task") == ["skill_library", "skill_router"]
-    assert common.disabled_toolsets("library") == ["skills", "skill_router"]
-    assert common.disabled_toolsets("library-compatible") == ["skill_router"]
-    assert common.disabled_toolsets("library-only") == ["skills", "skill_router"]
-    assert common.disabled_toolsets("none") == ["skills", "skill_library", "skill_router"]
+    extra = ["skill_corpus", "skill_net"]
+    assert common.disabled_toolsets("task") == ["skill_library", "skill_router", *extra]
+    assert common.disabled_toolsets("library") == ["skills", "skill_router", *extra]
+    assert common.disabled_toolsets("library-compatible") == ["skill_router", *extra]
+    assert common.disabled_toolsets("library-only") == ["skills", "skill_router", *extra]
+    assert common.disabled_toolsets("none") == ["skills", "skill_library", "skill_router", *extra]
     assert common.skill_sources("router") == common.SkillSources(False, True, False, True)
     assert common.skill_sources("router-compatible") == common.SkillSources(True, True, False, True)
     assert common.skill_sources("router-only") == common.SkillSources(False, False, False, True)
-    assert common.disabled_toolsets("router") == ["skills", "skill_library"]
-    assert common.disabled_toolsets("router-only") == ["skills", "skill_library"]
-    assert common.disabled_toolsets("router-compatible") == ["skill_library"]
+    assert common.disabled_toolsets("router") == ["skills", "skill_library", *extra]
+    assert common.disabled_toolsets("router-only") == ["skills", "skill_library", *extra]
+    assert common.disabled_toolsets("router-compatible") == ["skill_library", *extra]
+    assert common.skill_sources("corpus-only").corpus is True
+    assert common.skill_sources("skillnet-only").skillnet is True
+    assert common.disabled_toolsets("corpus-only") == ["skills", "skill_library", "skill_router", "skill_net"]
+    assert common.disabled_toolsets("skillnet-only") == ["skills", "skill_library", "skill_router", "skill_corpus"]
 
 
 def test_skill_note_names_the_sources_a_mode_offers(tmp_path: Path):
@@ -862,6 +867,10 @@ def test_prepare_copies_task_skills_only_when_the_mode_includes_them(tmp_path: P
         ("router", True),
         ("router-compatible", True),
         ("router-only", False),
+        ("corpus", True),
+        ("corpus-only", False),
+        ("skillnet", True),
+        ("skillnet-only", False),
         ("none", False),
     ):
         workspace = tmp_path / mode

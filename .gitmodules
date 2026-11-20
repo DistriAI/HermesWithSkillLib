@@ -20,3 +20,9 @@
 [submodule "baselines/SkillRouter"]
 	path = baselines/SkillRouter
 	url = https://github.com/zhengyanzhao1997/SkillRouter.git
+[submodule "baselines/SkillCorpus"]
+	path = baselines/SkillCorpus
+	url = https://github.com/EverMind-AI/SkillCorpus.git
+[submodule "baselines/SkillNet"]
+	path = baselines/SkillNet
+	url = https://github.com/zjunlp/SkillNet.git

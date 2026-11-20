@@ -61,6 +61,9 @@ data/*
 # Experiment workspaces stay untracked. Benchmark sources are submodules.
 # The procedure and the runner scripts stay tracked in this repo.
 /baselines/skillrouter.json
+/baselines/.venv-construct/
+/baselines/embedding-server.log
+/baselines/embedding-server.pid
 /benchmark/*
 !/benchmark/README.md
 !/benchmark/scripts/

@@ -184,6 +184,8 @@ _LEGACY_TOOLSET_MAP = {
         "skills_list", "skill_view", "skill_manage",
         "skill_library_find", "skill_library_load", "skill_library_visit",
         "skill_router_find", "skill_router_load",
+        "skill_corpus_find", "skill_corpus_load",
+        "skill_net_route", "skill_net_load",
     ],
     "browser_tools": ["browser_navigate", "browser_snapshot", "browser_click", "browser_type", "browser_scroll",
                       "browser_back", "browser_press", "browser_get_images", "browser_vision", "browser_console"],

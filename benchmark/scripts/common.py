@@ -82,6 +82,25 @@ def repo_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
 
+def require_native_library(mode: str) -> None:
+    """Stop before a system run whose own store has not been built."""
+    sources = skill_sources(mode)
+    if sources.corpus:
+        library = repo_root() / "baselines" / "SkillCorpus" / "hermes_lib" / "index.db"
+        if not library.is_file():
+            raise SystemExit(
+                f"SkillCorpus library is missing at {library}. "
+                "Build it with: python baselines/SkillCorpus/hermes_build.py --publish"
+            )
+    if sources.skillnet:
+        pointer = repo_root() / "baselines" / "SkillNet" / "hermes_index" / "CURRENT"
+        if not pointer.is_file():
+            raise SystemExit(
+                f"SkillNet index is missing at {pointer}. "
+                "Build it with: python baselines/SkillNet/hermes_build.py --publish"
+            )
+
+
 def benchmark_root() -> Path:
     return repo_root() / "benchmark"
 
@@ -112,13 +131,16 @@ class SkillSources:
 
     ``hermes`` is the agent's own bundled skills (``skills_list``, ``skill_view``,
     ``skill_manage``). ``benchmark`` is the task's attached skills.
-    ``library`` is SkillLib. ``router`` is the SkillRouter baseline.
+    ``library`` is SkillLib. ``router`` is SkillRouter. ``corpus`` is SkillCorpus.
+    ``skillnet`` is SkillNet. Each of those uses its own store and its own search.
     """
 
     hermes: bool
     benchmark: bool
     library: bool
     router: bool = False
+    corpus: bool = False
+    skillnet: bool = False
 
 
 _SKILL_SOURCES = {
@@ -129,6 +151,12 @@ _SKILL_SOURCES = {
     "router": SkillSources(hermes=False, benchmark=True, library=False, router=True),
     "router-compatible": SkillSources(hermes=True, benchmark=True, library=False, router=True),
     "router-only": SkillSources(hermes=False, benchmark=False, library=False, router=True),
+    "corpus": SkillSources(hermes=False, benchmark=True, library=False, corpus=True),
+    "corpus-compatible": SkillSources(hermes=True, benchmark=True, library=False, corpus=True),
+    "corpus-only": SkillSources(hermes=False, benchmark=False, library=False, corpus=True),
+    "skillnet": SkillSources(hermes=False, benchmark=True, library=False, skillnet=True),
+    "skillnet-compatible": SkillSources(hermes=True, benchmark=True, library=False, skillnet=True),
+    "skillnet-only": SkillSources(hermes=False, benchmark=False, library=False, skillnet=True),
     "none": SkillSources(hermes=False, benchmark=False, library=False),
 }
 SKILL_MODES = tuple(_SKILL_SOURCES)
@@ -151,6 +179,10 @@ def disabled_toolsets(mode: str) -> list[str]:
         disabled.append("skill_library")
     if not sources.router:
         disabled.append("skill_router")
+    if not sources.corpus:
+        disabled.append("skill_corpus")
+    if not sources.skillnet:
+        disabled.append("skill_net")
     return disabled
 
 
@@ -173,8 +205,18 @@ def ensure_hermes_skills(home: Path) -> None:
             os.environ["HERMES_HOME"] = previous
 
 
+def _offer_or_ban(offered: bool, ready: bool, instruction: str, names: tuple[str, ...], missing: str) -> str:
+    if offered and ready:
+        return instruction
+    if offered:
+        return missing
+    return f"Do not call {', '.join(names)}."
+
+
 def skill_note(mode: str, workspace: Path, *, has_task_skills: bool) -> str:
+    from agent.skill_corpus import corpus_available, task_instruction as corpus_instruction, tool_names as corpus_names
     from agent.skill_library import task_instruction, tool_names
+    from agent.skill_net import skillnet_available, task_instruction as skillnet_instruction, tool_names as skillnet_names
     from agent.skill_router import router_available, task_instruction as router_instruction, tool_names as router_names
     sources = skill_sources(mode)
     parts: list[str] = []
@@ -189,20 +231,25 @@ def skill_note(mode: str, workspace: Path, *, has_task_skills: bool) -> str:
             parts.append(text)
     else:
         ban = f"Do not call {', '.join(tool_names())}."
-        if not (sources.benchmark and has_task_skills) and not sources.router:
+        other = sources.router or sources.corpus or sources.skillnet
+        if not (sources.benchmark and has_task_skills) and not other:
             ban = "Solve this from the task statement and the files in the workspace. " + ban
         parts.append(ban)
-    if sources.router and router_available():
-        parts.append(router_instruction())
-    elif sources.router:
-        parts.append(
-            "SkillRouter's skill pool is not available in this process, so "
-            "skill_router_find and skill_router_load are not offered. "
-            "Solve from the task statement and the files in the workspace."
-        )
-    else:
-        parts.append(f"Do not call {', '.join(router_names())}.")
-    return "\n\n" + "\n\n".join(parts) if parts else ""
+    parts.append(_offer_or_ban(
+        sources.router, router_available(), router_instruction(), router_names(),
+        "SkillRouter's skill pool is not available in this process, so "
+        "skill_router_find and skill_router_load are not offered. "
+        "Solve from the task statement and the files in the workspace.",
+    ))
+    parts.append(_offer_or_ban(
+        sources.corpus, corpus_available(), corpus_instruction(), corpus_names(),
+        "SkillCorpus's library is not built, so skill_corpus_find and skill_corpus_load are not offered.",
+    ))
+    parts.append(_offer_or_ban(
+        sources.skillnet, skillnet_available(), skillnet_instruction(), skillnet_names(),
+        "SkillNet's index is not built, so skill_net_route and skill_net_load are not offered.",
+    ))
+    return "\n\n" + "\n\n".join(part for part in parts if part) if parts else ""
 
 
 def layout_note(workspace: Path) -> str:
@@ -1717,6 +1764,7 @@ def cmd_run(args, spec: Spec) -> int:
     (run_dir / "run.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
     if skill_sources(args.skill_mode).hermes:
         ensure_hermes_skills(run_dir / ".hermes")
+    require_native_library(args.skill_mode)
     print(f"model: {chosen_model or '(profile default)'}  provider: {chosen_provider or '(profile default)'}")
     print(f"workspace: {run_dir}")
     pending_ids = {
@@ -1805,6 +1853,8 @@ def _add_selection(parser: argparse.ArgumentParser, spec: Spec, *, running: bool
                 "router: this task's skills and SkillRouter. "
                 "router-compatible: Hermes skills, this task's skills, and SkillRouter. "
                 "router-only: SkillRouter. "
+                "corpus, corpus-compatible, corpus-only: SkillCorpus's own library and search. "
+                "skillnet, skillnet-compatible, skillnet-only: SkillNet's own index and route. "
                 "none: none of those. Default: library."
             ),
         )

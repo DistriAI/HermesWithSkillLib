@@ -1,0 +1,1847 @@
+2026-11-18T13:35:01+08:00 start
+bash baselines/construct-repositories.sh
+
+===== 2026-11-18T13:35:01+08:00 construct-repositories.sh =====
+root=/data/liangfeng/git/hermesWithSkillLib
++ cd /data/liangfeng/git/hermesWithSkillLib
++ [[ ! -x /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/bin/python ]]
++ python3 -m venv /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct
++ /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/bin/pip install -r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt
+Collecting pyyaml (from -r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 8))
+  Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+Collecting numpy (from -r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 9))
+  Downloading numpy-2.5.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+Collecting click (from -r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 10))
+  Downloading click-8.5.1-py3-none-any.whl.metadata (2.6 kB)
+Collecting faiss-cpu (from -r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 11))
+  Downloading faiss_cpu-1.16.0-cp310-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (7.8 kB)
+Collecting sqlite-vec (from -r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 12))
+  Downloading sqlite_vec-0.1.9-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux1_x86_64.whl.metadata (198 bytes)
+Collecting openai (from -r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading openai-3.55.0-py3-none-any.whl.metadata (45 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 632.6 kB/s eta 0:00:00
+
+Collecting pyarrow (from -r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 14))
+  Downloading pyarrow-26.0.1-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (3.0 kB)
+Collecting zstandard (from -r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 15))
+  Downloading zstandard-0.25.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (3.3 kB)
+Collecting packaging (from faiss-cpu->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 11))
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting anyio<5,>=4.10.0 (from openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading anyio-4.16.0-py3-none-any.whl.metadata (4.7 kB)
+Collecting httpx2<3,>=2.12.0 (from openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading httpx2-2.16.2-py3-none-any.whl.metadata (10.0 kB)
+Collecting jiter<1,>=0.16.0 (from openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading jiter-0.19.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.2 kB)
+Collecting pydantic!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,<3,>=1.10.13 (from openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading pydantic-2.14.3-py3-none-any.whl.metadata (141 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 141.5/141.5 kB 1.9 MB/s eta 0:00:00
+
+Collecting sniffio (from openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting typing-extensions<5,>=4.14 (from openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting idna>=2.8 (from anyio<5,>=4.10.0->openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Collecting httpcore2==2.16.2 (from httpx2<3,>=2.12.0->openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading httpcore2-2.16.2-py3-none-any.whl.metadata (28 kB)
+Collecting truststore>=0.10 (from httpx2<3,>=2.12.0->openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading truststore-0.10.5-py3-none-any.whl.metadata (4.5 kB)
+Collecting h11>=0.16 (from httpcore2==2.16.2->httpx2<3,>=2.12.0->openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting annotated-types>=0.6.0 (from pydantic!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,<3,>=1.10.13->openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.50.4 (from pydantic!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,<3,>=1.10.13->openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading pydantic_core-2.50.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.6 kB)
+Collecting typing-inspection>=0.4.4 (from pydantic!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,<3,>=1.10.13->openai->-r /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/requirements.txt (line 13))
+  Downloading typing_inspection-0.4.5-py3-none-any.whl.metadata (2.6 kB)
+Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 4.1 MB/s eta 0:00:00
+
+Downloading numpy-2.5.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (15.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15.7/15.7 MB 11.5 MB/s eta 0:00:00
+
+Downloading click-8.5.1-py3-none-any.whl (126 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 126.2/126.2 kB 13.3 MB/s eta 0:00:00
+
+Downloading faiss_cpu-1.16.0-cp310-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (19.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.5/19.5 MB 12.7 MB/s eta 0:00:00
+
+Downloading sqlite_vec-0.1.9-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux1_x86_64.whl (163 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 163.4/163.4 kB 11.2 MB/s eta 0:00:00
+
+Downloading openai-3.55.0-py3-none-any.whl (2.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.5/2.5 MB 14.3 MB/s eta 0:00:00
+
+Downloading pyarrow-26.0.1-cp312-cp312-manylinux_2_28_x86_64.whl (55.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 55.0/55.0 MB 10.5 MB/s eta 0:00:00
+
+Downloading zstandard-0.25.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.5/5.5 MB 13.5 MB/s eta 0:00:00
+
+Downloading anyio-4.16.0-py3-none-any.whl (134 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.5/134.5 kB 27.4 MB/s eta 0:00:00
+
+Downloading httpx2-2.16.2-py3-none-any.whl (97 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 kB 21.3 MB/s eta 0:00:00
+
+Downloading httpcore2-2.16.2-py3-none-any.whl (85 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.6/85.6 kB 15.1 MB/s eta 0:00:00
+
+Downloading jiter-0.19.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (338 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 338.1/338.1 kB 19.2 MB/s eta 0:00:00
+
+Downloading pydantic-2.14.3-py3-none-any.whl (494 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 494.1/494.1 kB 16.6 MB/s eta 0:00:00
+
+Downloading pydantic_core-2.50.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 13.9 MB/s eta 0:00:00
+
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 10.0 MB/s eta 0:00:00
+
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 130.0/130.0 kB 24.8 MB/s eta 0:00:00
+
+Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+Downloading idna-3.20-py3-none-any.whl (69 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.6/69.6 kB 15.0 MB/s eta 0:00:00
+
+Downloading truststore-0.10.5-py3-none-any.whl (19 kB)
+Downloading typing_inspection-0.4.5-py3-none-any.whl (14 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Installing collected packages: sqlite-vec, zstandard, typing-extensions, truststore, sniffio, pyyaml, pyarrow, packaging, numpy, jiter, idna, h11, click, annotated-types, typing-inspection, pydantic-core, httpcore2, faiss-cpu, anyio, pydantic, httpx2, openai
+Successfully installed annotated-types-0.8.0 anyio-4.16.0 click-8.5.1 faiss-cpu-1.16.0 h11-0.16.0 httpcore2-2.16.2 httpx2-2.16.2 idna-3.20 jiter-0.19.0 numpy-2.5.5 openai-3.55.0 packaging-26.3 pyarrow-26.0.1 pydantic-2.14.3 pydantic-core-2.50.4 pyyaml-6.0.3 sniffio-1.3.1 sqlite-vec-0.1.9 truststore-0.10.5 typing-extensions-4.16.0 typing-inspection-0.4.5 zstandard-0.25.0
++ /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/bin/pip install -e '/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai[graph]'
+Obtaining file:///data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Collecting requests<3,>=2.32.5 (from skillnet-ai==0.1.5)
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting openai<3,>=1.109.1 (from skillnet-ai==0.1.5)
+  Downloading openai-2.54.0-py3-none-any.whl.metadata (40 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.9/40.9 kB 132.5 kB/s eta 0:00:00
+
+Requirement already satisfied: pydantic<3,>=2.12.5 in ./baselines/.venv-construct/lib/python3.12/site-packages (from skillnet-ai==0.1.5) (2.14.3)
+Collecting tqdm>=4.67.1 (from skillnet-ai==0.1.5)
+  Downloading tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.4/57.4 kB 729.5 kB/s eta 0:00:00
+
+Collecting typer<1,>=0.21.1 (from skillnet-ai==0.1.5)
+  Downloading typer-0.29.1-py3-none-any.whl.metadata (16 kB)
+Collecting rich>=13.9.4 (from skillnet-ai==0.1.5)
+  Downloading rich-15.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting PyPDF2>=3.0.1 (from skillnet-ai==0.1.5)
+  Downloading pypdf2-3.0.1-py3-none-any.whl.metadata (6.8 kB)
+Collecting pycryptodome>=3.23.0 (from skillnet-ai==0.1.5)
+  Downloading pycryptodome-4.5.0-cp39-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (4.8 kB)
+Collecting python-docx>=1.2.0 (from skillnet-ai==0.1.5)
+  Downloading python_docx-1.2.0-py3-none-any.whl.metadata (2.0 kB)
+Collecting python-pptx>=1.0.2 (from skillnet-ai==0.1.5)
+  Downloading python_pptx-1.0.2-py3-none-any.whl.metadata (2.5 kB)
+Collecting json-repair>=0.30.0 (from skillnet-ai==0.1.5)
+  Downloading json_repair-0.64.9-py3-none-any.whl.metadata (21 kB)
+Requirement already satisfied: PyYAML<7,>=6.0 in ./baselines/.venv-construct/lib/python3.12/site-packages (from skillnet-ai==0.1.5) (6.0.3)
+Requirement already satisfied: numpy>=1.24 in ./baselines/.venv-construct/lib/python3.12/site-packages (from skillnet-ai==0.1.5) (2.5.5)
+Requirement already satisfied: anyio<5,>=3.5.0 in ./baselines/.venv-construct/lib/python3.12/site-packages (from openai<3,>=1.109.1->skillnet-ai==0.1.5) (4.16.0)
+Collecting distro<2,>=1.7.0 (from openai<3,>=1.109.1->skillnet-ai==0.1.5)
+  Downloading distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+Collecting httpx<1,>=0.23.0 (from openai<3,>=1.109.1->skillnet-ai==0.1.5)
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Requirement already satisfied: jiter<1,>=0.10.0 in ./baselines/.venv-construct/lib/python3.12/site-packages (from openai<3,>=1.109.1->skillnet-ai==0.1.5) (0.19.0)
+Requirement already satisfied: sniffio in ./baselines/.venv-construct/lib/python3.12/site-packages (from openai<3,>=1.109.1->skillnet-ai==0.1.5) (1.3.1)
+Requirement already satisfied: typing-extensions<5,>=4.14 in ./baselines/.venv-construct/lib/python3.12/site-packages (from openai<3,>=1.109.1->skillnet-ai==0.1.5) (4.16.0)
+Requirement already satisfied: annotated-types>=0.6.0 in ./baselines/.venv-construct/lib/python3.12/site-packages (from pydantic<3,>=2.12.5->skillnet-ai==0.1.5) (0.8.0)
+Requirement already satisfied: pydantic-core==2.50.4 in ./baselines/.venv-construct/lib/python3.12/site-packages (from pydantic<3,>=2.12.5->skillnet-ai==0.1.5) (2.50.4)
+Requirement already satisfied: typing-inspection>=0.4.4 in ./baselines/.venv-construct/lib/python3.12/site-packages (from pydantic<3,>=2.12.5->skillnet-ai==0.1.5) (0.4.5)
+Collecting lxml>=3.1.0 (from python-docx>=1.2.0->skillnet-ai==0.1.5)
+  Downloading lxml-6.1.3-cp312-cp312-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl.metadata (3.3 kB)
+Collecting Pillow>=3.3.2 (from python-pptx>=1.0.2->skillnet-ai==0.1.5)
+  Downloading pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)
+Collecting XlsxWriter>=0.5.7 (from python-pptx>=1.0.2->skillnet-ai==0.1.5)
+  Downloading xlsxwriter-3.3.1-py3-none-any.whl.metadata (2.9 kB)
+Collecting charset_normalizer<4,>=2 (from requests<3,>=2.32.5->skillnet-ai==0.1.5)
+  Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (46 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 46.4/46.4 kB 68.3 kB/s eta 0:00:00
+
+Requirement already satisfied: idna<4,>=2.5 in ./baselines/.venv-construct/lib/python3.12/site-packages (from requests<3,>=2.32.5->skillnet-ai==0.1.5) (3.20)
+Collecting urllib3<3,>=1.26 (from requests<3,>=2.32.5->skillnet-ai==0.1.5)
+  Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting certifi>=2023.5.7 (from requests<3,>=2.32.5->skillnet-ai==0.1.5)
+  Downloading certifi-2026.10.23-py3-none-any.whl.metadata (2.5 kB)
+Collecting markdown-it-py>=2.2.0 (from rich>=13.9.4->skillnet-ai==0.1.5)
+  Downloading markdown_it_py-4.3.0-py3-none-any.whl.metadata (7.9 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich>=13.9.4->skillnet-ai==0.1.5)
+  Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting shellingham>=1.3.0 (from typer<1,>=0.21.1->skillnet-ai==0.1.5)
+  Downloading shellingham-1.5.4-py2.py3-none-any.whl.metadata (3.5 kB)
+Collecting annotated-doc>=0.0.2 (from typer<1,>=0.21.1->skillnet-ai==0.1.5)
+  Downloading annotated_doc-0.0.6-py3-none-any.whl.metadata (6.5 kB)
+Collecting httpcore==1.* (from httpx<1,>=0.23.0->openai<3,>=1.109.1->skillnet-ai==0.1.5)
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Requirement already satisfied: h11>=0.16 in ./baselines/.venv-construct/lib/python3.12/site-packages (from httpcore==1.*->httpx<1,>=0.23.0->openai<3,>=1.109.1->skillnet-ai==0.1.5) (0.16.0)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=13.9.4->skillnet-ai==0.1.5)
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Downloading json_repair-0.64.9-py3-none-any.whl (54 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.9/54.9 kB 48.3 kB/s eta 0:00:00
+
+Downloading openai-2.54.0-py3-none-any.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 41.8 kB/s eta 0:00:00
+
+Downloading pycryptodome-4.5.0-cp39-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (3.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.1/3.1 MB 78.5 kB/s eta 0:00:00
+
+Downloading pypdf2-3.0.1-py3-none-any.whl (232 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.6/232.6 kB 131.4 kB/s eta 0:00:00
+
+Downloading python_docx-1.2.0-py3-none-any.whl (252 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 253.0/253.0 kB 124.9 kB/s eta 0:00:00
+
+Downloading python_pptx-1.0.2-py3-none-any.whl (472 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 472.8/472.8 kB 67.4 kB/s eta 0:00:00
+
+Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.1/73.1 kB 55.3 kB/s eta 0:00:00
+
+Downloading rich-15.0.0-py3-none-any.whl (310 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 310.7/310.7 kB 64.9 kB/s eta 0:00:00
+
+Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.2/80.2 kB 79.8 kB/s eta 0:00:00
+
+Downloading typer-0.29.1-py3-none-any.whl (121 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.1/121.1 kB 92.5 kB/s eta 0:00:00
+
+Downloading annotated_doc-0.0.6-py3-none-any.whl (5.3 kB)
+Downloading certifi-2026.10.23-py3-none-any.whl (135 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 135.1/135.1 kB 84.9 kB/s eta 0:00:00
+
+Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (257 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 257.6/257.6 kB 47.5 kB/s eta 0:00:00
+
+Downloading distro-1.9.0-py3-none-any.whl (20 kB)
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.5/73.5 kB 52.8 kB/s eta 0:00:00
+
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 76.7 kB/s eta 0:00:00
+
+Downloading lxml-6.1.3-cp312-cp312-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (5.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 48.0 kB/s eta 0:00:00
+
+Downloading markdown_it_py-4.3.0-py3-none-any.whl (96 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.0/97.0 kB 22.9 kB/s eta 0:00:00
+
+Downloading pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (7.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.1/7.1 MB 47.4 kB/s eta 0:00:00
+
+Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 47.2 kB/s eta 0:00:00
+
+Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 135.7/135.7 kB 30.0 kB/s eta 0:00:00
+
+Downloading xlsxwriter-3.3.1-py3-none-any.whl (180 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 180.6/180.6 kB 34.1 kB/s eta 0:00:00
+
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Checking if build backend supports build_editable: started
+Checking if build backend supports build_editable: finished with status 'done'
+Building wheels for collected packages: skillnet-ai
+  Building editable for skillnet-ai (pyproject.toml): started
+  Building editable for skillnet-ai (pyproject.toml): finished with status 'done'
+  Created wheel for skillnet-ai: filename=skillnet_ai-0.1.5-0.editable-py3-none-any.whl size=12894 sha256=c1b4812f00e61668691aee7bcc61ec5d3a11856422d61706cc5a0389669d0f96
+  Stored in directory: /tmp/pip-ephem-wheel-cache-71ojrmme/wheels/ca/9a/33/b6f9423cec6527ff6265dc134726c5272cd2505ec51784861a
+Successfully built skillnet-ai
+Installing collected packages: XlsxWriter, urllib3, tqdm, shellingham, PyPDF2, pygments, pycryptodome, Pillow, mdurl, lxml, json-repair, distro, charset_normalizer, certifi, annotated-doc, requests, python-pptx, python-docx, markdown-it-py, httpcore, rich, httpx, typer, openai, skillnet-ai
+  Attempting uninstall: openai
+    Found existing installation: openai 3.55.0
+    Uninstalling openai-3.55.0:
+      Successfully uninstalled openai-3.55.0
+Successfully installed Pillow-13.0.0 PyPDF2-3.0.1 XlsxWriter-3.3.1 annotated-doc-0.0.6 certifi-2026.10.23 charset_normalizer-3.5.2 distro-1.9.0 httpcore-1.0.9 httpx-0.28.1 json-repair-0.64.9 lxml-6.1.3 markdown-it-py-4.3.0 mdurl-0.1.2 openai-2.54.0 pycryptodome-4.5.0 pygments-2.21.0 python-docx-1.2.0 python-pptx-1.0.2 requests-2.34.2 rich-15.0.0 shellingham-1.5.4 skillnet-ai-0.1.5 tqdm-4.70.1 typer-0.29.1 urllib3-2.8.0
++ curl -fsS --max-time 2 http://127.0.0.1:8100/health
+curl: (7) Failed to connect to 127.0.0.1 port 8100 after 0 ms: Couldn't connect to server
++ echo 101174
++ nohup /data/liangfeng/git/hermesWithSkillLib/.venv/bin/python /data/liangfeng/git/hermesWithSkillLib/baselines/embedding_server.py
+++ seq 1 960
++ for _ in $(seq 1 960)
++ curl -fsS --max-time 2 http://127.0.0.1:8100/health
+curl: (7) Failed to connect to 127.0.0.1 port 8100 after 0 ms: Couldn't connect to server
++ sleep 30
++ for _ in $(seq 1 960)
++ curl -fsS --max-time 2 http://127.0.0.1:8100/health
+curl: (7) Failed to connect to 127.0.0.1 port 8100 after 0 ms: Couldn't connect to server
++ sleep 30
++ for _ in $(seq 1 960)
++ curl -fsS --max-time 2 http://127.0.0.1:8100/health
+curl: (7) Failed to connect to 127.0.0.1 port 8100 after 0 ms: Couldn't connect to server
++ sleep 30
+2026-11-18T13:46:27+08:00 HF blocked and GPU full; start local CPU embedding server from the SkillRouter Qwen3-Embedding-8B snapshot
+HF_HUB_OFFLINE=1 .venv/bin/python -u baselines/embedding_server.py >> baselines/embedding-server.log 2>&1
++ for _ in $(seq 1 960)
++ curl -fsS --max-time 2 http://127.0.0.1:8100/health
+curl: (7) Failed to connect to 127.0.0.1 port 8100 after 0 ms: Couldn't connect to server
++ sleep 30
++ for _ in $(seq 1 960)
++ curl -fsS --max-time 2 http://127.0.0.1:8100/health
++ break
++ curl -fsS --max-time 5 http://127.0.0.1:8100/health
+{"ok": true, "model": "Qwen/Qwen3-Embedding-8B", "dim": 4096}+ /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/bin/python /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/hermes_build.py --publish
+752 cards have no file on disk and are skipped, for example ['combined::ab-test-setup', 'combined::academic-paper', 'combined::academic-paper-reviewer', 'combined::academic-pipeline', 'combined::accessibility']
+2026-11-18T13:51:22+08:00 restart embedding server with 32 CPU threads
+EMBEDDING_THREADS=32 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 .venv/bin/python -u baselines/embedding_server.py >> baselines/embedding-server.log 2>&1
+embed chunk attempt 1/5 failed: RemoteDisconnected('Remote end closed connection without response'), retry in 1.0s
+embed chunk attempt 2/5 failed: URLError(ConnectionRefusedError(111, 'Connection refused')), retry in 2.0s
+embed chunk attempt 3/5 failed: URLError(ConnectionRefusedError(111, 'Connection refused')), retry in 4.0s
+2026-11-18T13:54:51+08:00 restart SkillCorpus build with concurrent ingest
+Terminated
+2026-11-18T13:55:06+08:00 bash baselines/construct-repositories.sh
+
+===== 2026-11-18T13:55:06+08:00 construct-repositories.sh =====
+root=/data/liangfeng/git/hermesWithSkillLib
++ cd /data/liangfeng/git/hermesWithSkillLib
++ [[ ! -x /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/bin/python ]]
++ curl -fsS --max-time 2 http://127.0.0.1:8100/health
++ /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/bin/python -u /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/hermes_build.py --publish
+752 cards have no file on disk and are skipped, for example ['combined::ab-test-setup', 'combined::academic-paper', 'combined::academic-paper-reviewer', 'combined::academic-pipeline', 'combined::accessibility']
+[BankrBot/skills] description too long (1299 > 1024) for skill 'hunch-bazaar' — kept as-is
+[BankrBot/skills] description too long (1148 > 1024) for skill 'papertrade' — kept as-is
+[FreedomIntelligence/OpenClaw-Medical-Skills] description too long (1075 > 1024) for skill 'tooluniverse-single-cell' — kept as-is
+[FreedomIntelligence/OpenClaw-Medical-Skills] description too long (1119 > 1024) for skill 'tooluniverse-variant-analysis' — kept as-is
+2026-11-18T15:50:27+08:00 point local :8100 at GPU server http://10.50.0.31:8100
+socat TCP-LISTEN:8100,bind=127.0.0.1,fork,reuseaddr TCP:10.50.0.31:8100
+embed chunk attempt 1/5 failed: RemoteDisconnected('Remote end closed connection without response'), retry in 1.0s
+embed chunk attempt 1/5 failed: RemoteDisconnected('Remote end closed connection without response'), retry in 1.0s
+embed chunk attempt 2/5 failed: URLError(ConnectionRefusedError(111, 'Connection refused')), retry in 2.0s
+embed chunk attempt 2/5 failed: URLError(ConnectionRefusedError(111, 'Connection refused')), retry in 2.0s
+embed chunk attempt 3/5 failed: URLError(ConnectionRefusedError(111, 'Connection refused')), retry in 4.0s
+embed chunk attempt 3/5 failed: URLError(ConnectionRefusedError(111, 'Connection refused')), retry in 4.0s
+embed chunk attempt 4/5 failed: URLError(ConnectionRefusedError(111, 'Connection refused')), retry in 8.0s
+embed chunk attempt 4/5 failed: URLError(ConnectionRefusedError(111, 'Connection refused')), retry in 8.0s
+embedding call failed: <urlopen error [Errno 111] Connection refused>
+embedding call failed: <urlopen error [Errno 111] Connection refused>
+2026-11-18T15:50:45+08:00 python3 -u /tmp/proxy8100.py  # 127.0.0.1:8100 -> 10.50.0.31:8100
+2026-11-18T15:58:58+08:00 embedding base_url -> http://10.50.0.31:8100/v1
+2026-11-18T15:59:21+08:00 moved model to /data-store/liangfeng/models/Qwen3-Embedding-8B and restarted CUDA_VISIBLE_DEVICES=5
+embed chunk attempt 1/5 failed: ConnectionResetError(104, 'Connection reset by peer'), retry in 1.0s
+embed chunk attempt 1/5 failed: ConnectionResetError(104, 'Connection reset by peer'), retry in 1.0s
+embed chunk attempt 1/5 failed: ConnectionResetError(104, 'Connection reset by peer'), retry in 1.0s
+embed chunk attempt 2/5 failed: ConnectionResetError(104, 'Connection reset by peer'), retry in 2.0s
+embed chunk attempt 2/5 failed: ConnectionResetError(104, 'Connection reset by peer'), retry in 2.0s
+embed chunk attempt 2/5 failed: ConnectionResetError(104, 'Connection reset by peer'), retry in 2.0s
+embed chunk attempt 1/5 failed: ConnectionResetError(104, 'Connection reset by peer'), retry in 1.0s
+embed chunk attempt 3/5 failed: ConnectionResetError(104, 'Connection reset by peer'), retry in 4.0s
+embed chunk attempt 3/5 failed: ConnectionResetError(104, 'Connection reset by peer'), retry in 4.0s
+embed chunk attempt 3/5 failed: ConnectionResetError(104, 'Connection reset by peer'), retry in 4.0s
+embed chunk attempt 2/5 failed: ConnectionResetError(104, 'Connection reset by peer'), retry in 2.0s
+2026-11-18T15:59:58+08:00 removed /home/liangfeng/models/Qwen3-Embedding-8B after GPU server came up from /data-store/liangfeng/models/Qwen3-Embedding-8B
+2026-11-18T16:03:35+08:00 restart SkillCorpus build, resume existing index.db, embeddings http://10.50.0.31:8100/v1
+kill 115243 115235
+2026-11-18T16:03:37+08:00 bash baselines/construct-repositories.sh
+
+===== 2026-11-18T16:03:37+08:00 construct-repositories.sh =====
+root=/data/liangfeng/git/hermesWithSkillLib
++ cd /data/liangfeng/git/hermesWithSkillLib
++ [[ ! -x /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/bin/python ]]
++ curl -fsS --max-time 2 http://127.0.0.1:8100/health
++ cd /data/liangfeng/git/hermesWithSkillLib
++ [[ ! -x /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/bin/python ]]
++ curl -fsS --max-time 2 http://127.0.0.1:8100/health
++ /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/bin/python -u /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/hermes_build.py --publish
++ /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/bin/python -u /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/hermes_build.py --publish
+752 cards have no file on disk and are skipped, for example ['combined::ab-test-setup', 'combined::academic-paper', 'combined::academic-paper-reviewer', 'combined::academic-pipeline', 'combined::accessibility']
+752 cards have no file on disk and are skipped, for example ['combined::ab-test-setup', 'combined::academic-paper', 'combined::academic-paper-reviewer', 'combined::academic-pipeline', 'combined::accessibility']
+resuming /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/hermes_work/library: skills already stored are skipped by content hash; staged 0 new files
+resuming /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/hermes_work/library: skills already stored are skipped by content hash; staged 0 new files
+[BankrBot/skills] description too long (1299 > 1024) for skill 'hunch-bazaar' — kept as-is
+[BankrBot/skills] description too long (1299 > 1024) for skill 'hunch-bazaar' — kept as-is
+[BankrBot/skills] description too long (1148 > 1024) for skill 'papertrade' — kept as-is
+[BankrBot/skills] description too long (1148 > 1024) for skill 'papertrade' — kept as-is
+[FreedomIntelligence/OpenClaw-Medical-Skills] description too long (1075 > 1024) for skill 'tooluniverse-single-cell' — kept as-is
+[FreedomIntelligence/OpenClaw-Medical-Skills] description too long (1075 > 1024) for skill 'tooluniverse-single-cell' — kept as-is
+[FreedomIntelligence/OpenClaw-Medical-Skills] description too long (1119 > 1024) for skill 'tooluniverse-variant-analysis' — kept as-is
+[FreedomIntelligence/OpenClaw-Medical-Skills] description too long (1119 > 1024) for skill 'tooluniverse-variant-analysis' — kept as-is
+[Leanmcp/gateway-skills] description too long (1246 > 1024) for skill 'fireworks-inference' — kept as-is
+[Leanmcp/gateway-skills] description too long (1246 > 1024) for skill 'fireworks-inference' — kept as-is
+[Leanmcp/gateway-skills] description too long (1284 > 1024) for skill 'godot-city-game-3d' — kept as-is
+[Leanmcp/gateway-skills] description too long (1284 > 1024) for skill 'godot-city-game-3d' — kept as-is
+[Leanmcp/gateway-skills] description too long (1139 > 1024) for skill 'tinker-training-inference' — kept as-is
+[Leanmcp/gateway-skills] description too long (1139 > 1024) for skill 'tinker-training-inference' — kept as-is
+[Leanmcp/gateway-skills] description too long (1470 > 1024) for skill 'vuln-repro' — kept as-is
+[Leanmcp/gateway-skills] description too long (1470 > 1024) for skill 'vuln-repro' — kept as-is
+[LeoYeAI/openclaw-master-skills] description too long (1041 > 1024) for skill 'agent-reach' — kept as-is
+[LeoYeAI/openclaw-master-skills] description too long (1041 > 1024) for skill 'agent-reach' — kept as-is
+[LeoYeAI/openclaw-master-skills] description too long (1025 > 1024) for skill 'cloudflare-workers-architect' — kept as-is
+[LeoYeAI/openclaw-master-skills] description too long (1025 > 1024) for skill 'cloudflare-workers-architect' — kept as-is
+[LeoYeAI/openclaw-master-skills] description too long (1177 > 1024) for skill 'datadog-monitor-designer' — kept as-is
+[LeoYeAI/openclaw-master-skills] description too long (1177 > 1024) for skill 'datadog-monitor-designer' — kept as-is
+[LeoYeAI/openclaw-master-skills] description too long (1154 > 1024) for skill 'grafana-panel-engineer' — kept as-is
+[LeoYeAI/openclaw-master-skills] description too long (1154 > 1024) for skill 'grafana-panel-engineer' — kept as-is
+UTF-8 surrogate sanitized in skill text (sample: '{"name": "emoclaw", "description": "Give your AI emotions that grow from its own')
+UTF-8 surrogate sanitized in skill text (sample: '{"name": "emoclaw", "description": "Give your AI emotions that grow from its own')
+[LeoYeAI/openclaw-master-skills] description too long (1172 > 1024) for skill 'pagerduty-escalation-architect' — kept as-is
+[LeoYeAI/openclaw-master-skills] description too long (1172 > 1024) for skill 'pagerduty-escalation-architect' — kept as-is
+UTF-8 surrogate sanitized in skill text (sample: '{"name": "training-manager", "description": "Manage and optimize your OpenClaw t')
+UTF-8 surrogate sanitized in skill text (sample: '{"name": "training-manager", "description": "Manage and optimize your OpenClaw t')
+UTF-8 surrogate sanitized in skill text (sample: '{"name": "sponge-wallet", "version": "1.0.0", "description": "Manage crypto wall')
+UTF-8 surrogate sanitized in skill text (sample: '{"name": "sponge-wallet", "version": "1.0.0", "description": "Manage crypto wall')
+[MengTo/Skills] description too long (1099 > 1024) for skill 'game-dev-combat-skill-polish' — kept as-is
+[MengTo/Skills] description too long (1099 > 1024) for skill 'game-dev-combat-skill-polish' — kept as-is
+[SnailSploit/Claude-Red] description too long (1111 > 1024) for skill 'offensive-api-abuse' — kept as-is
+[SnailSploit/Claude-Red] description too long (1111 > 1024) for skill 'offensive-api-abuse' — kept as-is
+[SnailSploit/Claude-Red] description too long (1177 > 1024) for skill 'offensive-cicd-pipeline' — kept as-is
+[SnailSploit/Claude-Red] description too long (1177 > 1024) for skill 'offensive-cicd-pipeline' — kept as-is
+[SnailSploit/Claude-Red] description too long (1058 > 1024) for skill 'offensive-cicd-secrets' — kept as-is
+[SnailSploit/Claude-Red] description too long (1058 > 1024) for skill 'offensive-cicd-secrets' — kept as-is
+[SnailSploit/Claude-Red] description too long (1050 > 1024) for skill 'offensive-cloud' — kept as-is
+[SnailSploit/Claude-Red] description too long (1050 > 1024) for skill 'offensive-cloud' — kept as-is
+[SnailSploit/Claude-Red] description too long (1152 > 1024) for skill 'offensive-k8s-attacks' — kept as-is
+[SnailSploit/Claude-Red] description too long (1152 > 1024) for skill 'offensive-k8s-attacks' — kept as-is
+[SnailSploit/Claude-Red] description too long (1303 > 1024) for skill 'offensive-crypto-attacks' — kept as-is
+[SnailSploit/Claude-Red] description too long (1303 > 1024) for skill 'offensive-crypto-attacks' — kept as-is
+[SnailSploit/Claude-Red] description too long (1506 > 1024) for skill 'offensive-tls-attacks' — kept as-is
+[SnailSploit/Claude-Red] description too long (1506 > 1024) for skill 'offensive-tls-attacks' — kept as-is
+[SnailSploit/Claude-Red] description too long (1149 > 1024) for skill 'offensive-anti-forensics' — kept as-is
+[SnailSploit/Claude-Red] description too long (1149 > 1024) for skill 'offensive-anti-forensics' — kept as-is
+[SnailSploit/Claude-Red] description too long (1088 > 1024) for skill 'offensive-c2-frameworks' — kept as-is
+[SnailSploit/Claude-Red] description too long (1088 > 1024) for skill 'offensive-c2-frameworks' — kept as-is
+[SnailSploit/Claude-Red] description too long (1025 > 1024) for skill 'offensive-data-exfiltration' — kept as-is
+[SnailSploit/Claude-Red] description too long (1025 > 1024) for skill 'offensive-data-exfiltration' — kept as-is
+[SnailSploit/Claude-Red] description too long (1132 > 1024) for skill 'offensive-persistence' — kept as-is
+[SnailSploit/Claude-Red] description too long (1132 > 1024) for skill 'offensive-persistence' — kept as-is
+[SnailSploit/Claude-Red] description too long (1313 > 1024) for skill 'offensive-linux-privesc' — kept as-is
+[SnailSploit/Claude-Red] description too long (1313 > 1024) for skill 'offensive-linux-privesc' — kept as-is
+[SnailSploit/Claude-Red] description too long (1522 > 1024) for skill 'offensive-windows-privesc' — kept as-is
+[SnailSploit/Claude-Red] description too long (1522 > 1024) for skill 'offensive-windows-privesc' — kept as-is
+[SnailSploit/Claude-Red] description too long (1290 > 1024) for skill 'offensive-phishing' — kept as-is
+[SnailSploit/Claude-Red] description too long (1290 > 1024) for skill 'offensive-phishing' — kept as-is
+[SnailSploit/Claude-Red] description too long (1341 > 1024) for skill 'offensive-social-engineering' — kept as-is
+[SnailSploit/Claude-Red] description too long (1341 > 1024) for skill 'offensive-social-engineering' — kept as-is
+[SnailSploit/Claude-Red] description too long (1420 > 1024) for skill 'offensive-dependency-confusion' — kept as-is
+[SnailSploit/Claude-Red] description too long (1420 > 1024) for skill 'offensive-dependency-confusion' — kept as-is
+[SnailSploit/Claude-Red] description too long (1407 > 1024) for skill 'offensive-supply-chain' — kept as-is
+[SnailSploit/Claude-Red] description too long (1407 > 1024) for skill 'offensive-supply-chain' — kept as-is
+[SnailSploit/Claude-Red] description too long (1108 > 1024) for skill 'offensive-graphql' — kept as-is
+[SnailSploit/Claude-Red] description too long (1108 > 1024) for skill 'offensive-graphql' — kept as-is
+[aipoch/medical-research-skills] description too long (1094 > 1024) for skill 'qtl-colocalization-study-planner' — kept as-is
+[aipoch/medical-research-skills] description too long (1094 > 1024) for skill 'qtl-colocalization-study-planner' — kept as-is
+[aipoch/medical-research-skills] description too long (1063 > 1024) for skill 'single-drug-adverse-effect-hub-first-network-pharmacology' — kept as-is
+[aipoch/medical-research-skills] description too long (1063 > 1024) for skill 'single-drug-adverse-effect-hub-first-network-pharmacology' — kept as-is
+[aipoch/medical-research-skills] description too long (1063 > 1024) for skill 'single-drug-adverse-effect-pathway-anchored-network-pharmacology' — kept as-is
+[aipoch/medical-research-skills] description too long (1063 > 1024) for skill 'single-drug-adverse-effect-pathway-anchored-network-pharmacology' — kept as-is
+[aipoch/medical-research-skills] description too long (1028 > 1024) for skill 'tumor-immune-infiltration-diagnostic-ml-research-planner' — kept as-is
+[aipoch/medical-research-skills] description too long (1028 > 1024) for skill 'tumor-immune-infiltration-diagnostic-ml-research-planner' — kept as-is
+[aipoch/medical-research-skills] description too long (1125 > 1024) for skill 'faers-multi-drug-soc-planner' — kept as-is
+[aipoch/medical-research-skills] description too long (1125 > 1024) for skill 'faers-multi-drug-soc-planner' — kept as-is
+[aipoch/medical-research-skills] description too long (1225 > 1024) for skill 'network-tox-docking-research-planner' — kept as-is
+[aipoch/medical-research-skills] description too long (1225 > 1024) for skill 'network-tox-docking-research-planner' — kept as-is
+[aipoch/medical-research-skills] description too long (1048 > 1024) for skill 'non-tumor-ml-research-planner' — kept as-is
+[aipoch/medical-research-skills] description too long (1048 > 1024) for skill 'non-tumor-ml-research-planner' — kept as-is
+[browser-act/skills] description too long (1386 > 1024) for skill 'amazon-bestseller-listing' — kept as-is
+[browser-act/skills] description too long (1386 > 1024) for skill 'amazon-bestseller-listing' — kept as-is
+[browser-act/skills] description too long (2121 > 1024) for skill 'amazon-product-detail' — kept as-is
+[browser-act/skills] description too long (2121 > 1024) for skill 'amazon-product-detail' — kept as-is
+[browser-act/skills] description too long (1526 > 1024) for skill 'amazon-search-listing' — kept as-is
+[browser-act/skills] description too long (1526 > 1024) for skill 'amazon-search-listing' — kept as-is
+[browser-act/skills] description too long (1047 > 1024) for skill 'walmart-category-listing' — kept as-is
+[browser-act/skills] description too long (1047 > 1024) for skill 'walmart-category-listing' — kept as-is
+[browser-act/skills] description too long (1344 > 1024) for skill 'walmart-product-detail' — kept as-is
+[browser-act/skills] description too long (1344 > 1024) for skill 'walmart-product-detail' — kept as-is
+[browser-act/skills] description too long (1030 > 1024) for skill 'walmart-product-reviews' — kept as-is
+[browser-act/skills] description too long (1030 > 1024) for skill 'walmart-product-reviews' — kept as-is
+[browser-act/skills] description too long (1762 > 1024) for skill 'trustpilot-company-info' — kept as-is
+[browser-act/skills] description too long (1762 > 1024) for skill 'trustpilot-company-info' — kept as-is
+[browser-act/skills] description too long (1778 > 1024) for skill 'youtube-channel-business-email' — kept as-is
+[browser-act/skills] description too long (1778 > 1024) for skill 'youtube-channel-business-email' — kept as-is
+[browser-act/skills] description too long (1077 > 1024) for skill 'reddit-warmup' — kept as-is
+[browser-act/skills] description too long (1077 > 1024) for skill 'reddit-warmup' — kept as-is
+[browser-act/skills] description too long (2222 > 1024) for skill 'trustpilot-reviews' — kept as-is
+[browser-act/skills] description too long (2222 > 1024) for skill 'trustpilot-reviews' — kept as-is
+[browser-act/skills] description too long (1080 > 1024) for skill 'x-tweet-by-conversation' — kept as-is
+[browser-act/skills] description too long (1080 > 1024) for skill 'x-tweet-by-conversation' — kept as-is
+[browser-act/skills] description too long (1147 > 1024) for skill 'x-tweet-by-handle' — kept as-is
+[browser-act/skills] description too long (1147 > 1024) for skill 'x-tweet-by-handle' — kept as-is
+[browser-act/skills] description too long (1046 > 1024) for skill 'x-tweet-by-url' — kept as-is
+[browser-act/skills] description too long (1046 > 1024) for skill 'x-tweet-by-url' — kept as-is
+[browser-act/skills] description too long (1367 > 1024) for skill 'x-tweet-search-by-query' — kept as-is
+[browser-act/skills] description too long (1367 > 1024) for skill 'x-tweet-search-by-query' — kept as-is
+[brycewang-stanford/Auto-Empirical-Research-Skills] description too long (3663 > 1024) for skill 'latex-document' — kept as-is
+[brycewang-stanford/Auto-Empirical-Research-Skills] description too long (3663 > 1024) for skill 'latex-document' — kept as-is
+[brycewang-stanford/Auto-Empirical-Research-Skills] description too long (1113 > 1024) for skill 'humanize-chinese' — kept as-is
+[brycewang-stanford/Auto-Empirical-Research-Skills] description too long (1113 > 1024) for skill 'humanize-chinese' — kept as-is
+[brycewang-stanford/Auto-Empirical-Research-Skills] description too long (1050 > 1024) for skill 'academic-paper-strategist' — kept as-is
+[brycewang-stanford/Auto-Empirical-Research-Skills] description too long (1050 > 1024) for skill 'academic-paper-strategist' — kept as-is
+[elementalsouls/Claude-OSINT] description too long (1065 > 1024) for skill 'exposure-risk-quantification' — kept as-is
+[elementalsouls/Claude-OSINT] description too long (1065 > 1024) for skill 'exposure-risk-quantification' — kept as-is
+[elementalsouls/Claude-OSINT] description too long (1719 > 1024) for skill 'cloud-saas-exposure' — kept as-is
+[elementalsouls/Claude-OSINT] description too long (1719 > 1024) for skill 'cloud-saas-exposure' — kept as-is
+[elementalsouls/Claude-OSINT] description too long (1895 > 1024) for skill 'continuous-exposure-monitoring' — kept as-is
+[elementalsouls/Claude-OSINT] description too long (1895 > 1024) for skill 'continuous-exposure-monitoring' — kept as-is
+[elementalsouls/Claude-OSINT] description too long (1594 > 1024) for skill 'email-domain-security' — kept as-is
+[elementalsouls/Claude-OSINT] description too long (1594 > 1024) for skill 'email-domain-security' — kept as-is
+[itsmostafa/aws-agent-skills] description too long (1381 > 1024) for skill 'ec2' — kept as-is
+[itsmostafa/aws-agent-skills] description too long (1381 > 1024) for skill 'ec2' — kept as-is
+lib: /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/hermes_work/library
+target: 16582 active skills, workers=4
+existing cached judgments: 17393 (will be skipped)
+to score: 1  skipped_cached: 16581
+  1/1 (100%)  new=1  failed=0  rate=0.1/s  eta=0s
+  wrote skills.quality_score for 16582 skills (from cached LLM judgments)
+
+=== quality pass done in 9.5s ===
+  processed: 1
+  new llm_calls: 1
+  cached hits:   16581
+  failed:        0
+
+Aggregate (from quality_judgments table — includes prior cache):
+  total judgments: 17394
+  avg / min / max: 7.59 / 0.0 / 9.15
+  histogram: {'0-2': 322, '2-4': 243, '4-6': 1003, '6-8': 7241, '8-10': 8585}
+lib: /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/hermes_work/library
+target: 16582 active skills, workers=4
+existing cached judgments: 17393 (will be skipped)
+to score: 1  skipped_cached: 16581
+  1/1 (100%)  new=1  failed=0  rate=0.1/s  eta=0s
+  wrote skills.quality_score for 16582 skills (from cached LLM judgments)
+
+=== quality pass done in 9.5s ===
+  processed: 1
+  new llm_calls: 1
+  cached hits:   16581
+  failed:        0
+
+Aggregate (from quality_judgments table — includes prior cache):
+  total judgments: 17394
+  avg / min / max: 7.59 / 0.0 / 9.15
+  histogram: {'0-2': 322, '2-4': 243, '4-6': 1003, '6-8': 7241, '8-10': 8585}
+lib: /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/hermes_work/library
+config: min_cos=0.9, top_k=5, auto_cos=0.995
+[1/4] name_hash collisions: 74 pairs across 74 groups
+  scanned 200/16582 — 291 pairs so far
+  scanned 400/16582 — 618 pairs so far
+  scanned 600/16582 — 864 pairs so far
+  scanned 800/16582 — 1034 pairs so far
+  scanned 1000/16582 — 1074 pairs so far
+  scanned 1200/16582 — 1193 pairs so far
+  scanned 1400/16582 — 1436 pairs so far
+  scanned 1600/16582 — 1880 pairs so far
+  scanned 1800/16582 — 2215 pairs so far
+  scanned 2000/16582 — 2517 pairs so far
+  scanned 2200/16582 — 2776 pairs so far
+  scanned 2400/16582 — 3118 pairs so far
+  scanned 2600/16582 — 3387 pairs so far
+  scanned 2800/16582 — 3726 pairs so far
+  scanned 3000/16582 — 3993 pairs so far
+  scanned 3200/16582 — 4199 pairs so far
+  scanned 3400/16582 — 4253 pairs so far
+  scanned 3600/16582 — 4367 pairs so far
+  scanned 3800/16582 — 4567 pairs so far
+  scanned 4000/16582 — 4817 pairs so far
+  scanned 4200/16582 — 5092 pairs so far
+  scanned 4400/16582 — 5480 pairs so far
+  scanned 4600/16582 — 5753 pairs so far
+  scanned 4800/16582 — 6078 pairs so far
+  scanned 5000/16582 — 6231 pairs so far
+  scanned 5200/16582 — 6303 pairs so far
+  scanned 5400/16582 — 6611 pairs so far
+  scanned 5600/16582 — 6960 pairs so far
+  scanned 5800/16582 — 7147 pairs so far
+  scanned 6000/16582 — 7329 pairs so far
+  scanned 6200/16582 — 7568 pairs so far
+  scanned 6400/16582 — 7682 pairs so far
+  scanned 6600/16582 — 7865 pairs so far
+  scanned 6800/16582 — 8359 pairs so far
+  scanned 7000/16582 — 8489 pairs so far
+  scanned 7200/16582 — 8808 pairs so far
+  scanned 7400/16582 — 9165 pairs so far
+  scanned 7600/16582 — 9301 pairs so far
+  scanned 7800/16582 — 9375 pairs so far
+  scanned 8000/16582 — 9637 pairs so far
+  scanned 8200/16582 — 9896 pairs so far
+  scanned 8400/16582 — 10162 pairs so far
+  scanned 8600/16582 — 10367 pairs so far
+  scanned 8800/16582 — 10525 pairs so far
+  scanned 9000/16582 — 10623 pairs so far
+  scanned 9200/16582 — 10739 pairs so far
+  scanned 9400/16582 — 10916 pairs so far
+  scanned 9600/16582 — 10997 pairs so far
+  scanned 9800/16582 — 11090 pairs so far
+  scanned 10000/16582 — 11315 pairs so far
+  scanned 10200/16582 — 11568 pairs so far
+  scanned 10400/16582 — 11776 pairs so far
+  scanned 10600/16582 — 11958 pairs so far
+  scanned 10800/16582 — 12312 pairs so far
+  scanned 11000/16582 — 12585 pairs so far
+  scanned 11200/16582 — 12897 pairs so far
+  scanned 11400/16582 — 13055 pairs so far
+  scanned 11600/16582 — 13392 pairs so far
+  scanned 11800/16582 — 13573 pairs so far
+  scanned 12000/16582 — 13957 pairs so far
+  scanned 12200/16582 — 14267 pairs so far
+  scanned 12400/16582 — 14589 pairs so far
+  scanned 12600/16582 — 14767 pairs so far
+  scanned 12800/16582 — 15042 pairs so far
+  scanned 13000/16582 — 15222 pairs so far
+  scanned 13200/16582 — 15343 pairs so far
+  scanned 13400/16582 — 15378 pairs so far
+  scanned 13600/16582 — 15464 pairs so far
+  scanned 13800/16582 — 15922 pairs so far
+  scanned 14000/16582 — 16213 pairs so far
+  scanned 14200/16582 — 16399 pairs so far
+  scanned 14400/16582 — 16624 pairs so far
+  scanned 14600/16582 — 16830 pairs so far
+  scanned 14800/16582 — 16976 pairs so far
+  scanned 15000/16582 — 17096 pairs so far
+  scanned 15200/16582 — 17271 pairs so far
+  scanned 15400/16582 — 17438 pairs so far
+  scanned 15600/16582 — 17636 pairs so far
+  scanned 15800/16582 — 17857 pairs so far
+  scanned 16000/16582 — 18018 pairs so far
+  scanned 16200/16582 — 18192 pairs so far
+  scanned 16400/16582 — 18365 pairs so far
+[2/4] embedding near pairs: 18344 new (skipped 2 without embedding)
+[3/4] total candidate pairs: 18418, elapsed=114.5s
+[4a/4] pre-fetching 8336 skill records...
+[4a/4] parallel judging 18418 pairs (workers=8)...
+  judged 200/18418 @ 9.8/s — confirmed dups: 0
+  judged 400/18418 @ 12.0/s — confirmed dups: 0
+  judged 600/18418 @ 11.8/s — confirmed dups: 0
+  judged 800/18418 @ 13.0/s — confirmed dups: 0
+  judged 1000/18418 @ 14.1/s — confirmed dups: 0
+  judged 1200/18418 @ 14.7/s — confirmed dups: 0
+  judged 1400/18418 @ 14.6/s — confirmed dups: 0
+  judged 1600/18418 @ 15.0/s — confirmed dups: 0
+  judged 1800/18418 @ 15.9/s — confirmed dups: 0
+  judged 2000/18418 @ 16.9/s — confirmed dups: 0
+  judged 2200/18418 @ 17.2/s — confirmed dups: 0
+  judged 2400/18418 @ 17.5/s — confirmed dups: 0
+  judged 2600/18418 @ 17.7/s — confirmed dups: 0
+  judged 2800/18418 @ 17.0/s — confirmed dups: 0
+  judged 3000/18418 @ 17.0/s — confirmed dups: 0
+  judged 3200/18418 @ 17.2/s — confirmed dups: 0
+  judged 3400/18418 @ 16.9/s — confirmed dups: 0
+  judged 3600/18418 @ 16.8/s — confirmed dups: 0
+  judged 3800/18418 @ 16.9/s — confirmed dups: 0
+  judged 4000/18418 @ 16.3/s — confirmed dups: 0
+  judged 4200/18418 @ 15.5/s — confirmed dups: 0
+  judged 4400/18418 @ 15.5/s — confirmed dups: 0
+  judged 4600/18418 @ 15.2/s — confirmed dups: 0
+  judged 4800/18418 @ 14.3/s — confirmed dups: 0
+  judged 5000/18418 @ 14.2/s — confirmed dups: 0
+  judged 5200/18418 @ 14.0/s — confirmed dups: 0
+  judged 5400/18418 @ 13.7/s — confirmed dups: 0
+  judged 5600/18418 @ 13.4/s — confirmed dups: 0
+  judged 5800/18418 @ 13.3/s — confirmed dups: 0
+  judged 6000/18418 @ 13.4/s — confirmed dups: 0
+  judged 6200/18418 @ 13.2/s — confirmed dups: 0
+  judged 6400/18418 @ 13.0/s — confirmed dups: 0
+  judged 6600/18418 @ 12.8/s — confirmed dups: 0
+  judged 6800/18418 @ 12.5/s — confirmed dups: 0
+  judged 7000/18418 @ 12.4/s — confirmed dups: 0
+  judged 7200/18418 @ 12.2/s — confirmed dups: 0
+  judged 7400/18418 @ 11.9/s — confirmed dups: 0
+  judged 7600/18418 @ 11.8/s — confirmed dups: 0
+  judged 7800/18418 @ 11.5/s — confirmed dups: 1
+  judged 8000/18418 @ 11.5/s — confirmed dups: 1
+  judged 8200/18418 @ 11.5/s — confirmed dups: 1
+  judged 8400/18418 @ 11.4/s — confirmed dups: 1
+  judged 8600/18418 @ 11.3/s — confirmed dups: 1
+  judged 8800/18418 @ 11.3/s — confirmed dups: 1
+  judged 9000/18418 @ 11.2/s — confirmed dups: 1
+  judged 9200/18418 @ 11.0/s — confirmed dups: 1
+  judged 9400/18418 @ 10.9/s — confirmed dups: 1
+  judged 9600/18418 @ 10.8/s — confirmed dups: 1
+  judged 9800/18418 @ 10.8/s — confirmed dups: 2
+  judged 10000/18418 @ 10.7/s — confirmed dups: 2
+  judged 10200/18418 @ 10.6/s — confirmed dups: 2
+  judged 10400/18418 @ 10.5/s — confirmed dups: 2
+  judged 10600/18418 @ 10.4/s — confirmed dups: 2
+  judged 10800/18418 @ 10.3/s — confirmed dups: 2
+  judged 11000/18418 @ 10.2/s — confirmed dups: 2
+  judged 11200/18418 @ 10.1/s — confirmed dups: 2
+  judged 11400/18418 @ 10.0/s — confirmed dups: 2
+  judged 11600/18418 @ 10.0/s — confirmed dups: 2
+  judged 11800/18418 @ 9.9/s — confirmed dups: 2
+  judged 12000/18418 @ 9.8/s — confirmed dups: 2
+  judged 12200/18418 @ 9.7/s — confirmed dups: 2
+  judged 12400/18418 @ 9.6/s — confirmed dups: 2
+  judged 12600/18418 @ 9.6/s — confirmed dups: 2
+  judged 12800/18418 @ 9.5/s — confirmed dups: 2
+  judged 13000/18418 @ 9.4/s — confirmed dups: 2
+  judged 13200/18418 @ 9.4/s — confirmed dups: 2
+  judged 13400/18418 @ 9.3/s — confirmed dups: 2
+  judged 13600/18418 @ 9.3/s — confirmed dups: 2
+  judged 13800/18418 @ 9.2/s — confirmed dups: 2
+  judged 14000/18418 @ 9.2/s — confirmed dups: 2
+  judged 14200/18418 @ 9.1/s — confirmed dups: 2
+  judged 14400/18418 @ 9.0/s — confirmed dups: 2
+  judged 14600/18418 @ 9.0/s — confirmed dups: 2
+  judged 14800/18418 @ 8.9/s — confirmed dups: 2
+  judged 15000/18418 @ 8.9/s — confirmed dups: 2
+  judged 15200/18418 @ 8.8/s — confirmed dups: 2
+  judged 15400/18418 @ 8.8/s — confirmed dups: 2
+  judged 15600/18418 @ 8.7/s — confirmed dups: 2
+  judged 15800/18418 @ 8.6/s — confirmed dups: 2
+  judged 16000/18418 @ 8.6/s — confirmed dups: 2
+  judged 16200/18418 @ 8.5/s — confirmed dups: 2
+  judged 16400/18418 @ 8.5/s — confirmed dups: 2
+  judged 16600/1lib: /data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/hermes_work/library
+config: min_cos=0.9, top_k=5, auto_cos=0.995
+[1/4] name_hash collisions: 74 pairs across 74 groups
+  scanned 200/16582 — 291 pairs so far
+  scanned 400/16582 — 618 pairs so far
+  scanned 600/16582 — 864 pairs so far
+  scanned 800/16582 — 1034 pairs so far
+  scanned 1000/16582 — 1074 pairs so far
+  scanned 1200/16582 — 1193 pairs so far
+  scanned 1400/16582 — 1436 pairs so far
+  scanned 1600/16582 — 1880 pairs so far
+  scanned 1800/16582 — 2215 pairs so far
+  scanned 2000/16582 — 2517 pairs so far
+  scanned 2200/16582 — 2776 pairs so far
+  scanned 2400/16582 — 3118 pairs so far
+  scanned 2600/16582 — 3387 pairs so far
+  scanned 2800/16582 — 3726 pairs so far
+  scanned 3000/16582 — 3993 pairs so far
+  scanned 3200/16582 — 4199 pairs so far
+  scanned 3400/16582 — 4253 pairs so far
+  scanned 3600/16582 — 4367 pairs so far
+  scanned 3800/16582 — 4567 pairs so far
+  scanned 4000/16582 — 4817 pairs so far
+  scanned 4200/16582 — 5092 pairs so far
+  scanned 4400/16582 — 5480 pairs so far
+  scanned 4600/16582 — 5753 pairs so far
+  scanned 4800/16582 — 6078 pairs so far
+  scanned 5000/16582 — 6231 pairs so far
+  scanned 5200/16582 — 6303 pairs so far
+  scanned 5400/16582 — 6611 pairs so far
+  scanned 5600/16582 — 6960 pairs so far
+  scanned 5800/16582 — 7147 pairs so far
+  scanned 6000/16582 — 7329 pairs so far
+  scanned 6200/16582 — 7568 pairs so far
+  scanned 6400/16582 — 7682 pairs so far
+  scanned 6600/16582 — 7865 pairs so far
+  scanned 6800/16582 — 8359 pairs so far
+  scanned 7000/16582 — 8489 pairs so far
+  scanned 7200/16582 — 8808 pairs so far
+  scanned 7400/16582 — 9165 pairs so far
+  scanned 7600/16582 — 9301 pairs so far
+  scanned 7800/16582 — 9375 pairs so far
+  scanned 8000/16582 — 9637 pairs so far
+  scanned 8200/16582 — 9896 pairs so far
+  scanned 8400/16582 — 10162 pairs so far
+  scanned 8600/16582 — 10367 pairs so far
+  scanned 8800/16582 — 10525 pairs so far
+  scanned 9000/16582 — 10623 pairs so far
+  scanned 9200/16582 — 10739 pairs so far
+  scanned 9400/16582 — 10916 pairs so far
+  scanned 9600/16582 — 10997 pairs so far
+  scanned 9800/16582 — 11090 pairs so far
+  scanned 10000/16582 — 11315 pairs so far
+  scanned 10200/16582 — 11568 pairs so far
+  scanned 10400/16582 — 11776 pairs so far
+  scanned 10600/16582 — 11958 pairs so far
+  scanned 10800/16582 — 12312 pairs so far
+  scanned 11000/16582 — 12585 pairs so far
+  scanned 11200/16582 — 12897 pairs so far
+  scanned 11400/16582 — 13055 pairs so far
+  scanned 11600/16582 — 13392 pairs so far
+  scanned 11800/16582 — 13573 pairs so far
+  scanned 12000/16582 — 13957 pairs so far
+  scanned 12200/16582 — 14267 pairs so far
+  scanned 12400/16582 — 14589 pairs so far
+  scanned 12600/16582 — 14767 pairs so far
+  scanned 12800/16582 — 15042 pairs so far
+  scanned 13000/16582 — 15222 pairs so far
+  scanned 13200/16582 — 15343 pairs so far
+  scanned 13400/16582 — 15378 pairs so far
+  scanned 13600/16582 — 15464 pairs so far
+  scanned 13800/16582 — 15922 pairs so far
+  scanned 14000/16582 — 16213 pairs so far
+  scanned 14200/16582 — 16399 pairs so far
+  scanned 14400/16582 — 16624 pairs so far
+  scanned 14600/16582 — 16830 pairs so far
+  scanned 14800/16582 — 16976 pairs so far
+  scanned 15000/16582 — 17096 pairs so far
+  scanned 15200/16582 — 17271 pairs so far
+  scanned 15400/16582 — 17438 pairs so far
+  scanned 15600/16582 — 17636 pairs so far
+  scanned 15800/16582 — 17857 pairs so far
+  scanned 16000/16582 — 18018 pairs so far
+  scanned 16200/16582 — 18192 pairs so far
+  scanned 16400/16582 — 18365 pairs so far
+[2/4] embedding near pairs: 18344 new (skipped 2 without embedding)
+[3/4] total candidate pairs: 18418, elapsed=114.5s
+[4a/4] pre-fetching 8336 skill records...
+[4a/4] parallel judging 18418 pairs (workers=8)...
+  judged 200/18418 @ 9.8/s — confirmed dups: 0
+  judged 400/18418 @ 12.0/s — confirmed dups: 0
+  judged 600/18418 @ 11.8/s — confirmed dups: 0
+  judged 800/18418 @ 13.0/s — confirmed dups: 0
+  judged 1000/18418 @ 14.1/s — confirmed dups: 0
+  judged 1200/18418 @ 14.7/s — confirmed dups: 0
+  judged 1400/18418 @ 14.6/s — confirmed dups: 0
+  judged 1600/18418 @ 15.0/s — confirmed dups: 0
+  judged 1800/18418 @ 15.9/s — confirmed dups: 0
+  judged 2000/18418 @ 16.9/s — confirmed dups: 0
+  judged 2200/18418 @ 17.2/s — confirmed dups: 0
+  judged 2400/18418 @ 17.5/s — confirmed dups: 0
+  judged 2600/18418 @ 17.7/s — confirmed dups: 0
+  judged 2800/18418 @ 17.0/s — confirmed dups: 0
+  judged 3000/18418 @ 17.0/s — confirmed dups: 0
+  judged 3200/18418 @ 17.2/s — confirmed dups: 0
+  judged 3400/18418 @ 16.9/s — confirmed dups: 0
+  judged 3600/18418 @ 16.8/s — confirmed dups: 0
+  judged 3800/18418 @ 16.9/s — confirmed dups: 0
+  judged 4000/18418 @ 16.3/s — confirmed dups: 0
+  judged 4200/18418 @ 15.5/s — confirmed dups: 0
+  judged 4400/18418 @ 15.5/s — confirmed dups: 0
+  judged 4600/18418 @ 15.2/s — confirmed dups: 0
+  judged 4800/18418 @ 14.3/s — confirmed dups: 0
+  judged 5000/18418 @ 14.2/s — confirmed dups: 0
+  judged 5200/18418 @ 14.0/s — confirmed dups: 0
+  judged 5400/18418 @ 13.7/s — confirmed dups: 0
+  judged 5600/18418 @ 13.4/s — confirmed dups: 0
+  judged 5800/18418 @ 13.3/s — confirmed dups: 0
+  judged 6000/18418 @ 13.4/s — confirmed dups: 0
+  judged 6200/18418 @ 13.2/s — confirmed dups: 0
+  judged 6400/18418 @ 13.0/s — confirmed dups: 0
+  judged 6600/18418 @ 12.8/s — confirmed dups: 0
+  judged 6800/18418 @ 12.5/s — confirmed dups: 0
+  judged 7000/18418 @ 12.4/s — confirmed dups: 0
+  judged 7200/18418 @ 12.2/s — confirmed dups: 0
+  judged 7400/18418 @ 11.9/s — confirmed dups: 0
+  judged 7600/18418 @ 11.8/s — confirmed dups: 0
+  judged 7800/18418 @ 11.5/s — confirmed dups: 1
+  judged 8000/18418 @ 11.5/s — confirmed dups: 1
+  judged 8200/18418 @ 11.5/s — confirmed dups: 1
+  judged 8400/18418 @ 11.4/s — confirmed dups: 1
+  judged 8600/18418 @ 11.3/s — confirmed dups: 1
+  judged 8800/18418 @ 11.3/s — confirmed dups: 1
+  judged 9000/18418 @ 11.2/s — confirmed dups: 1
+  judged 9200/18418 @ 11.0/s — confirmed dups: 1
+  judged 9400/18418 @ 10.9/s — confirmed dups: 1
+  judged 9600/18418 @ 10.8/s — confirmed dups: 1
+  judged 9800/18418 @ 10.8/s — confirmed dups: 2
+  judged 10000/18418 @ 10.7/s — confirmed dups: 2
+  judged 10200/18418 @ 10.6/s — confirmed dups: 2
+  judged 10400/18418 @ 10.5/s — confirmed dups: 2
+  judged 10600/18418 @ 10.4/s — confirmed dups: 2
+  judged 10800/18418 @ 10.3/s — confirmed dups: 2
+  judged 11000/18418 @ 10.2/s — confirmed dups: 2
+  judged 11200/18418 @ 10.1/s — confirmed dups: 2
+  judged 11400/18418 @ 10.0/s — confirmed dups: 2
+  judged 11600/18418 @ 10.0/s — confirmed dups: 2
+  judged 11800/18418 @ 9.9/s — confirmed dups: 2
+  judged 12000/18418 @ 9.8/s — confirmed dups: 2
+  judged 12200/18418 @ 9.7/s — confirmed dups: 2
+  judged 12400/18418 @ 9.6/s — confirmed dups: 2
+  judged 12600/18418 @ 9.6/s — confirmed dups: 2
+  judged 12800/18418 @ 9.5/s — confirmed dups: 2
+  judged 13000/18418 @ 9.4/s — confirmed dups: 2
+  judged 13200/18418 @ 9.4/s — confirmed dups: 2
+  judged 13400/18418 @ 9.3/s — confirmed dups: 2
+  judged 13600/18418 @ 9.3/s — confirmed dups: 2
+  judged 13800/18418 @ 9.2/s — confirmed dups: 2
+  judged 14000/18418 @ 9.2/s — confirmed dups: 2
+  judged 14200/18418 @ 9.1/s — confirmed dups: 2
+  judged 14400/18418 @ 9.0/s — confirmed dups: 2
+  judged 14600/18418 @ 9.0/s — confirmed dups: 2
+  judged 14800/18418 @ 8.9/s — confirmed dups: 2
+  judged 15000/18418 @ 8.9/s — confirmed dups: 2
+  judged 15200/18418 @ 8.8/s — confirmed dups: 2
+  judged 15400/18418 @ 8.8/s — confirmed dups: 2
+  judged 15600/18418 @ 8.7/s — confirmed dups: 2
+  judged 15800/18418 @ 8.6/s — confirmed dups: 2
+  judged 16000/18418 @ 8.6/s — confirmed dups: 2
+  judged 16200/18418 @ 8.5/s — confirmed dups: 2
+  judged 16400/18418 @ 8.5/s — confirmed dups: 2
+  judged 16600/18418 @ 8.4/s — confirmed dups: 28418 @ 8.4/s — confirmed dups: 2
+  judged 16800/18418 @ 8.4/s — confirmed dups: 2
+  judged 17000/18418 @ 8.4/s — confirmed dups: 2
+  judged 17200/18418 @ 8.4/s — confirmed dups: 2
+  judged 17400/18418 @ 8.3/s — confirmed dups: 2
+  judged 17600/18418 @ 8.3/s — confirmed dups: 2
+  judged 17800/18418 @ 8.2/s — confirmed dups: 3
+  judged 18000/18418 @ 8.2/s — confirmed dups: 3
+  judged 18200/18418 @ 8.1/s — confirmed dups: 3
+  judged 18400/18418 @ 8.1/s — confirmed dups: 3
+[4b/4] applying 3 merges (serial)...
+[4/4] done in 2383.4s — llm_calls=18418, auto_calls=0, merges=3
+
+Merges by (winner_src <- loser_src):
+     1  sickn33/agentic-awesome-skills  <-  BankrBot/skills
+     1  LeoYeAI/openclaw-master-skills  <-  softaworks/agent-toolkit
+     1  sickn33/agentic-awesome-skills  <-  sickn33/agentic-awesome-skills
+
+  judged 16800/18418 @ 8.4/s — confirmed dups: 2
+  judged 17000/18418 @ 8.4/s — confirmed dups: 2
+  judged 17200/18418 @ 8.4/s — confirmed dups: 2
+  judged 17400/18418 @ 8.3/s — confirmed dups: 2
+  judged 17600/18418 @ 8.3/s — confirmed dups: 2
+  judged 17800/18418 @ 8.2/s — confirmed dups: 3
+  judged 18000/18418 @ 8.2/s — confirmed dups: 3
+  judged 18200/18418 @ 8.1/s — confirmed dups: 3
+  judged 18400/18418 @ 8.1/s — confirmed dups: 3
+[4b/4] applying 3 merges (serial)...
+[4/4] done in 2383.4s — llm_calls=18418, auto_calls=0, merges=3
+
+Merges by (winner_src <- loser_src):
+     1  sickn33/agentic-awesome-skills  <-  BankrBot/skills
+     1  LeoYeAI/openclaw-master-skills  <-  softaworks/agent-toolkit
+     1  sickn33/agentic-awesome-skills  <-  sickn33/agentic-awesome-skills
+/data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/hermes_lib
+Select it with benchmark --skill-mode corpus-only
+/data/liangfeng/git/hermesWithSkillLib/baselines/SkillCorpus/hermes_lib
+Select it with benchmark --skill-mode corpus-only
++ /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/bin/python -u /data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py --publish
++ /data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/bin/python -u /data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py --publish
+752 cards have no file on disk and are skipped, for example ['combined::ab-test-setup', 'combined::academic-paper', 'combined::academic-paper-reviewer', 'combined::academic-pipeline', 'combined::accessibility']
+752 cards have no file on disk and are skipped, for example ['combined::ab-test-setup', 'combined::academic-paper', 'combined::academic-paper-reviewer', 'combined::academic-pipeline', 'combined::accessibility']
+Traceback (most recent call last):
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/core/validation.py", line 23, in parse_frontmatter
+    metadata = yaml.safe_load("\n".join(lines[1:end]))
+Traceback (most recent call last):
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/core/validation.py", line 23, in parse_frontmatter
+    metadata = yaml.safe_load("\n".join(lines[1:end]))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/__init__.py", line 125, in safe_load
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/__init__.py", line 125, in safe_load
+    return load(stream, SafeLoader)
+    return load(stream, SafeLoader)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/__init__.py", line 81, in load
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/__init__.py", line 81, in load
+    return loader.get_single_data()
+           ^^^^^^^    return loader.get_single_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/constructor.py", line 49, in get_single_data
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/constructor.py", line 49, in get_single_data
+    node = self.get_single_node()
+           ^^^^^^^^^^^^^^^^    node = self.get_single_node()
+           ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/composer.py", line 36, in get_single_node
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/composer.py", line 36, in get_single_node
+    document = self.compose_document()
+               ^    document = self.compose_document()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/composer.py", line 55, in compose_document
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+            node = self.compose_node(None, None)
+           ^^^^^^^^^   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/composer.py", line 84, in compose_node
+^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+      node = self.compose_mapping_node(anchor)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/composer.py", line 127, in compose_mapping_node
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/composer.py", line 127, in compose_mapping_node
+    while not self.check_event(MappingEndEvent):
+    while not self.check_event(MappingEndEvent):
+                          ^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/parser.py", line 98, in check_event
+
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/parser.py", line 98, in check_event
+    self.current_event = self.state()
+                        self.current_event = self.state()
+                         ^^^^^^     ^^^^^^^^^^^^^^^^
+^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/parser.py", line 428, in parse_block_mapping_key
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/parser.py", line 428, in parse_block_mapping_key
+    if self.check_token(KeyToken):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^    if self.check_token(KeyToken):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/scanner.py", line 116, in check_token
+
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/scanner.py", line 116, in check_token
+    self.fetch_more_tokens()
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/scanner.py", line 223, in fetch_more_tokens
+    self.fetch_more_tokens()
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/scanner.py", line 223, in fetch_more_tokens
+    return self.fetch_value()
+           ^^^^^^^    return self.fetch_value()
+           ^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/scanner.py", line 577, in fetch_value
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/yaml/scanner.py", line 577, in fetch_value
+    raise ScannerError(None, None,
+yaml.scanner.ScannerError    raise ScannerError(None, None,
+yaml.scanner.ScannerError: mapping values are not allowed here
+  in "<unicode string>", line 2, column 655:
+     ... y for LLMs through Bankr. Chains: Base, Ethereum, Polygon, Solan ... 
+                                         ^
+
+The above exception was the direct cause of the following exception:
+
+: mapping values are not allowed here
+  in "<unicode string>", line 2, column 655:
+     ... y for LLMs through Bankr. Chains: Base, Ethereum, Polygon, Solan ... 
+                                         ^
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 159, in <module>
+Traceback (most recent call last):
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 159, in <module>
+    raise SystemExit(main())
+               raise SystemExit(main())
+                     ^^          ^^^^^^
+^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 149, in main
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 149, in main
+    destination = build(skilllib_root(args.skilllib), limit=args.limit, publish=args.publish)
+    destination = build(skilllib_root(args.skilllib), limit=args.limit, publish=args.publish)
+                  ^^^^^^^                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 134, in build
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 134, in build
+    SkillNetClient().analyze(skills, output_dir=index)
+    SkillNetClient().analyze(skills, output_dir=index)
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/interfaces/client.py", line 364, in analyze
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/interfaces/client.py", line 364, in analyze
+    return analyze(
+           ^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/analyzer.py", line 74, in analyze
+    return analyze(
+           ^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/analyzer.py", line 74, in analyze
+    sources = read_skills(skills_dir)
+                 sources = read_skills(skills_dir)
+              ^^^^^^^^^^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/analyzer.py", line 215, in read_skills
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/analyzer.py", line 215, in read_skills
+    skills.append(read_source(path))
+            skills.append(read_source(path))
+                  ^          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/core/library.py", line 19, in read_source
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/core/library.py", line 19, in read_source
+    metadata = parse_frontmatter(source)
+                 metadata = parse_frontmatter(source)
+               ^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/core/validation.py", line 25, in parse_frontmatter
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/core/validation.py", line 25, in parse_frontmatter
+    raise ValueError("Invalid YAML frontmatter.") from exc
+ValueError: Invalid YAML frontmatter.
+    raise ValueError("Invalid YAML frontmatter.") from exc
+ValueError: Invalid YAML frontmatter.
+2026-11-20T01:53:11+08:00 baselines/.venv-construct/bin/python -u baselines/SkillNet/hermes_build.py --publish
+752 cards have no file on disk and are skipped, for example ['combined::ab-test-setup', 'combined::academic-paper', 'combined::academic-paper-reviewer', 'combined::academic-pipeline', 'combined::accessibility']
+Traceback (most recent call last):
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 84, in stage_skills
+    destination.symlink_to(source)
+  File "/usr/lib/python3.12/pathlib.py", line 1388, in symlink_to
+    os.symlink(target, self, target_is_directory)
+FileExistsError: [Errno 17] File exists: '/data/liangfeng/git/skillRepo/cache/skills/0xsline/OpenChatCut/skills/openchatcut/SKILL.md' -> '/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_lib/skills/s000000/SKILL.md'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 181, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 171, in main
+    destination = build(skilllib_root(args.skilllib), limit=args.limit, publish=args.publish)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 123, in build
+    staged = stage_skills(cards, files, skills)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 86, in stage_skills
+    shutil.copyfile(source, destination)
+  File "/usr/lib/python3.12/shutil.py", line 240, in copyfile
+    raise SameFileError("{!r} and {!r} are the same file".format(src, dst))
+shutil.SameFileError: PosixPath('/data/liangfeng/git/skillRepo/cache/skills/0xsline/OpenChatCut/skills/openchatcut/SKILL.md') and PosixPath('/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_lib/skills/s000000/SKILL.md') are the same file
+2026-11-20T01:53:52+08:00 retry SkillNet after existing-link resume fix
+baselines/.venv-construct/bin/python -u baselines/SkillNet/hermes_build.py --publish
+752 cards have no file on disk and are skipped, for example ['combined::ab-test-setup', 'combined::academic-paper', 'combined::academic-paper-reviewer', 'combined::academic-pipeline', 'combined::accessibility']
+resuming skills=/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_lib/skills index=/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_index cache=no
+Traceback (most recent call last):
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 126, in read
+    with map_exceptions(exc_map):
+  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadTimeout: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_base_client.py", line 1080, in request
+    response = self._send_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_client.py", line 491, in _send_request
+    response = self._send_with_auth_retry(request, stream=stream, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_client.py", line 469, in _send_with_auth_retry
+    response = super()._send_request(request, stream=stream, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_base_client.py", line 1005, in _send_request
+    return self._client.send(request, stream=stream, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadTimeout: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 184, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 174, in main
+    destination = build(skilllib_root(args.skilllib), limit=args.limit, publish=args.publish)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 150, in build
+    SkillNetClient().analyze(
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/interfaces/client.py", line 364, in analyze
+    return analyze(
+           ^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/analyzer.py", line 109, in analyze
+    extracted = list(pool.map(extract, sources))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/analyzer.py", line 93, in extract
+    else structured_call(
+         ^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/core/llm.py", line 116, in structured_call
+    response = client.chat.completions.create(**request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_utils/_utils.py", line 298, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 1296, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_base_client.py", line 1375, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_base_client.py", line 1098, in request
+    raise APITimeoutError(request=request) from err
+openai.APITimeoutError: Request timed out.
+2026-11-20T08:07:09+08:00 resume baselines/.venv-construct/bin/python -u baselines/SkillNet/hermes_build.py --publish
+752 cards have no file on disk and are skipped, for example ['combined::ab-test-setup', 'combined::academic-paper', 'combined::academic-paper-reviewer', 'combined::academic-pipeline', 'combined::accessibility']
+resuming skills=/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_lib/skills index=/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_index cache=yes
+Traceback (most recent call last):
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 126, in read
+    with map_exceptions(exc_map):
+  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadTimeout: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_base_client.py", line 1080, in request
+    response = self._send_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_client.py", line 491, in _send_request
+    response = self._send_with_auth_retry(request, stream=stream, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_client.py", line 469, in _send_with_auth_retry
+    response = super()._send_request(request, stream=stream, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_base_client.py", line 1005, in _send_request
+    return self._client.send(request, stream=stream, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadTimeout: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 184, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 174, in main
+    destination = build(skilllib_root(args.skilllib), limit=args.limit, publish=args.publish)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_build.py", line 150, in build
+    SkillNetClient().analyze(
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/interfaces/client.py", line 364, in analyze
+    return analyze(
+           ^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/analyzer.py", line 109, in analyze
+    extracted = list(pool.map(extract, sources))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/analyzer.py", line 93, in extract
+    else structured_call(
+         ^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/skillnet-ai/src/skillnet_ai/core/llm.py", line 116, in structured_call
+    response = client.chat.completions.create(**request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_utils/_utils.py", line 298, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 1296, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_base_client.py", line 1375, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liangfeng/git/hermesWithSkillLib/baselines/.venv-construct/lib/python3.12/site-packages/openai/_base_client.py", line 1098, in request
+    raise APITimeoutError(request=request) from err
+openai.APITimeoutError: Request timed out.
+2026-11-20T11:50:10+08:00 resume baselines/.venv-construct/bin/python -u baselines/SkillNet/hermes_build.py --publish
+752 cards have no file on disk and are skipped, for example ['combined::ab-test-setup', 'combined::academic-paper', 'combined::academic-paper-reviewer', 'combined::academic-pipeline', 'combined::accessibility']
+resuming skills=/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_lib/skills index=/data/liangfeng/git/hermesWithSkillLib/baselines/SkillNet/hermes_index cache=yes
+skip profile s000000: Request timed out.
+skip profile s000018: Request timed out.
+skip profile s000023: Request timed out.
+skip profile s000028: Request timed out.
+skip profile s000031: Request timed out.
+skip profile s000033: Request timed out.
+skip profile s000035: Request timed out.
+skip profile s000037: Request timed out.
+skip profile s000041: Request timed out.
+skip profile s000043: Request timed out.
+skip profile s000044: Request timed out.
+skip profile s000045: Request timed out.
+skip profile s000049: 100 validation errors for SkillProfile
+capability.evidence.0
+  Input should be an object [type=model_type, input_value=3, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+capability.evidence.1
+  Input should be an object [type=model_type, input_value=27, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+when_to_use.0.evidence.0
+  Input should be an object [type=model_type, input_value=12, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+when_to_use.1.evidence.0
+  Input should be an object [type=model_type, input_value=13, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+when_to_use.2.evidence.0
+  Input should be an object [type=model_type, input_value=14, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+when_to_use.3.evidence.0
+  Input should be an object [type=model_type, input_value=15, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.0.before.0.evidence.0
+  Input should be an object [type=model_type, input_value=36, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.0.before.0.evidence.1
+  Input should be an object [type=model_type, input_value=38, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.0.before.0.evidence.2
+  Input should be an object [type=model_type, input_value=42, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.0.before.1.evidence.0
+  Input should be an object [type=model_type, input_value=49, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.0.before.1.evidence.1
+  Input should be an object [type=model_type, input_value=51, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.0.before.1.evidence.2
+  Input should be an object [type=model_type, input_value=52, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.0.after.0.evidence.0
+  Input should be an object [type=model_type, input_value=45, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.0.after.0.evidence.1
+  Input should be an object [type=model_type, input_value=46, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.0.after.0.evidence.2
+  Input should be an object [type=model_type, input_value=47, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.0.after.1.evidence.0
+  Input should be an object [type=model_type, input_value=51, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.0.after.1.evidence.1
+  Input should be an object [type=model_type, input_value=52, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.1.before.0.evidence.0
+  Input should be an object [type=model_type, input_value=67, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.1.before.0.evidence.1
+  Input should be an object [type=model_type, input_value=68, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.1.before.0.evidence.2
+  Input should be an object [type=model_type, input_value=69, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.1.before.1.evidence.0
+  Input should be an object [type=model_type, input_value=98, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.1.before.1.evidence.1
+  Input should be an object [type=model_type, input_value=110, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.1.before.1.evidence.2
+  Input should be an object [type=model_type, input_value=112, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.1.after.0.evidence.0
+  Input should be an object [type=model_type, input_value=98, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.1.after.0.evidence.1
+  Input should be an object [type=model_type, input_value=101, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.1.after.0.evidence.2
+  Input should be an object [type=model_type, input_value=147, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.1.after.1.evidence.0
+  Input should be an object [type=model_type, input_value=12, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.1.after.1.evidence.1
+  Input should be an object [type=model_type, input_value=52, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.1.after.1.evidence.2
+  Input should be an object [type=model_type, input_value=147, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.2.before.0.evidence.0
+  Input should be an object [type=model_type, input_value=27, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.2.before.1.evidence.0
+  Input should be an object [type=model_type, input_value=15, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.2.before.1.evidence.1
+  Input should be an object [type=model_type, input_value=168, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.2.before.1.evidence.2
+  Input should be an object [type=model_type, input_value=171, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.2.after.0.evidence.0
+  Input should be an object [type=model_type, input_value=165, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.2.after.0.evidence.1
+  Input should be an object [type=model_type, input_value=168, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.2.after.0.evidence.2
+  Input should be an object [type=model_type, input_value=170, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.3.before.0.evidence.0
+  Input should be an object [type=model_type, input_value=184, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.3.before.0.evidence.1
+  Input should be an object [type=model_type, input_value=191, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.3.before.0.evidence.2
+  Input should be an object [type=model_type, input_value=303, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.3.before.1.evidence.0
+  Input should be an object [type=model_type, input_value=199, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.3.before.1.evidence.1
+  Input should be an object [type=model_type, input_value=202, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.3.after.0.evidence.0
+  Input should be an object [type=model_type, input_value=210, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.3.after.0.evidence.1
+  Input should be an object [type=model_type, input_value=216, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.3.after.0.evidence.2
+  Input should be an object [type=model_type, input_value=217, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.4.before.0.evidence.0
+  Input should be an object [type=model_type, input_value=334, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.4.before.0.evidence.1
+  Input should be an object [type=model_type, input_value=337, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.4.before.0.evidence.2
+  Input should be an object [type=model_type, input_value=356, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.4.before.1.evidence.0
+  Input should be an object [type=model_type, input_value=340, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.4.before.1.evidence.1
+  Input should be an object [type=model_type, input_value=361, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.4.before.1.evidence.2
+  Input should be an object [type=model_type, input_value=362, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.4.after.0.evidence.0
+  Input should be an object [type=model_type, input_value=340, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.4.after.0.evidence.1
+  Input should be an object [type=model_type, input_value=344, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.4.after.0.evidence.2
+  Input should be an object [type=model_type, input_value=365, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.5.before.0.evidence.0
+  Input should be an object [type=model_type, input_value=377, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.5.before.0.evidence.1
+  Input should be an object [type=model_type, input_value=379, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.5.before.1.evidence.0
+  Input should be an object [type=model_type, input_value=389, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.5.before.1.evidence.1
+  Input should be an object [type=model_type, input_value=395, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.5.after.0.evidence.0
+  Input should be an object [type=model_type, input_value=392, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+scenarios.5.after.0.evidence.1
+  Input should be an object [type=model_type, input_value=396, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+inputs.0.evidence.0
+  Input should be an object [type=model_type, input_value=36, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+inputs.0.evidence.1
+  Input should be an object [type=model_type, input_value=38, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+inputs.0.evidence.2
+  Input should be an object [type=model_type, input_value=42, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+inputs.1.evidence.0
+  Input should be an object [type=model_type, input_value=66, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+inputs.1.evidence.1
+  Input should be an object [type=model_type, input_value=67, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+inputs.1.evidence.2
+  Input should be an object [type=model_type, input_value=68, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+inputs.2.evidence.0
+  Input should be an object [type=model_type, input_value=192, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+inputs.2.evidence.1
+  Input should be an object [type=model_type, input_value=229, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+inputs.2.evidence.2
+  Input should be an object [type=model_type, input_value=303, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+inputs.3.evidence.0
+  Input should be an object [type=model_type, input_value=202, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+inputs.3.evidence.1
+  Input should be an object [type=model_type, input_value=337, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+inputs.3.evidence.2
+  Input should be an object [type=model_type, input_value=356, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+outputs.0.evidence.0
+  Input should be an object [type=model_type, input_value=46, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+outputs.0.evidence.1
+  Input should be an object [type=model_type, input_value=47, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+outputs.1.evidence.0
+  Input should be an object [type=model_type, input_value=98, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+outputs.1.evidence.1
+  Input should be an object [type=model_type, input_value=101, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+outputs.1.evidence.2
+  Input should be an object [type=model_type, input_value=147, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+outputs.2.evidence.0
+  Input should be an object [type=model_type, input_value=29, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+outputs.2.evidence.1
+  Input should be an object [type=model_type, input_value=236, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+outputs.3.evidence.0
+  Input should be an object [type=model_type, input_value=212, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+outputs.3.evidence.1
+  Input should be an object [type=model_type, input_value=344, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+outputs.3.evidence.2
+  Input should be an object [type=model_type, input_value=365, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+constraints.0.evidence.0
+  Input should be an object [type=model_type, input_value=27, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+constraints.0.evidence.1
+  Input should be an object [type=model_type, input_value=12, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+constraints.1.evidence.0
+  Input should be an object [type=model_type, input_value=47, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+constraints.1.evidence.1
+  Input should be an object [type=model_type, input_value=68, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+constraints.2.evidence.0
+  Input should be an object [type=model_type, input_value=417, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+constraints.2.evidence.1
+  Input should be an object [type=model_type, input_value=420, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+constraints.3.evidence.0
+  Input should be an object [type=model_type, input_value=245, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+constraints.3.evidence.1
+  Input should be an object [type=model_type, input_value=259, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+constraints.3.evidence.2
+  Input should be an object [type=model_type, input_value=262, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+constraints.4.evidence.0
+  Input should be an object [type=model_type, input_value=4, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+tools.0.evidence.0
+  Input should be an object [type=model_type, input_value=26, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+tools.0.evidence.1
+  Input should be an object [type=model_type, input_value=45, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+tools.1.evidence.0
+  Input should be an object [type=model_type, input_value=42, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+tools.1.evidence.1
+  Input should be an object [type=model_type, input_value=292, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+tools.1.evidence.2
+  Input should be an object [type=model_type, input_value=293, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+tools.2.evidence.0
+  Input should be an object [type=model_type, input_value=153, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+tools.2.evidence.1
+  Input should be an object [type=model_type, input_value=156, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+tools.3.evidence.0
+  Input should be an object [type=model_type, input_value=236, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+tools.3.evidence.1
+  Input should be an object [type=model_type, input_value=242, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.14/v/model_type
+skip profile s000050: Request timed out.
+skip profile s000052: Request timed out.
+skip profile s000055: Request timed out.
+skip profile s000062: Request timed out.
+skip profile s000067: Request timed out.
+skip profile s000068: Request timed out.
+skip profile s000069: Request timed out.
+skip profile s000070: Request timed out.
+skip profile s000071: Request timed out.
+skip profile s000072: Request timed out.
+skip profile s000073: Request timed out.
+skip profile s000076: Request timed out.
+skip profile s000078: Request timed out.
+skip profile s000079: Request timed out.
+skip profile s000080: Request timed out.
+skip profile s000081: Request timed out.
+skip profile s000082: Request timed out.
+skip profile s000083: Request timed out.
+skip profile s000084: Request timed out.
+skip profile s000085: Request timed out.
+skip profile s000086: Request timed out.
+skip profile s000114: Request timed out.
+skip profile s000115: Request timed out.
+skip profile s000116: Request timed out.
+skip profile s000117: Request timed out.
+skip profile s000118: Request timed out.
+skip profile s000119: Request timed out.
+skip profile s000120: Request timed out.
+skip profile s000121: Request timed out.
+skip profile s000122: Request timed out.
+skip profile s000123: Request timed out.
+skip profile s000124: Request timed out.
+skip profile s000125: Request timed out.
+skip profile s000126: Request timed out.
+skip profile s000127: Request timed out.
+skip profile s000128: Request timed out.
+skip profile s000129: Request timed out.
+skip profile s000130: Request timed out.
+skip profile s000131: Request timed out.
+skip profile s000132: Request timed out.
+skip profile s000133: Request timed out.
+skip profile s000134: Request timed out.
+skip profile s000135: Request timed out.
+skip profile s000136: Request timed out.
+skip profile s000137: Request timed out.
+skip profile s000138: Request timed out.
+skip profile s000139: Request timed out.
+skip profile s000140: Request timed out.
+skip profile s000141: Request timed out.
+skip profile s000142: Request timed out.
+skip profile s000143: Request timed out.
+skip profile s000144: Request timed out.
+skip profile s000145: Request timed out.
+skip profile s000146: Request timed out.
+skip profile s000147: Request timed out.
+skip profile s000148: Request timed out.
+skip profile s000149: Request timed out.
+skip profile s000150: Request timed out.
+skip profile s000151: Request timed out.
+skip profile s000152: Request timed out.
+skip profile s000153: Request timed out.
+skip profile s000155: Request timed out.
+skip profile s000156: Request timed out.
+skip profile s000157: Request timed out.
+skip profile s000158: Request timed out.
+skip profile s000159: Request timed out.
+skip profile s000160: Request timed out.
+skip profile s000161: Request timed out.
+skip profile s000162: Request timed out.
+skip profile s000163: Request timed out.
+skip profile s000164: Request timed out.
+skip profile s000165: Request timed out.
+skip profile s000166: Request timed out.
+skip profile s000167: Request timed out.
+skip profile s000168: Request timed out.
+skip profile s000169: Request timed out.
+skip profile s000170: Request timed out.
+skip profile s000172: Request timed out.
+skip profile s000173: Request timed out.
+skip profile s000174: Request timed out.
+skip profile s000175: Request timed out.
+skip profile s000176: Request timed out.
+skip profile s000177: Request timed out.
+skip profile s000178: Request timed out.
+skip profile s000179: Request timed out.
+skip profile s000180: Request timed out.
+skip profile s000181: Request timed out.
+skip profile s000182: Request timed out.
+skip profile s000183: Request timed out.
+skip profile s000185: Request timed out.
+skip profile s000186: Request timed out.
+skip profile s000187: Request timed out.
+skip profile s000188: Request timed out.
+skip profile s000189: Request timed out.
+skip profile s000190: Request timed out.
+skip profile s000191: Request timed out.
+skip profile s000192: Request timed out.
+skip profile s000193: Request timed out.
+skip profile s000194: Request timed out.
+skip profile s000195: Request timed out.
+skip profile s000196: Request timed out.
+skip profile s000197: Request timed out.
+skip profile s000198: Request timed out.
+skip profile s000199: Request timed out.
+skip profile s000200: Request timed out.
+skip profile s000201: Request timed out.
+skip profile s000202: Request timed out.
+skip profile s000203: 1 validation error for SkillProfile
+  Invalid JSON: expected `,` or `}` at line 3 column 4437 [type=json_invalid, input_value='\n\n{"capability":{"text...ence":[{"line":411"}]}}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.14/v/json_invalid
+skip profile s000204: Request timed out.
+skip profile s000205: Request timed out.
+skip profile s000206: Request timed out.
+skip profile s000208: Request timed out.
+skip profile s000209: Request timed out.
+skip profile s000210: Request timed out.
+skip profile s000211: Request timed out.
+skip profile s000212: Request timed out.
+skip profile s000213: Request timed out.
+skip profile s000214: Request timed out.
+skip profile s000215: Request timed out.
+skip profile s000216: Request timed out.
+skip profile s000217: Request timed out.
+skip profile s000218: Request timed out.
+skip profile s000219: Request timed out.
+skip profile s000220: Request timed out.
+skip profile s000221: Request timed out.
+skip profile s000222: Request timed out.
+skip profile s000223: Request timed out.
+skip profile s000224: Request timed out.
+skip profile s000226: Request timed out.
+skip profile s000227: Request timed out.
+skip profile s000228: Request timed out.
+skip profile s000229: Request timed out.
+skip profile s000230: Request timed out.
+skip profile s000231: Request timed out.
+skip profile s000232: Request timed out.
+skip profile s000233: Request timed out.
+skip profile s000235: Request timed out.
+skip profile s000236: Request timed out.
+skip profile s000237: Request timed out.
+skip profile s000238: Request timed out.
+skip profile s000239: Request timed out.
+skip profile s000241: Request timed out.
+skip profile s000243: Request timed out.
+skip profile s000244: Request timed out.
+skip profile s000245: Request timed out.
+skip profile s000247: Request timed out.
+skip profile s000248: Request timed out.
+skip profile s000249: Request timed out.
+skip profile s000250: Request timed out.
+skip profile s000251: Request timed out.
+skip profile s000252: Request timed out.
+skip profile s000253: Request timed out.
+skip profile s000254: Request timed out.
+skip profile s000255: Request timed out.
+skip profile s000256: Request timed out.
+skip profile s000258: Request timed out.
+skip profile s000259: Request timed out.
+skip profile s000260: Request timed out.
+skip profile s000261: Request timed out.
+skip profile s000265: Request timed out.
+skip profile s000269: Request timed out.
+skip profile s000270: Request timed out.
+skip profile s000282: Request timed out.
+skip profile s000283: Request timed out.
+skip profile s000285: Request timed out.
+skip profile s000286: Request timed out.
+skip profile s000287: Request timed out.
+skip profile s000288: Request timed out.
+skip profile s000289: Request timed out.
+skip profile s000290: Request timed out.
+skip profile s000292: Request timed out.
+skip profile s000293: Request timed out.
+skip profile s000295: Request timed out.
+skip profile s000296: Request timed out.
+skip profile s000302: Request timed out.
+skip profile s000303: Request timed out.
+skip profile s000304: Request timed out.
+skip profile s000305: Request timed out.
+skip profile s000306: 1 validation error for SkillProfile
+  Invalid JSON: expected value at line 3 column 1 [type=json_invalid, input_value='\n\n```json\n{\n  "capab...  ]\n    }\n  ]\n}\n```', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.14/v/json_invalid
+skip profile s000307: Request timed out.
+skip profile s000309: Request timed out.
+skip profile s000310: Request timed out.
+skip profile s000311: Request timed out.
+skip profile s000312: Request timed out.
+skip profile s000313: Request timed out.
+skip profile s000314: Request timed out.
+skip profile s000318: Request timed out.
+skip profile s000337: Request timed out.
+skip profile s000338: Request timed out.
+skip profile s000339: Request timed out.
+skip profile s000340: Request timed out.
+skip profile s000341: Request timed out.
+skip profile s000342: Request timed out.
+skip profile s000343: Request timed out.
+skip profile s000345: Request timed out.
+skip profile s000347: Request timed out.
+skip profile s000349: Model evidence cites lines outside the skill source (23 lines): [24]
+skip profile s000348: Request timed out.
+skip profile s000350: Request timed out.
+skip profile s000351: Request timed out.
+skip profile s000352: Request timed out.
+skip profile s000353: Request timed out.
+skip profile s000355: Request timed out.
+skip profile s000357: Request timed out.
+skip profile s000358: Request timed out.
+skip profile s000359: Request timed out.
+skip profile s000360: Request timed out.
+skip profile s000361: Request timed out.
+skip profile s000362: Request timed out.
+skip profile s000363: Request timed out.
+skip profile s000364: Request timed out.
+skip profile s000366: Request timed out.
+2026-11-21T00:52:09+08:00 tmux new-session -d -s skillsbench-corpus skillsbench corpus-compatible exp261121Corpus

@@ -33,7 +33,7 @@ def package_root() -> Path | None:
 
 
 def catalog_root() -> Path | None:
-    """Directory whose ``catalog/`` the agent reads. The submodule, unless a test overrides this."""
+    """Directory whose ``catalog/`` the agent reads. Always the SkillLib submodule."""
     return package_root()
 
 

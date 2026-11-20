@@ -16,6 +16,8 @@ _HERMES_CORE_TOOLS = [
     "skills_list", "skill_view", "skill_manage",
     "skill_library_find", "skill_library_load", "skill_library_visit",
     "skill_router_find", "skill_router_load",
+    "skill_corpus_find", "skill_corpus_load",
+    "skill_net_route", "skill_net_load",
     "browser_navigate", "browser_snapshot", "browser_click",
     "browser_type", "browser_scroll", "browser_back",
     "browser_press", "browser_get_images",
@@ -116,6 +118,16 @@ TOOLSETS = {
         "Rank and load skills from the SkillRouter baseline pool. "
         "Present only when that pool and its Python dependencies are installed.",
         ["skill_router_find", "skill_router_load"],
+    ),
+    "skill_corpus": _ts(
+        "Search and load the SkillCorpus library built from this project's skill snapshot. "
+        "Present only when that checkout has published hermes_lib.",
+        ["skill_corpus_find", "skill_corpus_load"],
+    ),
+    "skill_net": _ts(
+        "Route and load skills from the SkillNet index built from this project's skill snapshot. "
+        "Present only when that checkout has published hermes_index.",
+        ["skill_net_route", "skill_net_load"],
     ),
     # web_search belongs to `web`/`search` only. Listing it here too let
     # `disabled_toolsets: [browser]` (headless/Docker deployments) strip
